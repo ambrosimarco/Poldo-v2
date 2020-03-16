@@ -27,6 +27,7 @@ class HomeController extends Controller
     }
 
     public function order(){
-        return view('order');
+        $sandwiches = app()->call('App\Http\Controllers\SandwichController@index');
+        return view('order')->with('sandwiches', $sandwiches);
     }
 }

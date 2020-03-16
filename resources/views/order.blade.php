@@ -22,6 +22,7 @@
                     <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">
                         Visualizza panini:
                     </button>
+
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">Caldi</a>
                         <a class="dropdown-item" href="#">Freddi</a>
@@ -30,88 +31,36 @@
             </div>
             <hr>
     
-            <div class="media p-1">
-                <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
-                <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
-                    <h4 class="media-heading">Farcito con prosciutto cotto e salsa ai funghi: 1.40€</h4>
-                    <div class="input-group">
-                        <input disabled value="Pane, prosciutto cotto, salsa ai funghi" type="text" class="form-control"
-                            aria-label="Recipient's username" aria-describedby="basic-addon2">
-    
-                        <div class="input-group-append">
-                            <button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
-                            <button type="button" class="btn btn-danger"><i class="fa fa-minus"></i></button>
+            @foreach($sandwiches as $sandwich => $attributes)
+                @php
+                $recipe = "";
+                @endphp
+                @foreach($attributes->ingredients as $ingredient)
+                    @php
+                    $recipe = $recipe.$ingredient->name;
+                    @endphp
+                    @if (!$loop->last)
+                        @php
+                        $recipe = $recipe.", ";
+                        @endphp
+                    @endif
+                @endforeach
+
+                <div class="media p-1">
+                    <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
+                    <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
+                    <h4 class="media-heading">{{$attributes->name}}: {{$attributes->price}}€</h4>
+                        <div class="input-group">
+                            <input disabled value="{{$recipe}}" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
+                                <button type="button" class="btn btn-danger"><i class="fa fa-minus"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-    
-            <div class="media p-1">
-                <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
-                <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
-                    <h4 class="media-heading">Caprese: 1.40€</h4>
-                    <p><b> Ingredienti:</b> Pane, insalata, mozzarella, pomodori</p>
-                </div>
-            </div>
-    
-            <div class="media p-1">
-                <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
-                <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
-                    <h4 class="media-heading">Filoncino: 1.40€</h4>
-                    <p><b> Ingredienti:</b> Pane, prosciutto crudo</p>
-                </div>
-            </div>
-    
-            <div class="media p-1">
-                <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
-                <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
-                    <h4 class="media-heading">Verona: 1.40€</h4>
-                    <p><b> Ingredienti:</b> Pane, pancetta, formaggio, salsa al radicchio</p>
-                </div>
-            </div>
-    
-            <div class="media p-1">
-                <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
-                <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
-                    <h4 class="media-heading">Brioches alla crema: 0.70€</h4>
-                    <p><b> Ingredienti:</b> Soffice cornetto ripieno di crema</p>
-                </div>
-            </div>
-    
-            <div class="media p-1">
-                <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
-                <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
-                    <h4 class="media-heading">Brioches alla marmellata: 0.70€</h4>
-                    <p><b> Ingredienti:</b> Soffice cornetto ripieno di marmellata</p>
-                </div>
-            </div>
-    
-            <div class="media p-1">
-                <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
-                <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
-                    <h4 class="media-heading">Brioches alla cioccolata: 0.70€</h4>
-                    <p><b> Ingredienti:</b> Soffice cornetto ripieno di ciocciolato</p>
-                </div>
-            </div>
-    
-            <div class="media p-1">
-                <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
-                <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
-                    <h4 class="media-heading">Focaccia con prosciutto cotto: 1.30€</h4>
-                    <p><b> Ingredienti:</b> Pane, prosciutto cotto</p>
-                </div>
-            </div>
-    
-            <div class="media p-1">
-                <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
-                <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
-                    <h4 class="media-heading">Farcito piccante: 1.40€</h4>
-                    <p><b> Ingredienti:</b> Pane, formaggio, salsa piccante</p>
-                </div>
-            </div>
-            <hr>
-        </div>
-    
+            @endforeach
+
         <!-- Scroll-back button -->
         <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button>
     
