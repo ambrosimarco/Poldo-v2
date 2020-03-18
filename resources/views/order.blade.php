@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-
+        
+        @can('order', App\Order::class)
         <!-- Container with the list of sandwiches -->
         <div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
-    
             <!-- Three main buttons -->
             <div class="btn-toolbar" role="toolbar">
                 <div class="dropdown">
@@ -99,4 +99,7 @@
     
         </script>
         </div>
+        @else
+        <h1>Benvenuto, {{ Auth::user()->name }}!</h1>
+        @endcan
 @endsection

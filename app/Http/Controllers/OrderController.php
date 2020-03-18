@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\order;
 use Illuminate\Http\Request;
-use App\User;
 
-class UserController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,21 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-
-        return view('/users/view')->with(compact('users'));
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index_api()
-    {
-        $users = User::all();
-
-        return $users;
+        //
     }
 
     /**
@@ -55,10 +41,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(order $order)
     {
         //
     }
@@ -66,10 +52,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(order $order)
     {
         //
     }
@@ -78,10 +64,10 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, order $order)
     {
         //
     }
@@ -89,10 +75,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(order $order)
     {
         //
     }
