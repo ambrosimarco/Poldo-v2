@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\UserRequest;
 use App\User;
 
 class UserController extends Controller
@@ -16,11 +16,11 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return view('/users/view')->with(compact('users'));
+        return view('/users/index')->with(compact('users'));
     }
 
     /**
-     * Display a listing of the resource.
+     * Send a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -44,10 +44,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\UserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         //
     }
@@ -60,7 +60,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('/users/show')->with(compact('user'));
     }
 
     /**
@@ -77,13 +78,18 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\UserRequest $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->name =  $request->get('name');
+        $user->email = $request->get('email');
+        $user->isAdmin = $request->get('isAdmin');
+        $user->canOrder = $request->get('isCustomer');
+        $user->save();
     }
 
     /**

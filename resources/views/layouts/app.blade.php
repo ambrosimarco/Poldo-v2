@@ -78,10 +78,15 @@
                                 <a class="nav-link" href="/users">Gestione degli account</a>    
                             </li>
                             @endcan
-                            @can('view-any', App\Sandwich::class)
-                                <a class="nav-link" href="/sandwiches">Panini</a>
+                            @can('update', App\Sandwich::class)
+                                <a class="nav-link" href="/sandwiches">Gestione Panini</a>
                             @endcan
-                                <a class="nav-link" href="#">Impostazioni</a>
+                            <li>
+                                <a class="nav-link" href="/settings">Impostazioni</a>
+                            </li>
+                            <li>
+                            <a class="nav-link" href="/contacts">Contatti</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

@@ -29,22 +29,19 @@ class DatabaseSeeder extends Seeder
         'name' => 'admin',
         'email' => 'admin@admin.com',
         'password' => Hash::make('admin'),
-        'isAdmin' => 1,
-        'canOrder' => 0
+        'role' => 'admin',
         ]);
       DB::table('users')->insert([
         'name' => 'user',
         'email' => 'user@user.com',
         'password' => Hash::make('user'),
-        'isAdmin' => 0,
-        'canOrder' => 1
+        'role' => 'observer',
         ]);
       DB::table('users')->insert([
         'name' => '5ai',
         'email' => '5ai@5ai.com',
         'password' => Hash::make('5ai'),
-        'isAdmin' => 0,
-        'canOrder' => 1
+        'role' => 'class',
         ]);
 
       //Sandwiches

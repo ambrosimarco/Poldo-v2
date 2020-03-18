@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-       return $user->isAdmin;
+        return in_array($user->role, array('admin'));
     }
 
     /**
@@ -29,7 +29,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-       return $user->isAdmin;
+        return in_array($user->role, array('admin'));
     }
 
     /**
@@ -40,7 +40,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->isAdmin;
+        return in_array($user->role, array('admin'));
     }
 
     /**
@@ -50,9 +50,9 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function update(User $user, User $model)
+    public function update(User $user)
     {
-        return $user->isAdmin;
+        return in_array($user->role, array('admin'));
     }
 
     /**
@@ -64,7 +64,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->isAdmin;
+        return in_array($user->role, array('admin'));
     }
 
     /**
@@ -76,7 +76,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        //
+        return in_array($user->role, array('admin'));
     }
 
     /**
@@ -88,6 +88,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        //
+        return in_array($user->role, array('admin'));
     }
 }

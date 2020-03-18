@@ -38,8 +38,8 @@
                     <h4 class="media-heading">{{$attributes->name}}</h4>
                         <div class="input-group">
                             <div class="input-group-append">
-                                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
-                                <button type="button" class="btn btn-danger"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-primary mr-1"><a href="/users/{{$attributes->id}}">Vedi</a></button>
+                                <button type="button" class="btn btn-primary mr-1">Cancella</button>
                             </div>
                         </div>
                     </div>

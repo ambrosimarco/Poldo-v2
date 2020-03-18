@@ -30,4 +30,12 @@ class HomeController extends Controller
         $sandwiches = app()->call('App\Http\Controllers\SandwichController@index_api');
         return view('order')->with(compact('sandwiches'));
     }
+
+    public function contacts(){
+        return view('contacts');
+    }
+
+    public function settings(){
+        return view('settings/index');
+    }
 }

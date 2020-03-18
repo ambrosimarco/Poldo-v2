@@ -12,7 +12,7 @@ class OrderPolicy
 
     public function order(User $user)
     {
-        return $user->canOrder;
+        return in_array($user->role, array('class'));
     }
 
     /**
@@ -23,7 +23,7 @@ class OrderPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return in_array($user->role, array('class', 'admin', 'observer'));
     }
 
     /**
@@ -35,7 +35,7 @@ class OrderPolicy
      */
     public function view(User $user, Order $order)
     {
-        //
+        return in_array($user->role, array('class', 'admin', 'observer'));
     }
 
     /**
@@ -46,7 +46,7 @@ class OrderPolicy
      */
     public function create(User $user)
     {
-        return $user->canOrder;
+        return in_array($user->role, array('class'));
     }
 
     /**
@@ -58,7 +58,7 @@ class OrderPolicy
      */
     public function update(User $user, Order $order)
     {
-        //
+        return in_array($user->role, array('class'));
     }
 
     /**
@@ -70,7 +70,7 @@ class OrderPolicy
      */
     public function delete(User $user, Order $order)
     {
-        return $user->canOrder;
+        return in_array($user->role, array('class'));
     }
 
     /**
@@ -82,7 +82,7 @@ class OrderPolicy
      */
     public function restore(User $user, Order $order)
     {
-        //
+        return in_array($user->role, array('class'));
     }
 
     /**
@@ -94,6 +94,6 @@ class OrderPolicy
      */
     public function forceDelete(User $user, Order $order)
     {
-        //
+        return in_array($user->role, array('class'));
     }
 }

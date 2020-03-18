@@ -17,16 +17,13 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 20)->unique();
             $table->string('email', 100)->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('isAdmin')->default(0);
-            $table->boolean('canOrder')->default(1);
+            $table->enum('role', ['class', 'admin', 'observer'])->default('class');	
             $table->rememberToken();
             $table->timestamps();
         });
 
         App\User::create([
-        // 'id' => 1,
         'name'   => 'admin',
         'email'   => 'admin@admin',
         'password'   => Hash::make('admin'),

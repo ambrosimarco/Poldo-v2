@@ -18,7 +18,7 @@ class SandwichPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->isAdmin;
+        return in_array($user->role, array('admin', 'class', 'observer'));
     }
 
     /**
@@ -30,7 +30,7 @@ class SandwichPolicy
      */
     public function view(User $user, Sandwich $sandwich)
     {
-        return true;
+        return in_array($user->role, array('admin', 'class', 'observer'));
     }
 
     /**
@@ -41,7 +41,7 @@ class SandwichPolicy
      */
     public function create(User $user)
     {
-        return $user->isAdmin;
+        return in_array($user->role, array('admin'));
     }
 
     /**
@@ -51,9 +51,9 @@ class SandwichPolicy
      * @param  \App\Sandwich  $sandwich
      * @return mixed
      */
-    public function update(User $user, Sandwich $sandwich)
+    public function update(User $user)
     {
-        //
+        return in_array($user->role, array('admin'));
     }
 
     /**
@@ -65,7 +65,7 @@ class SandwichPolicy
      */
     public function delete(User $user, Sandwich $sandwich)
     {
-        //
+        return in_array($user->role, array('admin'));
     }
 
     /**
@@ -77,7 +77,7 @@ class SandwichPolicy
      */
     public function restore(User $user, Sandwich $sandwich)
     {
-        //
+        return in_array($user->role, array('admin'));
     }
 
     /**
@@ -89,6 +89,6 @@ class SandwichPolicy
      */
     public function forceDelete(User $user, Sandwich $sandwich)
     {
-        //
+        return in_array($user->role, array('admin'));
     }
 }
