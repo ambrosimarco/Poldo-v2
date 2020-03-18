@@ -30,7 +30,7 @@
                 </div>
             </div>
             <hr>
-
+    
             @foreach($sandwiches as $sandwich => $attributes)
                 @php
                 $recipe = "";

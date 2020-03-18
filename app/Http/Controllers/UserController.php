@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Sandwich;
+use App\User;
 
-class SandwichController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,21 +14,9 @@ class SandwichController extends Controller
      */
     public function index()
     {
-        $sandwiches = Sandwich::all();
+        $users = User::all();
 
-        return view('/sandwiches/view')->with(compact('sandwiches'));
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index_api()
-    {
-        $sandwiches = Sandwich::all();
-
-        return $sandwiches;
+        return view('/users/view')->with(compact('users'));
     }
 
     /**

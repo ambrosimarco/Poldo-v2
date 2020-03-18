@@ -2,7 +2,7 @@
 
 @section('content')
 
-        <!-- Container with the list of sandwiches -->
+        <!-- Container with the list of users -->
         <div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
     
             <!-- Three main buttons -->
@@ -30,28 +30,13 @@
                 </div>
             </div>
             <hr>
-
-            @foreach($sandwiches as $sandwich => $attributes)
-                @php
-                $recipe = "";
-                @endphp
-                @foreach($attributes->ingredients as $ingredient)
-                    @php
-                    $recipe = $recipe.$ingredient->name;
-                    @endphp
-                    @if (!$loop->last)
-                        @php
-                        $recipe = $recipe.", ";
-                        @endphp
-                    @endif
-                @endforeach
-
+    
+            @foreach($users as $user => $attributes)
                 <div class="media p-1">
                     <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
                     <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
-                    <h4 class="media-heading">{{$attributes->name}}: {{$attributes->price}}€</h4>
+                    <h4 class="media-heading">{{$attributes->name}}</h4>
                         <div class="input-group">
-                            <input disabled value="{{$recipe}}" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
                                 <button type="button" class="btn btn-danger"><i class="fa fa-minus"></i></button>

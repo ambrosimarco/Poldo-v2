@@ -6,7 +6,7 @@ use App\Sandwich;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class SandwichPolicies
+class SandwichPolicy
 {
     use HandlesAuthorization;
 

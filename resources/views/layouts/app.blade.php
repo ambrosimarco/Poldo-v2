@@ -73,6 +73,15 @@
                                 </li>
                             @endif
                         @else
+                            @can('view-any', App\User::class)
+                            <li>
+                                <a class="nav-link" href="/users">Gestione degli account</a>    
+                            </li>
+                            @endcan
+                            @can('view-any', App\Sandwich::class)
+                                <a class="nav-link" href="/sandwiches">Panini</a>
+                            @endcan
+                                <a class="nav-link" href="#">Impostazioni</a>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
