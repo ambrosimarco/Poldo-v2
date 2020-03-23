@@ -36,7 +36,7 @@ class HomeController extends Controller
         return view('contacts');
     }
 
-    public function settings(){
+    public function settings(){  
         return view('settings/index');        
     }
 }

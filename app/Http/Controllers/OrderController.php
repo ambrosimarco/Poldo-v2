@@ -43,7 +43,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\OrderRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store_api(OrderRequest $request)
@@ -128,6 +128,50 @@ class OrderController extends Controller
      */
     public function destroy(order $order)
     {
-        //
+        // Attenzione: cancellazione permanente!
+        
+    }
+    
+    /**
+    * Remove the specified resource from storage.
+    *
+    * @param  \Illuminate\Http\OrderRequest  $request
+    * @return \Illuminate\Http\Response
+    */
+    public function destroy_api(OrderRequest $request)
+    {
+        // Attenzione: cancellazione permanente!
+
+        if($sandwich_obj = \App\Sandwich::findOrFail(3)){
+            $price = $sandwich_obj->price;
+        }else{
+            return ['success' => false, 'message' => "Errore nell'ordinazione"];
+        }
+
+        // Check if the sandwich was already ordered by the school class
+        // in the same day.            
+        $order = \DB::table('orders')->where('user_id', '=', 4)
+                                    ->where('sandwich_id', '=', 3)
+                                    ->whereDate('created_at', '=', Carbon::today()->toDateString())
+                                    ->whereNull('deleted_at');
+        if($order->exists()){
+            $times = ($order->select('times')->pluck('times')[0]);
+            if($times > 1){
+                $order->updated_at = Carbon::now(); 
+                $order->update(['times' => $times - 1]);
+                return ['success' => true, 'message' => 'Diminuzione effettuata.'];   
+            }else{
+                try {
+                    $order->delete();
+                    return ['success' => true, 'message' => 'Rimozione effettuata.'];
+
+                } catch (\Throwable $th) {
+                    return ['success' => false, 'message' => $th->getMessage()];
+            }
+        }
+        // Otherwise
+        }else{
+            return ['success' => false, 'message' => 'Panino non trovato.'];
+        }      
     }
 }

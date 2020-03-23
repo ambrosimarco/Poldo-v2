@@ -49,7 +49,7 @@ class SandwichController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // E' NECESSARIO METTERE IL SITO IN MANUTENZIONE?
     }
 
     /**
@@ -71,7 +71,8 @@ class SandwichController extends Controller
      */
     public function edit($id)
     {
-        //
+        // E' NECESSARIO METTERE IL SITO IN MANUTENZIONE
+        // BISOGNA ANCHE AGGIORNARE OGNI RECORD DI QUEL PANINO NEL GIORNO ATTUALE NELLA TABELLA DEGLI ORDINI
     }
 
     /**
@@ -94,6 +95,6 @@ class SandwichController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // E' NECESSARIO METTERE IL SITO IN MANUTENZIONE
     }
 }

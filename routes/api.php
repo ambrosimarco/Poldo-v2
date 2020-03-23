@@ -21,4 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 */
 Route::put('/order', 'OrderController@store_api');
+Route::delete('/order', 'OrderController@destroy_api');
 Route::get('/aaaa', 'SandwichController@index_api');
