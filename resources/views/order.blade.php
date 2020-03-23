@@ -124,15 +124,12 @@
                 $(button).on('click', function() {
                     var sandwich_id = $($(this).parent().parent()[0]).find("input")[0].value;
                     var price = $(this).parent().parent().parent();
-                    //console.log(sandwich_id.value);
-                    console.log(sandwich_id);   
                     $.ajax({  
                         type: "POST",
                         url: "/api/order",  
                         data: { 
                                 user_id: {{ Auth::user()->id }},
-                                sandwich_id: 2,
-                                sandwich_name: "Prova",
+                                sandwich_id: 3,
                                 _token: '{{csrf_token()}}',
                                 _method: 'PUT'
                         },

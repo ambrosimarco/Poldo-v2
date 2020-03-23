@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('price', 4, 2);  //Backup del prezzo nel caso in cui venisse cambiato in un secondo momento nel database
             $table->integer('times')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
             $table->primary(array('user_id', 'sandwich_id'));
             $table->unique(['user_id', 'sandwich_id']);
             $table->foreign('user_id')->references('id')->on('users');

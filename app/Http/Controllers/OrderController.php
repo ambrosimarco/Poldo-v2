@@ -55,18 +55,19 @@ class OrderController extends Controller
         }
 
         // Check if the sandwich was already ordered by the school class
-        // in the same day.
-        try {
-            
-            $order = \DB::table('orders')->where('user_id', '=', $request->get('user_id'))
-                                ->where('sandwich_id', '=', $request->get('sandwich_id'))
-                                ->whereDate('created_at', '=', Carbon::today()->toDateString())->update(['times' => '5']);
-    
-            return ['success' => true, 'message' => 'rft'];   
-        //}catch(\Throwable $th){return ['success' => true, 'message' => $th->getMessage()];   }
-
+        // in the same day.            
+        $order = \DB::table('orders')->where('user_id', '=', $request->get('user_id'))
+                                    ->where('sandwich_id', '=', $request->get('sandwich_id'))
+                                    ->whereDate('created_at', '=', Carbon::today()->toDateString())
+                                    ->whereNull('deleted_at');
+        if($order->exists()){
+            $times = ($order->select('times')->pluck('times')[0] + 1);
+            $order->updated_at = Carbon::now(); 
+            $order->update(['times' => $times]);
+            return ['success' => true, 'message' => 'Aggiunta effettuata.'];   
+        
         // Otherwise
-        }catch(\Throwable $th){
+        }else{
             try {
                 $price = Sandwich::findOrFail($request->get('sandwich_id'))->price;
                 \DB::table('orders')->insert([
@@ -74,11 +75,13 @@ class OrderController extends Controller
                     'sandwich_id' => $request->get('sandwich_id'),
                     'price' => $price,
                     'times' => '1',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
                 ]);
                 return ['success' => true, 'message' => 'Nuovo ordine creato'];
 
             } catch (\Throwable $th) {
-                return ['success' => false, 'message' => 'Creazione ordine fallita'];
+                return ['success' => false, 'message' => $th->getMessage()];
             }
         }      
     }

@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->enum('role', ['class', 'admin', 'observer'])->default('class');	
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         App\User::create([
