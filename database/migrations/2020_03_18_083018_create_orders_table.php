@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->integer('times')->unsigned();
             $table->timestamps();
             $table->primary(array('user_id', 'sandwich_id'));
+            $table->unique(['user_id', 'sandwich_id']);
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('sandwich_id')->references('id')->on('sandwiches');
         });

@@ -18,6 +18,7 @@ Auth::routes();
 Route::get('/', 'HomeController@order')->name('order');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('users', 'UserController');
+Route::post('/sandwiches/{id}');
 Route::resource('sandwiches', 'SandwichController');
 Route::get('/contacts', 'HomeController@contacts')->name('contacts');
 Route::get('/settings', 'HomeController@settings')->name('settings');

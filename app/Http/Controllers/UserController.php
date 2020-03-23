@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\UserRequest;
+use App\Http\Requests\UserRequest;
 use App\User;
 
 class UserController extends Controller
@@ -84,12 +84,33 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
+        dd();
         $user = User::findOrFail($id);
         $user->name =  $request->get('name');
         $user->email = $request->get('email');
         $user->isAdmin = $request->get('isAdmin');
         $user->canOrder = $request->get('isCustomer');
         $user->save();
+        return redirectTo("google.com");
+        return redirect()->back()->withSuccess('Utente aggiornato.');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\UserRequest $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update_api(UserRequest $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->name =  $request->get('name');
+        $user->email = $request->get('email');
+        $user->isAdmin = $request->get('isAdmin');
+        $user->canOrder = $request->get('isCustomer');
+        $user->save();
+        return response()->json(['success' => $result], 200);
     }
 
     /**

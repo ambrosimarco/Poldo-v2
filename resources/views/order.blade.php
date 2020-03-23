@@ -51,15 +51,20 @@
                     <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
                     <h4 class="media-heading">{{$attributes->name}}: {{$attributes->price}}€</h4>
                         <div class="input-group">
+                            <input hidden class="sandwich_id" name="sandwich_id" value="{{$attributes->id}}">
+                            <input hidden class="price" name="price" value="{{$attributes->price}}">
                             <input disabled value="{{$recipe}}" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
-                                <button type="button" class="btn btn-danger"><i class="fa fa-minus"></i></button>
+                                <button class="plus btn btn-success" type="button" onclick="addSandwich(this)"><i class="fa fa-plus"></i></button>
+                                <button class="minus btn btn-danger" type="button"><i class="fa fa-minus"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
+
+
+
 
         <!-- Scroll-back button -->
         <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button>
@@ -102,4 +107,60 @@
         @else
         <h1>Benvenuto, {{ Auth::user()->name }}!</h1>
         @endcan
+        
+        <script type="application/javascript">
+            $(document).ready(function(){
+                /*$('.plus').on('click', function() {
+                    var sandwich_id = $($(this).parent().parent()[0]).find("input")[0];
+                    var price = $(this);
+                    //console.log(sandwich_id.value);
+                    console.log(price);   
+                });*/
+                console.log('dgsad');
+                
+            });
+
+            function addSandwich(button){
+                $(button).on('click', function() {
+                    var sandwich_id = $($(this).parent().parent()[0]).find("input")[0].value;
+                    var price = $(this).parent().parent().parent();
+                    //console.log(sandwich_id.value);
+                    console.log(sandwich_id);   
+                    $.ajax({  
+                        type: "POST",
+                        url: "/api/order",  
+                        data: { 
+                                user_id: {{ Auth::user()->id }},
+                                sandwich_id: 2,
+                                sandwich_name: "Prova",
+                                _token: '{{csrf_token()}}',
+                                _method: 'PUT'
+                        },
+                        dataType: "json",
+                        success: function(risposta) {  
+                            alert(risposta.message);
+                        },
+                        error: function(xhr, status, error) {
+                        alert(xhr.responseText);
+                        }
+                    }); 
+                });
+            }
+
+                    
+                    {{-- return jQuery.ajax({
+                        type: 'POST',
+                        url: "/sandwiches/{{$attributes->id}}",
+                        data:{
+                            user_id: {{ Auth::user()->id }}
+                            sandwich_id: sandwich_id,
+                            price: this.parent().parent().$('td[name ="tcol1"]')
+                            name: $('#name').value,
+                        },
+                        success: function(data)
+                        {
+
+                        } --}}
+
+        </script>
 @endsection

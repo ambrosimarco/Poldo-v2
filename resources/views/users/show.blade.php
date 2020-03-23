@@ -2,6 +2,8 @@
 
 @section('content')
 
+<form action="{{ $user->id }}" method="POST">
+        {{ method_field('PUT') }}
         <h1>Nome:</h1>
         <input class="field" value="{{$user->name}}" name="name">
         <h1>E-mail:</h1>
@@ -12,42 +14,48 @@
             <option value="class" {{ $user->role=='class' ? 'selected' : ''}}>Classe</option> 
             <option value="observer" {{$user->role=='observer' ? 'selected' : ''}}>Osservatore</option> --}}
         </select>
-        
+        <input type="hidden" value="{{ csrf_token() }}" name="_token">
         @can('update', App\User::class)
         <br />
         <div id="buttons-container">
             <button id="edit" class="btn btn-primary mt-3">Modifica</button>
+            <button id="send" type="submit" class="btn btn-primary mt-3">Invia</button>
         </div>
         @endcan
 
+        </form>
+
         <script type="application/javascript" >
             $(document).ready(function(){
+            {{--
             
                 $('.field').prop("disabled", true);
             
                 $('#edit').on('click', function() {
-                    if (!this.hasAttribute("disabled")) {
+                    var firstInput = $(".field")[0];                    
+                    if (firstInput.hasAttribute("disabled")) {
                         $('.field').removeAttr("disabled");                    
-                        var sendButton = '<button id="send" class="btn btn-primary mt-3">Invia</button>';
+                   var sendButton = '<button id="send" type="submit" class="btn btn-primary mt-3">Invia</button>';
                         $('#buttons-container').append(sendButton);
+            --}}
                     }
                 })
-                
-                $('#send').on('click', function() {
-                    $.ajax({  
+
+            {{--
+                $.ajax({  
                         type: "PUT",
                         url: "/users/{{$user->name}}",  
-                        data: "name=" + $('#name').value + "&email=" + $('#email').value
-                                      + "&role=" + $('#role').value,
+                        data: { id: {{$user->id}}, name: $('#name').value, email: $('#email').value,
+                                role: $('#role').value, _token: '{{csrf_token()}}'},
                         dataType: "html",
                         success: function(risposta) {  
                             alert(risposta);
                         },
                         error: function(){
-                            alert("Chiamata fallita!");
+                            alert("Chiamata fallita!");     
                         } 
                     }); 
-                })
+            --}}
              });
         </script>
 
@@ -60,7 +68,7 @@
         <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script type="application/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-        <script type="application/javascript" src="js/bootstrap-better-nav.js"></script>
+        <script type="application/javascript" src="/js/bootstrap-better-nav.js"></script>
     
         <script  type="application/javascript">
             //Get the button
