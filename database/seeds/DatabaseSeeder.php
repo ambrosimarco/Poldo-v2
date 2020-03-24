@@ -32,9 +32,9 @@ class DatabaseSeeder extends Seeder
         'role' => 'admin',
         ]);
       DB::table('users')->insert([
-        'name' => 'user',
-        'email' => 'user@user.com',
-        'password' => Hash::make('user'),
+        'name' => 'bar',
+        'email' => 'bar@bar.com',
+        'password' => Hash::make('bar'),
         'role' => 'observer',
         ]);
       DB::table('users')->insert([
@@ -50,7 +50,6 @@ class DatabaseSeeder extends Seeder
         'name' => 'Piadina al cotto',
         'price' => '2.00',
         'description' => 'Piadina al cotto',
-        'created_at' => Carbon::now()
       ]);
       DB::table('sandwiches')->insert([
         'name' => 'Maxi pizza',

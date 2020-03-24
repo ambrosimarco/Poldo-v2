@@ -73,16 +73,33 @@
                                 </li>
                             @endif
                         @else
+                            @if (Auth::user()->role == 'class')
+                                <li>
+                                    <a class="nav-link" href="/">Ordina</a>    
+                                </li>
+                            @endif
                             @can('view-any', App\User::class)
                             <li>
-                                <a class="nav-link" href="/users">Gestione degli account</a>    
+                                <a class="nav-link" href="/users">Gestione utenti</a>    
                             </li>
+                            @elsecan('update', Auth::user())
+                                <a class="nav-link" href="/users/{{ Auth::user()->id }}">Gestione account</a>
                             @endcan
-                            @can('update', App\Sandwich::class)
-                                <a class="nav-link" href="/sandwiches">Gestione Panini</a>
+                            @can('view-any', App\Order::class)
+                                <a class="nav-link" href="/orders">Ordinazioni</a>
+                            @endcan 
+                            @can('edit', App\Sandwich::class)
+                                <a class="nav-link" href="/sandwiches">Listino</a>
+                            @endcan
+                            @can('view-any', App\Order::class)
+                              <a class="nav-link" href="/print">Stampa liste</a>
                             @endcan
                             <li>
-                                <a class="nav-link" href="/settings">Impostazioni</a>
+                                @if (Auth::user()->role == 'admin')
+                                    <a class="nav-link" href="/settings">Gestione Poldo</a>                            
+                                @else
+                                    <a class="nav-link" href="/settings">Gestione Account</a>                            
+                                @endif 
                             </li>
                             <li>
                             <a class="nav-link" href="/contacts">Contatti</a>

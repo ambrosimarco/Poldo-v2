@@ -34,14 +34,14 @@ class SandwichPolicy
     }
 
     /**
-     * Determine whether the user can create sandwiches.
+     * Determine whether the user can edit sandwiches.
      *
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function edit(User $user)
     {
-        return in_array($user->role, array('admin'));
+        return in_array($user->role, array('admin', 'observer'));
     }
 
     /**
@@ -52,18 +52,6 @@ class SandwichPolicy
      * @return mixed
      */
     public function update(User $user)
-    {
-        return in_array($user->role, array('admin'));
-    }
-
-    /**
-     * Determine whether the user can delete the sandwich.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Sandwich  $sandwich
-     * @return mixed
-     */
-    public function delete(User $user, Sandwich $sandwich)
     {
         return in_array($user->role, array('admin'));
     }

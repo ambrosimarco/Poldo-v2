@@ -16,7 +16,7 @@ class SandwichController extends Controller
     {
         $sandwiches = Sandwich::all();
 
-        return view('/sandwiches/view')->with(compact('sandwiches'));
+        return view('/sandwiches/index')->with(compact('sandwiches'));
     }
 
     /**

@@ -2,7 +2,9 @@
 
 @section('content')
 
-        <!-- Container with the list of sandwiches -->
+
+        {{dd($customers)}}
+        <!-- Container with the list of users -->
         <div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
     
             <!-- Three main buttons -->
@@ -30,36 +32,45 @@
                 </div>
             </div>
             <hr>
-    
-            @foreach($sandwiches as $sandwich => $attributes)
-                @php
-                $recipe = "";
-                @endphp
-                @foreach($attributes->ingredients as $ingredient)
-                    @php
-                    $recipe = $recipe.$ingredient->name;
-                    @endphp
-                    @if (!$loop->last)
-                        @php
-                        $recipe = $recipe.", ";
-                        @endphp
-                    @endif
-                @endforeach
 
+            <h1>Liste di oggi</h1>
+            <br />
+            @foreach($customers as $customer => $attributes)
                 <div class="media p-1">
                     <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
                     <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
-                    <h4 class="media-heading">{{$attributes->name}}: {{$attributes->price}}€</h4>
+                    <h4 class="media-heading">{{$attributes->name}}</h4>
                         <div class="input-group">
-                            <input disabled value="{{$recipe}}" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
-                                <button type="button" class="btn btn-danger"><i class="fa fa-minus"></i></button>
+                            <button type="button" class="btn btn-primary mr-1" onclick="getList(this)">Vedi</a></button>
+                                <button type="button" class="btn btn-primary mr-1">Cancella</button>
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
+
+        <script type="application/javascript">
+            function getList(button){
+                $(button).on('click', function() {
+                    $.ajax({  
+                        type: "GET",
+                        url: "/api/order/list/4",  
+                        dataType: "json",
+                        success: function(risposta) {  
+                            $.each(risposta, function(index, element) {
+                                alert("Nome: " + element.name 
+                                    + "\nPrezzo: " + element.pivot.price 
+                                    + "\nQuantità: " + element.pivot.times); 
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                        alert(xhr.responseText);
+                        }
+                    }); 
+                });
+            }
+        </script>
 
         <!-- Scroll-back button -->
         <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button>

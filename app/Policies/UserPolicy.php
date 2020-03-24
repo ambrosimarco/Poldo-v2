@@ -3,11 +3,20 @@
 namespace App\Policies;
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
 {
     use HandlesAuthorization;
+
+    public function changePassword(User $user){
+        if (!($user->role == 'admin')) {
+            return Auth::user()->role == 'admin' || Auth::user()->id == $user->id;
+        }else{
+            return Auth::user()->id == $user->id;
+        }
+    }
 
     /**
      * Determine whether the user can view any models.
@@ -27,7 +36,7 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function view(User $user, User $model)
+    public function view(User $user)
     {
         return in_array($user->role, array('admin'));
     }

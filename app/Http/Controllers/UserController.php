@@ -14,8 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('view-any', User::class);
         $users = User::all();
-
         return view('/users/index')->with(compact('users'));
     }
 
@@ -26,8 +26,8 @@ class UserController extends Controller
      */
     public function index_api()
     {
+        $this->authorize('view-any', User::class);
         $users = User::all();
-
         return $users;
     }
 
@@ -61,18 +61,21 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
+        $this->authorize('view', $user);
         return view('/users/show')->with(compact('user'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the password.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editPassword($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $this->authorize('change-password', $user);
+        return view('/users/change.password');
     }
 
     /**
@@ -84,7 +87,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-        dd();
+        $this->authorize('update', User::class);
         $user = User::findOrFail($id);
         $user->name =  $request->get('name');
         $user->email = $request->get('email');

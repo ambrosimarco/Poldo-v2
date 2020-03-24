@@ -22,3 +22,5 @@ Route::post('/sandwiches/{id}');
 Route::resource('sandwiches', 'SandwichController');
 Route::get('/contacts', 'HomeController@contacts')->name('contacts');
 Route::get('/settings', 'HomeController@settings')->name('settings');
+Route::get('/orders', 'OrderController@index_customers');
+Route::get('/print', 'HomeController@print_index');

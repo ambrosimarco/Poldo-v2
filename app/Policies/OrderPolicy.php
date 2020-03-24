@@ -23,7 +23,7 @@ class OrderPolicy
      */
     public function viewAny(User $user)
     {
-        return in_array($user->role, array('class', 'admin', 'observer'));
+        return in_array($user->role, array('admin', 'observer'));
     }
 
     /**

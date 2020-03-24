@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-        
-        @can('order', App\Order::class)
+
         <!-- Container with the list of sandwiches -->
         <div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
+    
             <!-- Three main buttons -->
             <div class="btn-toolbar" role="toolbar">
                 <div class="dropdown">
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <hr>
-
+    
             @foreach($sandwiches as $sandwich => $attributes)
                 @php
                 $recipe = "";
@@ -51,20 +51,13 @@
                     <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
                     <h4 class="media-heading">{{$attributes->name}}: {{$attributes->price}}€</h4>
                         <div class="input-group">
-                            <input hidden class="sandwich_id" name="sandwich_id" value="{{$attributes->id}}">
-                            <input hidden class="price" name="price" value="{{$attributes->price}}">
                             <input disabled value="{{$recipe}}" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="plus btn btn-success" type="button" onclick="addSandwich(this)"><i class="fa fa-plus"></i></button>
-                                <button class="minus btn btn-danger" type="button" onclick="removeSandwich(this)"><i class="fa fa-minus"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
-
-
-
 
         <!-- Scroll-back button -->
         <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button>
@@ -104,59 +97,4 @@
     
         </script>
         </div>
-        @else
-        <h1>Benvenuto, {{ Auth::user()->name }}!</h1>
-        @endcan
-        
-        <script type="application/javascript">
-
-            function addSandwich(button){
-                $(button).on('click', function() {
-                    var sandwich_id = $($(this).parent().parent()[0]).find("input")[0].value;
-                    var price = $(this).parent().parent().parent();
-                    $.ajax({  
-                        type: "POST",
-                        url: "/api/order",  
-                        data: { 
-                                user_id: {{ Auth::user()->id }},
-                                sandwich_id: 3,
-                                _token: '{{csrf_token()}}',
-                                _method: 'PUT'
-                        },
-                        dataType: "json",
-                        success: function(risposta) {  
-                            alert(risposta.message);
-                        },
-                        error: function(xhr, status, error) {
-                        alert(xhr.responseText);
-                        }
-                    }); 
-                });
-            }
-
-            function removeSandwich(button){
-                $(button).on('click', function() {
-                    var sandwich_id = $($(this).parent().parent()[0]).find("input")[0].value;
-                    var price = $(this).parent().parent().parent();
-                    $.ajax({  
-                        type: "POST",
-                        url: "/api/order",  
-                        data: { 
-                                user_id: {{ Auth::user()->id }},
-                                sandwich_id: 3,
-                                _token: '{{csrf_token()}}',
-                                _method: 'DELETE'
-                        },
-                        dataType: "json",
-                        success: function(risposta) {  
-                            alert(risposta.message);
-                        },
-                        error: function(xhr, status, error) {
-                        alert(xhr.responseText);
-                        }
-                    }); 
-                });
-            }       
-
-        </script>
 @endsection

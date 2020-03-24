@@ -38,6 +38,7 @@ class User extends Authenticatable
     ];
 
     public function sandwiches(){
-        return $this->belongsToMany('App\Sandwich', 'orders');
+        return $this->belongsToMany('App\Sandwich', 'orders')
+        ->withPivot('price', 'times', 'created_at', 'updated_at', 'deleted_at'); // Otherwise, default attributes of the pivot objects are just the two entities' IDs.
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Sandwich;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
@@ -16,7 +17,26 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = [];
+        foreach(User::all() as $user){
+            foreach(User::findOrFail($user->id)->sandwiches()->get() as $sandwich){
+                array_push($orders, $sandwich);        
+            }
+        }
+        return view('/orders/index')->with(compact('orders'));
+    }
+
+    public function index_customers()
+    {
+        $customers = [];
+        foreach(Sandwich::all() as $sandwich){    // Get all available sandwiches
+            foreach(Sandwich::findOrFail($sandwich->id)->users()->get() as $user){    // Get every order's customer
+                if()){   // Remove duplicate customers
+                    array_push($customers, $user);    // Add the customer to the array
+                }      
+            }
+        }
+        return view('/orders/index')->with(compact('customers'));
     }
 
     /**
@@ -92,6 +112,22 @@ class OrderController extends Controller
      * @param  \App\order  $order
      * @return \Illuminate\Http\Response
      */
+    public function show_list_api($id)
+    {
+        $list = [];
+        $user = User::findOrfail($id);
+        foreach($user->sandwiches()->get() as $sandwich){
+            array_push($list, $sandwich);        
+        }
+        return response()->json($list);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\order  $order
+     * @return \Illuminate\Http\Response
+     */
     public function show(order $order)
     {
         //
@@ -121,19 +157,48 @@ class OrderController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage (recoverable).
      *
      * @param  \App\order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(order $order)
+    public function soft_destroy_api(OrderRequest $request)
     {
-        // Attenzione: cancellazione permanente!
-        
+        if($sandwich_obj = \App\Sandwich::findOrFail(3)){
+            $price = $sandwich_obj->price;
+        }else{
+            return ['success' => false, 'message' => "Errore nell'ordinazione"];
+        }
+
+        // Check if the sandwich was already ordered by the school class
+        // in the same day.            
+        $order = \DB::table('orders')->where('user_id', '=', 4)
+                                    ->where('sandwich_id', '=', 3)
+                                    ->whereDate('created_at', '=', Carbon::today()->toDateString())
+                                    ->whereNull('deleted_at');
+        if($order->exists()){
+            $times = ($order->select('times')->pluck('times')[0]);
+            if($times > 1){
+                $order->updated_at = Carbon::now(); 
+                $order->update(['times' => $times - 1]);
+                return ['success' => true, 'message' => 'Diminuzione effettuata.'];   
+            }else{
+                try {
+                    $order->deleted_at = Carbon::now();
+                    return ['success' => true, 'message' => 'Rimozione effettuata.'];
+
+                } catch (\Throwable $th) {
+                    return ['success' => false, 'message' => $th->getMessage()];
+            }
+        }
+        // Otherwise
+        }else{
+            return ['success' => false, 'message' => 'Panino non trovato.'];
+        }    
     }
     
     /**
-    * Remove the specified resource from storage.
+    * Remove the specified resource from storage (not recoverable).
     *
     * @param  \Illuminate\Http\OrderRequest  $request
     * @return \Illuminate\Http\Response
@@ -163,7 +228,7 @@ class OrderController extends Controller
             }else{
                 try {
                     $order->delete();
-                    return ['success' => true, 'message' => 'Rimozione effettuata.'];
+                    return ['success' => true, 'message' => 'Rimozione permanente effettuata.'];
 
                 } catch (\Throwable $th) {
                     return ['success' => false, 'message' => $th->getMessage()];

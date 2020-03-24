@@ -20,6 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     //Route::put('user/{id}', 'UserController@update_api');
 });
 */
+Route::get('/order/list/{id}', 'OrderController@show_list_api');
 Route::put('/order', 'OrderController@store_api');
 Route::delete('/order', 'OrderController@destroy_api');
-Route::get('/aaaa', 'SandwichController@index_api');

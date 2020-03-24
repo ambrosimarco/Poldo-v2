@@ -39,4 +39,8 @@ class HomeController extends Controller
     public function settings(){  
         return view('settings/index');        
     }
+
+    public function print_index(){  
+        return view('print');        
+    }
 }
