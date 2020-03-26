@@ -87,6 +87,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
+        dd('update function');
         $this->authorize('update', User::class);
         $user = User::findOrFail($id);
         $user->name =  $request->get('name');
@@ -107,6 +108,7 @@ class UserController extends Controller
      */
     public function update_api(UserRequest $request, $id)
     {
+        $this->authorize('update', User::class);
         $user = User::findOrFail($id);
         $user->name =  $request->get('name');
         $user->email = $request->get('email');

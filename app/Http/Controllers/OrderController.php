@@ -28,15 +28,23 @@ class OrderController extends Controller
 
     public function index_customers()
     {
+        $dup_flag = false;
         $customers = [];
-        foreach(Sandwich::all() as $sandwich){    // Get all available sandwiches
+        foreach(Sandwich::all() as $sandwich){    // Get all existing sandwiches in the DB
             foreach(Sandwich::findOrFail($sandwich->id)->users()->get() as $user){    // Get every order's customer
-                if()){   // Remove duplicate customers
+                foreach($customers as $element){ // Cycle through the customers 
+                    if($element['id'] == $user['id']){   // Check for duplicate customers
+                        $dup_flag = true;   //Flag for duplicates
+                    }      
+                }
+                if(!$dup_flag){
                     array_push($customers, $user);    // Add the customer to the array
-                }      
+                }
+                $dup_flag = false;   // Reset the flag
             }
+
         }
-        return view('/orders/index')->with(compact('customers'));
+    return view('/orders/index')->with(compact('customers'));
     }
 
     /**

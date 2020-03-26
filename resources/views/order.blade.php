@@ -119,7 +119,7 @@
                         url: "/api/order",  
                         data: { 
                                 user_id: {{ Auth::user()->id }},
-                                sandwich_id: 3,
+                                sandwich_id: 2,
                                 _token: '{{csrf_token()}}',
                                 _method: 'PUT'
                         },

@@ -37,6 +37,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function canAdminEdit(){
+        return $this->role == 'admin';
+    }
+    
+    public function canBarEdit(){
+        return $this->role == 'observer';
+    }
+
     public function sandwiches(){
         return $this->belongsToMany('App\Sandwich', 'orders')
         ->withPivot('price', 'times', 'created_at', 'updated_at', 'deleted_at'); // Otherwise, default attributes of the pivot objects are just the two entities' IDs.

@@ -2,63 +2,33 @@
 
 @section('content')
 
-<form action="{{ $user->id }}" method="POST">
+<form id="form" action="{{ $user->id }}" method="POST">
         {{ method_field('PUT') }}
         <h1>Nome:</h1>
-        <input class="field" value="{{$user->name}}" name="name">
+        <input class="field" value="{{$user->name}}" id="name" name="name">
         <h1>E-mail:</h1>
-        <input class="field" value="{{$user->email}}" name="email">
+        <input class="field" value="{{$user->email}}" id="email" name="email">
         <h1>Ruolo:</h1>
-        <select class="field" name="role">
+        <select class="field" id="role" name="role">
             <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Amministratore</option> 
             <option value="class" {{ $user->role=='class' ? 'selected' : ''}}>Classe</option> 
-            <option value="observer" {{$user->role=='observer' ? 'selected' : ''}}>Osservatore</option> --}}
+            <option value="observer" {{$user->role=='observer' ? 'selected' : ''}}>Osservatore</option>
         </select>
         <input type="hidden" value="{{ csrf_token() }}" name="_token">
         @can('update', App\User::class)
         <br />
         <div id="buttons-container">
-            <button id="edit" class="btn btn-primary mt-3">Modifica</button>
+            <button id="edit" type="button" onclick="editForm()" class="btn btn-primary mt-3">Modifica</button>
             <button id="send" type="submit" class="btn btn-primary mt-3">Invia</button>
         </div>
         @endcan
 
-        </form>
-
-        <script type="application/javascript" >
-            $(document).ready(function(){
-            {{--
-            
-                $('.field').prop("disabled", true);
-            
-                $('#edit').on('click', function() {
-                    var firstInput = $(".field")[0];                    
-                    if (firstInput.hasAttribute("disabled")) {
-                        $('.field').removeAttr("disabled");                    
-                   var sendButton = '<button id="send" type="submit" class="btn btn-primary mt-3">Invia</button>';
-                        $('#buttons-container').append(sendButton);
-            --}}
-                    }
-                })
-
-            {{--
-                $.ajax({  
-                        type: "PUT",
-                        url: "/users/{{$user->name}}",  
-                        data: { id: {{$user->id}}, name: $('#name').value, email: $('#email').value,
-                                role: $('#role').value, _token: '{{csrf_token()}}'},
-                        dataType: "html",
-                        success: function(risposta) {  
-                            alert(risposta);
-                        },
-                        error: function(){
-                            alert("Chiamata fallita!");     
-                        } 
-                    }); 
-            --}}
-             });
+        <script  type="application/javascript">
+            function editForm(){
+                
+            }
         </script>
-
+</form>
     
         <!-- Footer -->
         <footer class="navbar navbar-light bg-light">

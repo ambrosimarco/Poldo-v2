@@ -5,6 +5,35 @@
         <!-- Container with the list of sandwiches -->
         <div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
     
+        @if(Auth::user()->canAdminEdit())
+        <form action="">
+          <label>
+            <input type="checkbox" {{ ($settings->online == '1') ? 'checked' : ''}}>
+            <span>Online</span>
+          </label>
+          <br />
+          <label>
+            <input type="checkbox" {{ ($settings->debug_mode == '1') ? 'checked' : ''}}>
+            <span>Modalità debug</span>
+          </label>
+          <br />
+          <label>
+          <input class="input-group-text" type="text" value="{{$settings->order_time_limit}}">
+            <span>Orario chiusura liste</span>
+          </label>
+          <label>
+            <input class="input-group-text" type="text" value="{{$settings->retire_time}}">
+              <span>Orario ritiro liste</span>
+          </label>
+          <input class="input-group-text" type="text" value="{{$settings->offline_message}}">
+          <span>Motivo sistema offline</span>
+          </label>
+          <br />
+          <br />
+          <button class="btn btn-primary" type="submit">Invia</button>
+        </form>  
+        @endif
+        <br />
         
 
         <!-- Scroll-back button -->

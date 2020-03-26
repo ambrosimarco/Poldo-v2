@@ -125,5 +125,11 @@ class DatabaseSeeder extends Seeder
         'sandwich_id' => $focaccia->id,
         'ingredient_id' => $prosciutto_cotto->id,
       ]);
+
+      // Settings
+
+      DB::table('system_settings')->insert([
+        'id' => '1',
+      ]);
     }
 }

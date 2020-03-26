@@ -2,7 +2,25 @@
 
 @section('content')
 
-        Change password
+        <h1>Cambio password</h1>
+        <br />
+
+        <form action="">
+            <label>
+                <input class="input-group-text" type="text">
+                <span>Vecchia password</span>
+            </label>
+            <label>
+                <input class="input-group-text" type="text">
+                <span>Nuova password</span>
+            </label>
+                <input class="input-group-text" type="text" >
+                <span>Reinserisci la password</span>
+            </label>
+            <br />
+            <br />
+            <button class="btn btn-primary" type="submit">Invia</button>
+          </form>  
 
         <!-- Scroll-back button -->
         <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button>

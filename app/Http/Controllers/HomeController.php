@@ -36,10 +36,6 @@ class HomeController extends Controller
         return view('contacts');
     }
 
-    public function settings(){  
-        return view('settings/index');        
-    }
-
     public function print_index(){  
         return view('print');        
     }

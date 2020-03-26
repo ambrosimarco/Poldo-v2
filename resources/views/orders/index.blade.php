@@ -3,7 +3,6 @@
 @section('content')
 
 
-        {{dd($customers)}}
         <!-- Container with the list of users -->
         <div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
     
