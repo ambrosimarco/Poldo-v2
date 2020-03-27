@@ -2,8 +2,8 @@
 
 @section('content')
 
-<form id="form" action="{{ $user->id }}" method="POST">
-        {{ method_field('PUT') }}
+    <form id="form" action="{{ route('users.update', $user->id) }}" method="POST">
+        @method('PATCH')
         <h1>Nome:</h1>
         <input class="field" value="{{$user->name}}" id="name" name="name">
         <h1>E-mail:</h1>
@@ -14,7 +14,7 @@
             <option value="class" {{ $user->role=='class' ? 'selected' : ''}}>Classe</option> 
             <option value="observer" {{$user->role=='observer' ? 'selected' : ''}}>Osservatore</option>
         </select>
-        <input type="hidden" value="{{ csrf_token() }}" name="_token">
+        <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
         @can('update', App\User::class)
         <br />
         <div id="buttons-container">
@@ -22,13 +22,14 @@
             <button id="send" type="submit" class="btn btn-primary mt-3">Invia</button>
         </div>
         @endcan
+    </form>
 
         <script  type="application/javascript">
             function editForm(){
                 
             }
         </script>
-</form>
+
     
         <!-- Footer -->
         <footer class="navbar navbar-light bg-light">
@@ -64,5 +65,4 @@
             }
     
         </script>
-        </div>
 @endsection

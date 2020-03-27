@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use Illuminate\Http\Request;
 use App\User;
 
 class UserController extends Controller
@@ -87,16 +88,13 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-        dd('update function');
         $this->authorize('update', User::class);
         $user = User::findOrFail($id);
         $user->name =  $request->get('name');
         $user->email = $request->get('email');
-        $user->isAdmin = $request->get('isAdmin');
-        $user->canOrder = $request->get('isCustomer');
+        $user->role = $request->get('role');
         $user->save();
-        return redirectTo("google.com");
-        return redirect()->back()->withSuccess('Utente aggiornato.');
+        return redirect('users')->withSuccess('Utente aggiornato.');
     }
 
     /**
@@ -112,8 +110,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->name =  $request->get('name');
         $user->email = $request->get('email');
-        $user->isAdmin = $request->get('isAdmin');
-        $user->canOrder = $request->get('isCustomer');
+        $user->role = $request->get('role');
         $user->save();
         return response()->json(['success' => $result], 200);
     }
