@@ -18,7 +18,8 @@ class CreateSandwichesTable extends Migration
             $table->string('name', 100)->unique();
             $table->decimal('price', 4, 2);
             $table->string('description', 255);
-            $table->timestamps();
+            $table->timestamps();            
+            $table->softDeletes();
         });
     }
 

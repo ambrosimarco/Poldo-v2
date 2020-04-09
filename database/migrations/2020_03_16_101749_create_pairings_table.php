@@ -20,6 +20,7 @@ class CreatePairingsTable extends Migration
             $table->primary(array('ingredient_id', 'sandwich_id'));
             $table->foreign('ingredient_id')->references('id')->on('ingredients');
             $table->foreign('sandwich_id')->references('id')->on('sandwiches');
+            $table->softDeletes();
         });
     }
 

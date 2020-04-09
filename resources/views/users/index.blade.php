@@ -39,12 +39,64 @@
                         <div class="input-group">
                             <div class="input-group-append">
                             <button type="button" class="btn btn-primary mr-1"><a href="/users/{{$attributes->id}}">Vedi</a></button>
-                                <button type="button" class="btn btn-primary mr-1">Cancella</button>
+                            <button type="button" class="btn btn-primary mr-1" onclick="deleteUser()">Cancella</button>
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
+
+
+
+            <button type="button" class="btn btn-primary mr-1" onclick="createUser()">Crea l'utente 5bi</button>
+
+            
+        <script type="application/javascript">  
+            function createUser(button){
+                var name = '5bi';
+                var email = '5bi@5bi.com';
+                var password = '5bi';
+                var role = 'class';
+                $.ajax({  
+                    type: "POST",                    
+                    url: "/api/users",  
+                    data: { 
+                        name: name,
+                        email: email,
+                        password: password,
+                        role: role,
+                        _token: '{{csrf_token()}}',
+                    },
+                    dataType: "json",
+                    success: function(risposta) {  
+                        alert(risposta.message);
+                    },
+                    error: function(xhr, status, error) {
+                    alert(xhr.responseText);
+                    }
+                }); 
+            }       
+
+            function deleteUser(button){
+                var user_id = 4;
+                $.ajax({  
+                    type: "POST",                    
+                    url: "/api/users/" + user_id,  
+                    data: { 
+                            user_id: 3,
+                            _token: '{{csrf_token()}}',
+                            _method: 'DELETE'
+                    },
+                    dataType: "json",
+                    success: function(risposta) {  
+                        alert(risposta.message);
+                    },
+                    error: function(xhr, status, error) {
+                    alert(xhr.responseText);
+                    }
+                }); 
+            }       
+        </script>
 
         <!-- Scroll-back button -->
         <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button>

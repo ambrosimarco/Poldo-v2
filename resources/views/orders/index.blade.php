@@ -42,7 +42,6 @@
                         <div class="input-group">
                             <div class="input-group-append">
                             <button type="button" class="btn btn-primary mr-1" onclick="getList(this)">Vedi</a></button>
-                                <button type="button" class="btn btn-primary mr-1">Cancella</button>
                             </div>
                         </div>
                     </div>

@@ -54,10 +54,14 @@
                             <input disabled value="{{$recipe}}" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                             </div>
+                            <button type="button" onclick="deleteSandwich()" class="btn btn-primary mr-1">Cancella</button>
                         </div>
                     </div>
                 </div>
             @endforeach
+
+            <button type="button" class="btn btn-primary mr-1" onclick="createSandwich()">Nuovo panino</button>
+
 
         <!-- Scroll-back button -->
         <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button>
@@ -72,6 +76,56 @@
         <script type="application/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <script type="application/javascript" src="js/bootstrap-better-nav.js"></script>
     
+
+
+        <script type="application/javascript">  
+            function createSandwich(button){
+                var name = 'Diablo';
+                var price = '2.00';
+                var description = 'Panino piccante';
+                var role = 'class';
+                $.ajax({  
+                    type: "POST",                    
+                    url: "/api/sandwiches",  
+                    data: { 
+                        name: name,
+                        price: price,
+                        description: description,
+                        _token: '{{csrf_token()}}',
+                    },
+                    dataType: "json",
+                    success: function(risposta) {  
+                        alert(risposta.message);
+                    },
+                    error: function(xhr, status, error) {
+                    alert(xhr.responseText);
+                    }
+                }); 
+            }       
+
+            function deleteSandwich(button){
+                var sandwich_id = 4;
+                $.ajax({  
+                    type: "POST",                    
+                    url: "/api/sandwiches/" + sandwich_id,  
+                    data: { 
+                            sandwich_id: 3,
+                            _token: '{{csrf_token()}}',
+                            _method: 'DELETE'
+                    },
+                    dataType: "json",
+                    success: function(risposta) {  
+                        alert(risposta.message);
+                    },
+                    error: function(xhr, status, error) {
+                    alert(xhr.responseText);
+                    }
+                }); 
+            }       
+        </script>
+
+
+
         <script  type="application/javascript">
             //Get the button
             var mybutton = document.getElementById("myBtn");

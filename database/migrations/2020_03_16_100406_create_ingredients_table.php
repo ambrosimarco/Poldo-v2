@@ -17,6 +17,7 @@ class CreateIngredientsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 30)->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

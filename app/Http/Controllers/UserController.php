@@ -48,9 +48,20 @@ class UserController extends Controller
      * @param  \Illuminate\Http\UserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store_api(UserRequest $request)
     {
-        //
+        //$this->authorize('create', User::class);
+        try {
+            $user = new User;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = \Hash::make($request->password);
+            $user->role = $request->role;
+            $user->save();
+            return response()->json(['message' => 'Utente creato'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => "Errore nell'operazione. Ricontrollare i dati inseriti (l'utente potrebbe essere già presente)."], 200);
+        }
     }
 
     /**
@@ -124,5 +135,19 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function soft_destroy_api($id)
+    {
+        //$this->authorize('delete', User::class);
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response()->json(['message' => 'Eliminazione effettuata.'], 200);
     }
 }

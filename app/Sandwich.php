@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sandwich extends Model
 {
+    use SoftDeletes;
+    
     public function ingredients(){
         return $this->belongsToMany('App\Ingredient', 'pairings');
     }

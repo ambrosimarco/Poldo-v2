@@ -38,6 +38,7 @@ class UserPolicy
      */
     public function view(User $user)
     {
+        dd();
         return in_array($user->role, array('admin'));
     }
 
@@ -47,8 +48,9 @@ class UserPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create()
     {
+        return true;
         return in_array($user->role, array('admin'));
     }
 
@@ -73,7 +75,11 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return in_array($user->role, array('admin'));
+        if ($model->name != 'admin') {
+            return in_array($user->role, array('admin'));
+        } else {
+            return false;
+        }  
     }
 
     /**
