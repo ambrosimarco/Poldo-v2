@@ -38,7 +38,6 @@ class UserPolicy
      */
     public function view(User $user)
     {
-        dd();
         return in_array($user->role, array('admin'));
     }
 

@@ -26,22 +26,45 @@ class SettingsController extends Controller
     
     public function update(Request $request){
         if(Auth::user()->canAdminEdit()){
-            dd('admin');
             $validatedData = $request->validate([
-                'online' => 'boolean',
-                'debug_mode' => 'boolean',
+                'online' => 'in:on',
+                'debug_mode' => 'in:on',
                 'offline_message' => 'string|max:250',
-                'order_time_limit' => 'regex:/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$',
-                'retire_time' => 'regex:/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$',
+                'order_time_limit' => ['regex:/^((([01]?[0-9]|2[0-3])[.][0-5][0-9])?)$/'],
+                'retire_time' => ['regex:/^((([01]?[0-9]|2[0-3])[.][0-5][0-9])?)$/'],
+                'password' => '',
             ]);
-            $settings = \DB::table('system_settings')->first();        
-            foreach ($changes as $validatedData => $value) {
-                $settings->update([$value => $value]);
+
+            // Imposta il valore del flag online
+            if (array_key_exists('online', $validatedData)) {
+                $validatedData['online'] = '1';
+            } else {
+                $validatedData['online'] = '0';
             }
-            $settings->save();
+
+            // Imposta il valore del flag debug_mode
+            if (array_key_exists('debug_mode', $validatedData)) {
+                $validatedData['debug_mode'] = '1';
+            } else {
+                $validatedData['debug_mode'] = '0';
+            }
+
+            // Controllo password
+            if (!(\Hash::check($request->password, Auth::user()->password))) {
+                return redirect()->back()->withErrors(['msg', "Password errata."]);
+            }
+            
+            // Update delle impostazioni nel DB
+            unset($validatedData['password']);  // Rimuovi il campo password
+            $settings = \DB::table('system_settings')->limit(1);        
+            foreach ($validatedData as $key => $value) {
+                $settings->update([$key => $value]);
+            }
+            return redirect('/')->withSuccess('Modifiche effettuate con successo.');
+
         }else{
             if(SettingsController::changePassword($request)){
-                return redirect('/')->withSuccess('Password cambiata con successo.');
+                return redirect()->back()->withSuccess('Password cambiata con successo.');
             }else{
                 return redirect()->back()->withErrors(['msg', "Errore nell'operazione."]);
             }
@@ -49,7 +72,6 @@ class SettingsController extends Controller
     }
 
     public function changePassword(Request $request){
-
         $validatedData = $request->validate([
             'id' => 'required',
             'old_password' => 'required|string',

@@ -6,28 +6,34 @@
         <div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
     
         @if(Auth::user()->canAdminEdit())
-        <form action="">
+        <form method="POST" action="">
           <label>
-            <input type="checkbox" {{ ($settings->online == '1') ? 'checked' : ''}}>
+            <input name="online" type="checkbox" {{ ($settings->online == '1') ? 'checked' : ''}}>
             <span>Online</span>
           </label>
           <br />
           <label>
-            <input type="checkbox" {{ ($settings->debug_mode == '1') ? 'checked' : ''}}>
+            <input name="debug_mode" type="checkbox" {{ ($settings->debug_mode == '1') ? 'checked' : ''}}>
             <span>Modalità debug</span>
           </label>
           <br />
           <label>
-          <input class="input-group-text" type="text" value="{{$settings->order_time_limit}}">
+          <input name="order_time_limit" class="input-group-text" type="text" value="{{$settings->order_time_limit}}">
             <span>Orario chiusura liste</span>
           </label>
           <label>
-            <input class="input-group-text" type="text" value="{{$settings->retire_time}}">
+            <input name="retire_time" class="input-group-text" type="text" value="{{$settings->retire_time}}">
               <span>Orario ritiro liste</span>
           </label>
-          <input class="input-group-text" type="text" value="{{$settings->offline_message}}">
+          <input name="offline_message" class="input-group-text" type="text" value="{{$settings->offline_message}}">
           <span>Motivo sistema offline</span>
           </label>
+          </label>
+          <input name="password" class="input-group-text" type="password" value="">
+          <span>Inserire password per conferma</span>
+          </label>
+          @method('PATCH')
+          @csrf
           <br />
           <br />
           <button class="btn btn-primary" type="submit">Invia</button>
