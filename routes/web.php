@@ -15,12 +15,15 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', 'HomeController@order')->name('order');
-Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('users', 'UserController');
-Route::resource('sandwiches', 'SandwichController');
-Route::get('/contacts', 'HomeController@contacts')->name('contacts');
-Route::get('/settings', 'SettingsController@index');
-Route::get('/orders', 'OrderController@index_customers');
-Route::get('/print', 'HomeController@print_index');
-Route::patch('/settings', 'SettingsController@update')->name('updateSettings');
+Route::group(['middleware'=> 'online.status.check'], function()
+    {
+        Route::get('/', 'HomeController@order')->name('order');
+        Route::get('/home', 'HomeController@index')->name('home');
+        Route::resource('users', 'UserController');
+        Route::resource('sandwiches', 'SandwichController');
+        Route::get('/contacts', 'HomeController@contacts')->name('contacts');
+        Route::get('/settings', 'SettingsController@index');
+        Route::get('/orders', 'OrderController@index_customers');
+        Route::get('/print', 'HomeController@print_index');
+        Route::patch('/settings', 'SettingsController@update')->name('updateSettings');
+    });
