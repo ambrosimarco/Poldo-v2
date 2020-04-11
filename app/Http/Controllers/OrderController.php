@@ -55,6 +55,9 @@ class OrderController extends Controller
      */
     public function store_api(OrderRequest $request)
     {
+
+        //Carbon::setTestNow(Carbon::create(2001, 5, 21, 12));
+
         if ($this->checkOrderTime()) {
             if ($sandwich_obj = Sandwich::findOrFail($request->get('sandwich_id'))) {
                 $price = $sandwich_obj->price;

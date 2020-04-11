@@ -23,7 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Ordini
 Route::get('/order/list/{id}', 'OrderController@show_list_api');
 Route::put('/order', 'OrderController@store_api');
-Route::delete('/order', 'OrderController@destroy_api');
+Route::delete('/order', 'OrderController@soft_destroy_api');
 // Utenti
 Route::post('/users', 'UserController@store_api');
 Route::delete('/users/{id}', 'UserController@soft_destroy_api');

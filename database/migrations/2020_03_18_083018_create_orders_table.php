@@ -16,12 +16,12 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->unsignedbigInteger('user_id');
             $table->unsignedbigInteger('sandwich_id');
-            $table->decimal('price', 4, 2);  //Backup del prezzo nel caso in cui venisse cambiato in un secondo momento nel database
+            $table->decimal('price', 4, 2);  //Backup del prezzo nel caso in cui venisse cambiato in un secondo momento nella tabella dei sandwiches
             $table->integer('times')->unsigned();
-            $table->timestamps();
+            $table->date('created_at');
+            $table->datetime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->softDeletes();
-            $table->primary(array('user_id', 'sandwich_id'));
-            $table->unique(['user_id', 'sandwich_id']);
+            $table->primary(array('user_id', 'sandwich_id', 'created_at'));
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('sandwich_id')->references('id')->on('sandwiches');
         });

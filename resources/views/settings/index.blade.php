@@ -28,7 +28,11 @@
           <input name="offline_message" class="input-group-text" type="text" value="{{$settings->offline_message}}">
           <span>Motivo sistema offline</span>
           </label>
+          <input name="session_timeout" class="input-group-text" type="text" value="{{$settings->session_timeout}}">
+          <span>Tempo timeout sessione (secondi)</span>
           </label>
+          <br />
+          <label>
           <input name="password" class="input-group-text" type="password" value="">
           <span>Inserire password per conferma</span>
           </label>

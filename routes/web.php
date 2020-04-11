@@ -15,8 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::group(['middleware'=> 'online.status.check'], function()
-    {
+Route::group(['middleware'=> ['online.status.check', 'session.timeout']], function(){
         Route::get('/', 'HomeController@order')->name('order');
         Route::get('/home', 'HomeController@index')->name('home');
         Route::resource('users', 'UserController');
@@ -26,4 +25,4 @@ Route::group(['middleware'=> 'online.status.check'], function()
         Route::get('/orders', 'OrderController@index_customers');
         Route::get('/print', 'HomeController@print_index');
         Route::patch('/settings', 'SettingsController@update')->name('updateSettings');
-    });
+});

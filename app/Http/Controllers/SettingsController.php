@@ -32,7 +32,8 @@ class SettingsController extends Controller
                 'offline_message' => 'string|max:250',
                 'order_time_limit' => ['regex:/^((([01]?[0-9]|2[0-3])[:][0-5][0-9])?)$/'],
                 'retire_time' => ['regex:/^((([01]?[0-9]|2[0-3])[:][0-5][0-9])?)$/'],
-                'password' => '',
+                'session_timeout' => 'integer',
+                'password' => ''
             ]);
 
             // Imposta il valore del flag online
