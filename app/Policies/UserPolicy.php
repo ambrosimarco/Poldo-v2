@@ -60,9 +60,18 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function update(User $user)
+    public function update(User $user, User $model)
     {
-        return in_array($user->role, array('admin'));
+        if ($model->role != 'admin') {
+            //dd('Utente normale');
+            return in_array($user->role, array('admin'));
+        }elseif ($model->id == $user->id) {
+           // dd('Utente admin ma se stesso');
+            return in_array($user->role, array('admin'));
+        }else{
+           // dd('Altro utente admin');
+            return false;
+        }
     }
 
     /**
@@ -74,11 +83,13 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        if ($model->name != 'admin') {
+        if ($model->role != 'admin') {
             return in_array($user->role, array('admin'));
-        } else {
+        }elseif ($model->id == $user->id) {
+            return in_array($user->role, array('admin'));
+        }else{
             return false;
-        }  
+        }
     }
 
     /**
@@ -102,6 +113,12 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        return in_array($user->role, array('admin'));
+        if ($model->role != 'admin') {
+            return in_array($user->role, array('admin'));
+        }elseif ($model->id == $user->id) {
+            return in_array($user->role, array('admin'));
+        }else{
+            return false;
+        }
     }
 }

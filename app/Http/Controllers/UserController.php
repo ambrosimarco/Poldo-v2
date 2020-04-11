@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 
 class UserController extends Controller
@@ -99,8 +100,9 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-        $this->authorize('update', User::class);
         $user = User::findOrFail($id);
+        //dd(Auth::user()->name, $user->name);
+        $this->authorize('update', $user);
         $user->name =  $request->get('name');
         $user->email = $request->get('email');
         $user->role = $request->get('role');

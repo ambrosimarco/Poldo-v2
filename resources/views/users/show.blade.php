@@ -15,7 +15,7 @@
             <option value="observer" {{$user->role=='observer' ? 'selected' : ''}}>Osservatore</option>
         </select>
         <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
-        @can('update', App\User::class)
+        @can('update', Auth::user(), $user)
         <br />
         <div id="buttons-container">
             <button id="edit" type="button" onclick="editForm()" class="btn btn-primary mt-3">Modifica</button>
