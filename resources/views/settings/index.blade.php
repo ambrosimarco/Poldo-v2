@@ -18,11 +18,11 @@
           </label>
           <br />
           <label>
-          <input name="order_time_limit" class="input-group-text" type="text" value="{{$settings->order_time_limit}}">
+          <input name="order_time_limit" class="input-group-text" type="text" value="{{substr($settings->order_time_limit, 0, -3)}}">
             <span>Orario chiusura liste</span>
           </label>
           <label>
-            <input name="retire_time" class="input-group-text" type="text" value="{{$settings->retire_time}}">
+            <input name="retire_time" class="input-group-text" type="text" value="{{substr($settings->retire_time, 0, -3)}}">
               <span>Orario ritiro liste</span>
           </label>
           <input name="offline_message" class="input-group-text" type="text" value="{{$settings->offline_message}}">

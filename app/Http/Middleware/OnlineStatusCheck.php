@@ -22,7 +22,8 @@ class OnlineStatusCheck
             if (Auth::user()->role == 'admin') {
                 return $next($request);
             } else {
-                return abort(503);   // Codice 503 (manutenzione)
+                $message = \DB::table('system_settings')->first()->offline_message;
+                return abort(503, $message);   // Codice 503 (manutenzione)
             }
         }
         

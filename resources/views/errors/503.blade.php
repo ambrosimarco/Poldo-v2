@@ -4,6 +4,5 @@
         
         <h1>ERRORE 503</h1>
         <br>
-        <h2>Il sito è in manutenzione. Si prega di riprovare più tardi.</h2>
-
+        <h2>{{ $exception->getMessage() }}</h2>
 @endsection

@@ -18,8 +18,8 @@ class SystemSettings extends Migration
             $table->boolean('online')->default('1')->nullable(false);
             $table->boolean('debug_mode')->default('0')->nullable(false);
             $table->string('offline_message', 250)->default('Sistema offline.')->nullable(false);
-            $table->decimal('order_time_limit', 4, 2)->default('08.30')->nullable(false);
-            $table->decimal('retire_time', 4, 2)->default('09.30')->nullable(false);
+            $table->time('order_time_limit', 0)->default('08:30')->nullable(false);
+            $table->time('retire_time', 0)->default('09:30')->nullable(false);
         });
     }
 
