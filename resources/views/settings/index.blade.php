@@ -18,6 +18,11 @@
           </label>
           <br />
           <label>
+            <input name="no_wipe" type="checkbox" {{ ($settings->no_wipe == '1') ? 'checked' : ''}}>
+            <span>Vincolo no-wipe</span>
+          </label>
+          <br />
+          <label>
           <input name="order_time_limit" class="input-group-text" type="text" value="{{substr($settings->order_time_limit, 0, -3)}}">
             <span>Orario chiusura liste</span>
           </label>
@@ -44,7 +49,30 @@
         </form>  
         @endif
         <br />
+
+        <button type="button" onclick="wipeSystem()" class="btn btn-primary mr-1">System wipe</button>
+
         
+        <script type="application/javascript">  
+              function wipeSystem(button){
+                $.ajax({  
+                    type: "POST",                    
+                    url: "api/settings",  
+                    data: { 
+                        api_token: '{{ Auth::user()->api_token }}',
+                        _token: '{{csrf_token()}}',
+                        _method: 'DELETE'
+                    },
+                    dataType: "json",
+                    success: function(risposta) {  
+                        alert(risposta.message);
+                    },
+                    error: function(xhr, status, error) {
+                    alert(xhr.responseText);
+                    }
+                }); 
+            }       
+        </script>
 
         <!-- Scroll-back button -->
         <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button>

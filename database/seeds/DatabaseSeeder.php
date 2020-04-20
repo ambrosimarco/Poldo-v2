@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
         'role' => 'admin',
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),
+        'api_token' => Str::random(60),
         ]);
       DB::table('users')->insert([
         'name' => 'bar',
@@ -40,6 +41,7 @@ class DatabaseSeeder extends Seeder
         'role' => 'observer',
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),
+        'api_token' => Str::random(60),
         ]);
       DB::table('users')->insert([
         'name' => '5ai',
@@ -48,6 +50,7 @@ class DatabaseSeeder extends Seeder
         'role' => 'class',
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),
+        'api_token' => Str::random(60),
         ]);
 
       //Sandwiches

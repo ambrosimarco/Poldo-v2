@@ -121,4 +121,9 @@ class UserPolicy
             return false;
         }
     }
+
+    public function wipe(User $user)
+    {
+        return in_array($user->role, array('admin'));
+    }
 }

@@ -30,3 +30,5 @@ Route::delete('/users/{id}', 'UserController@soft_destroy_api');
 // Panini
 Route::post('/sandwiches', 'SandwichController@store_api');
 Route::delete('/sandwiches/{id}', 'SandwichController@soft_destroy_api');
+//Impostazioni
+Route::delete('/settings', 'SettingsController@wipe_system_api')->middleware('auth:api');
