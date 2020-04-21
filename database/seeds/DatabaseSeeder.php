@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         'name' => 'bar',
         'email' => 'bar@bar.com',
         'password' => Hash::make('bar'),
-        'role' => 'observer',
+        'role' => 'bar',
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),
         'api_token' => Str::random(60),

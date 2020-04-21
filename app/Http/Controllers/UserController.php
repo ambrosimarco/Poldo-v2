@@ -57,7 +57,7 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = \Hash::make($request->password);
-            $user->api_token = Str::random(60);
+            $user->api_token = \Str::random(60);
             $user->role = $request->role;
             $user->save();
             return response()->json(['message' => 'Utente creato'], 200);

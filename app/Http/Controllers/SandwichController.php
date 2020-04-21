@@ -124,8 +124,8 @@ class SandwichController extends Controller
     public function soft_destroy_api($id)
     {
         //$this->authorize('delete', Sandwich::class);
-        $user = Sandwich::findOrFail($id);
-        $user->delete();
+        $sandwich = Sandwich::findOrFail($id);
+        $sandwich->delete();
         return response()->json(['message' => 'Eliminazione effettuata.'], 200);
     }
 }

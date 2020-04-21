@@ -18,7 +18,7 @@ class SandwichPolicy
      */
     public function viewAny(User $user)
     {
-        return in_array($user->role, array('admin', 'class', 'observer'));
+        return in_array($user->role, array('admin', 'class', 'bar'));
     }
 
     /**
@@ -30,7 +30,7 @@ class SandwichPolicy
      */
     public function view(User $user, Sandwich $sandwich)
     {
-        return in_array($user->role, array('admin', 'class', 'observer'));
+        return in_array($user->role, array('admin', 'class', 'bar'));
     }
 
     /**
@@ -41,7 +41,7 @@ class SandwichPolicy
      */
     public function edit(User $user)
     {
-        return in_array($user->role, array('admin', 'observer'));
+        return in_array($user->role, array('admin', 'bar'));
     }
 
     /**

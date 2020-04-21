@@ -11,6 +11,16 @@ use App\Http\Requests\OrderRequest;
 
 class OrderController extends Controller
 {
+    private $logged_user;
+    private $user_id;
+
+    public function __construct(Request $request){
+        // Utente che fa la chiamata api
+        $this->logged_user = $request->user('api');
+        // Id dell'utente associato all'ordine
+        $this->user_id = in_array($request->user('api')->role, array('bar')) ? $request->user_id : $request->user('api')->id; 
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -31,17 +41,24 @@ class OrderController extends Controller
     {
         $dup_flag = false;
         $customers = [];
-        foreach (Sandwich::all() as $sandwich) {    // Get all existing sandwiches in the DB
-            foreach (Sandwich::findOrFail($sandwich->id)->users()->get() as $user) {    // Get every order's customer
-                foreach ($customers as $element) { // Cycle through the customers 
-                    if ($element['id'] == $user['id']) {   // Check for duplicate customers
+        // Cicla tutti i panini nel DB
+        foreach (Sandwich::all() as $sandwich) {
+            // Cicla l'utente associato ad ogni ordine
+            foreach (Sandwich::findOrFail($sandwich->id)->users()->get() as $user) {
+                // Cicla gli utenti
+                foreach ($customers as $element) {
+                    // Controlla i duplicati
+                    if ($element['id'] == $user['id']) {
+                        // Flag per i duplicati
                         $dup_flag = true;   //Flag for duplicates
                     }
                 }
                 if (!$dup_flag) {
-                    array_push($customers, $user);    // Add the customer to the array
+                    // Aggiungi l'utente all'array se non è già presente
+                    array_push($customers, $user);
                 }
-                $dup_flag = false;   // Reset the flag
+                // Resetta il flag dopo ogni ordine
+                $dup_flag = false;
             }
         }
         return view('/orders/index')->with(compact('customers'));
@@ -57,39 +74,41 @@ class OrderController extends Controller
     {
 
         //Carbon::setTestNow(Carbon::create(2001, 5, 21, 12));
-
-        if ($this->checkOrderTime()) {
-            if ($sandwich_obj = Sandwich::findOrFail($request->get('sandwich_id'))) {
+        
+        // Controllo del blocco temporale (solo per le classi scolastiche)
+        // oppure controllo se l'utente loggato ha i permessi per bypassarlo 
+        if ($this->checkOrderTime() || in_array($this->logged_user->role, array('bar'))) {
+            // Controllo che il panino esista
+            if ($sandwich_obj = Sandwich::findOrFail($request->sandwich_id)) {
                 $price = $sandwich_obj->price;
             } else {
-                return ['success' => false, 'message' => "Errore nell'ordinazione"];
+                return ['success' => false, 'message' => "Errore nell'ordinazione."];
             }
-
-            // Check if the sandwich was already ordered by the school class
-            // in the same day.            
-            $order = DB::table('orders')->where('user_id', '=', $request->get('user_id'))
+    
+            $order = DB::table('orders')->where('user_id', '=', $this->logged_user->id)
                 ->where('sandwich_id', '=', $request->get('sandwich_id'))
                 ->whereDate('created_at', '=', Carbon::today()->toDateString())
                 ->whereNull('deleted_at');
+            // Se il panino è stato già ordinato dalla classe nello stesso giorno:
             if ($order->exists()) {
+                // Aumento il contatore di 1:
                 $times = ($order->select('times')->pluck('times')[0] + 1);
                 $order->updated_at = Carbon::now();
                 $order->update(['times' => $times]);
                 return ['success' => true, 'message' => 'Aggiunta effettuata.'];
 
-                // Otherwise
+            // Se non è stato ordinato lo inserisco:
             } else {
                 try {
-                    $price = Sandwich::findOrFail($request->get('sandwich_id'))->price;
                     DB::table('orders')->insert([
-                        'user_id' => $request->get('user_id'),
+                        'user_id' => $this->user_id,
                         'sandwich_id' => $request->get('sandwich_id'),
                         'price' => $price,
                         'times' => '1',
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ]);
-                    return ['success' => true, 'message' => 'Nuovo ordine creato'];
+                    return ['success' => true, 'message' => 'Nuovo ordine creato.'];
                 } catch (\Throwable $th) {
                     return ['success' => false, 'message' => $th->getMessage()];
                 }
@@ -123,25 +142,31 @@ class OrderController extends Controller
      */
     public function soft_destroy_api(OrderRequest $request)
     {
-        if ($this->checkOrderTime()) {
-            if ($sandwich_obj = \App\Sandwich::findOrFail(3)) {
+ 
+        // Controllo del blocco temporale (solo per le classi scolastiche)
+        // oppure controllo se l'utente loggato ha i permessi per bypassarlo 
+        if ($this->checkOrderTime() || in_array($this->logged_user->role, array('bar'))) {
+            // Controllo che il panino esista
+            if ($sandwich_obj = Sandwich::findOrFail($request->sandwich_id)) {
                 $price = $sandwich_obj->price;
             } else {
-                return ['success' => false, 'message' => "Errore nell'ordinazione"];
+                return ['success' => false, 'message' => "Errore nell'ordinazione."];
             }
 
-            // Check if the sandwich was already ordered by the school class
-            // in the same day.            
-            $order = DB::table('orders')->where('user_id', '=', 4)
-                ->where('sandwich_id', '=', 3)
+            $order = DB::table('orders')->where('user_id', '=', $this->user_id)
+                ->where('sandwich_id', '=', $request->sandwich_id)
                 ->whereDate('created_at', '=', Carbon::today()->toDateString())
                 ->whereNull('deleted_at');
+
+            // Se il panino è stato già ordinato dalla classe nello stesso giorno:
             if ($order->exists()) {
                 $times = ($order->select('times')->pluck('times')[0]);
+                // Se il contatore è maggiore di 1 lo diminuisco di 1:
                 if ($times > 1) {
                     $order->updated_at = Carbon::now();
                     $order->update(['times' => $times - 1]);
                     return ['success' => true, 'message' => 'Diminuzione effettuata.'];
+                // Altrimenti elimino il panino
                 } else {
                     try {
                         $order->deleted_at = Carbon::now();
@@ -150,9 +175,9 @@ class OrderController extends Controller
                         return ['success' => false, 'message' => $th->getMessage()];
                     }
                 }
-                // Otherwise
+            // Se non è stato ordinato:
             } else {
-                return ['success' => false, 'message' => 'Panino non trovato.'];
+                return ['success' => false, 'message' => 'Ordinazione non trovata.'];
             }
         } else {
             return ['success' => false, 'message' => "Il tempo limite per le ordinazioni è stato superato."];
@@ -169,26 +194,30 @@ class OrderController extends Controller
     {
         // Attenzione: cancellazione permanente!
 
-        if ($this->checkOrderTime()) {
+        $this->logged_user = $request->user('api');
 
+        // Controllo del blocco temporale (solo per le classi scolastiche)
+        // oppure controllo se l'utente loggato ha i permessi per bypassarlo 
+        if ($this->checkOrderTime() || in_array($this->logged_user->role, array('bar'))) {
             if ($sandwich_obj = \App\Sandwich::findOrFail(3)) {
                 $price = $sandwich_obj->price;
             } else {
                 return ['success' => false, 'message' => "Errore nell'ordinazione"];
             }
-
-            // Check if the sandwich was already ordered by the school class
-            // in the same day.            
-            $order = DB::table('orders')->where('user_id', '=', 4)
+       
+            $order = DB::table('orders')->where('user_id', '=', $this->user_id)
                 ->where('sandwich_id', '=', 3)
                 ->whereDate('created_at', '=', Carbon::today()->toDateString())
                 ->whereNull('deleted_at');
+            // Se il panino è stato già ordinato dalla classe nello stesso giorno:
             if ($order->exists()) {
                 $times = ($order->select('times')->pluck('times')[0]);
+                // Se il contatore è maggiore di 1 lo diminuisco di 1:
                 if ($times > 1) {
                     $order->updated_at = Carbon::now();
                     $order->update(['times' => $times - 1]);
                     return ['success' => true, 'message' => 'Diminuzione effettuata.'];
+                // Altrimenti elimino DEFINITIVAMENTE il panino
                 } else {
                     try {
                         $order->delete();
@@ -197,9 +226,9 @@ class OrderController extends Controller
                         return ['success' => false, 'message' => $th->getMessage()];
                     }
                 }
-                // Otherwise
+            // Se non è stato ordinato:
             } else {
-                return ['success' => false, 'message' => 'Panino non trovato.'];
+                return ['success' => false, 'message' => 'Ordinazione non trovata.'];
             }
         } else {
             return ['success' => false, 'message' => "Il tempo limite per le ordinazioni è stato superato."];

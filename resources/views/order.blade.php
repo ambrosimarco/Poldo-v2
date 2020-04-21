@@ -118,7 +118,7 @@
                         type: "POST",
                         url: "/api/order",  
                         data: { 
-                                user_id: {{ Auth::user()->id }},
+                                api_token: '{{ Auth::user()->api_token }}',
                                 sandwich_id: 3,
                                 _token: '{{csrf_token()}}',
                                 _method: 'PUT'
@@ -142,7 +142,7 @@
                         type: "POST",
                         url: "/api/order",  
                         data: { 
-                                user_id: {{ Auth::user()->id }},
+                                api_token: '{{ Auth::user()->api_token }}',
                                 sandwich_id: 3,
                                 _token: '{{csrf_token()}}',
                                 _method: 'DELETE'

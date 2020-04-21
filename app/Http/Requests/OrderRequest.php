@@ -25,7 +25,6 @@ class OrderRequest extends FormRequest
     {
         return [
             'sandwich_id' => 'required',
-            'user_id' => 'required',
         ];
     }
 }

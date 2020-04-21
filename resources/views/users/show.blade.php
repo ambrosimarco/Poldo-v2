@@ -12,7 +12,7 @@
         <select class="field" id="role" name="role">
             <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Amministratore</option> 
             <option value="class" {{ $user->role=='class' ? 'selected' : ''}}>Classe</option> 
-            <option value="observer" {{$user->role=='observer' ? 'selected' : ''}}>Osservatore</option>
+            <option value="bar" {{$user->role=='bar' ? 'selected' : ''}}>Bar</option>
         </select>
         <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
         @can('update', Auth::user(), $user)

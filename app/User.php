@@ -44,7 +44,7 @@ class User extends Authenticatable
     }
     
     public function canBarEdit(){
-        return $this->role == 'observer';
+        return $this->role == 'bar';
     }
 
     public function sandwiches(){

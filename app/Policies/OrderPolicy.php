@@ -23,7 +23,7 @@ class OrderPolicy
      */
     public function viewAny(User $user)
     {
-        return in_array($user->role, array('admin', 'observer'));
+        return in_array($user->role, array('admin', 'bar'));
     }
 
     /**
@@ -35,7 +35,7 @@ class OrderPolicy
      */
     public function view(User $user, Order $order)
     {
-        return in_array($user->role, array('class', 'admin', 'observer'));
+        return in_array($user->role, array('class', 'admin', 'bar'));
     }
 
     /**
