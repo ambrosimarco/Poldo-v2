@@ -9,6 +9,18 @@ use App\User;
 
 class UserController extends Controller
 {
+    private $logged_user;
+    private $user_id;
+
+    public function __construct(Request $request){
+        // Utente che fa la chiamata api
+        $this->logged_user = $request->user('api');
+        // Id dell'utente su cui agire
+        if ($request->has('api_token')) {
+            $this->user_id = in_array($request->user('api')->role, array('bar')) ? $request->user_id : $request->user('api')->id;             
+        }    
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -28,9 +40,12 @@ class UserController extends Controller
      */
     public function index_api()
     {
-        $this->authorize('view-any', User::class);
-        $users = User::all();
-        return $users;
+        if($this->logged_user->can('view-any', User::class)){
+            $users = User::all();
+            return $users;
+        }else{
+            return response()->json(['message' => "Errore nell'operazione. Utente non autorizzato."], 401);
+        }
     }
 
     /**
@@ -51,18 +66,21 @@ class UserController extends Controller
      */
     public function store_api(UserRequest $request)
     {
-        //$this->authorize('create', User::class);
-        try {
-            $user = new User;
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = \Hash::make($request->password);
-            $user->api_token = \Str::random(60);
-            $user->role = $request->role;
-            $user->save();
-            return response()->json(['message' => 'Utente creato'], 200);
-        } catch (\Throwable $th) {
-            return response()->json(['message' => "Errore nell'operazione. Ricontrollare i dati inseriti (l'utente potrebbe essere già presente)."], 200);
+        if($this->logged_user->can('create', User::class)){
+            try {
+                $user = new User;
+                $user->name = $request->name;
+                $user->email = $request->email;
+                $user->password = \Hash::make($request->password);
+                $user->api_token = \Str::random(60);
+                $user->role = $request->role;
+                $user->save();
+                return response()->json(['message' => 'Utente creato'], 200);
+            } catch (\Throwable $th) {
+                return response()->json(['message' => "Errore nell'operazione. Ricontrollare i dati inseriti (l'utente potrebbe essere già presente)."], 200);
+            }
+        }else{
+            return response()->json(['message' => "Errore nell'operazione. Utente non autorizzato."], 401);
         }
     }
 
@@ -118,15 +136,23 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update_api(UserRequest $request, $id)
+    public function update_api(UserRequest $request)
     {
-        $this->authorize('update', User::class);
-        $user = User::findOrFail($id);
-        $user->name =  $request->get('name');
-        $user->email = $request->get('email');
-        $user->role = $request->get('role');
-        $user->save();
-        return response()->json(['success' => $result], 200);
+        $user = User::findOrFail($user_id);
+        if($this->logged_user->can('update', $user)){
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            if ($logged_user->role == 'admin') {
+                $user->role = $request->get('role');
+            }
+            if ($request->has('password')) {
+                $user->password = $request->get('password');
+            }
+            $user->save();
+            return response()->json(['success' => $result], 200);
+        }else{
+            return response()->json(['message' => "Errore nell'operazione. Utente non autorizzato."], 401);
+        }
     }
 
     /**
@@ -147,10 +173,13 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function soft_destroy_api($id)
-    {
-        //$this->authorize('delete', User::class);
+    {        
         $user = User::findOrFail($id);
-        $user->delete();
-        return response()->json(['message' => 'Eliminazione effettuata.'], 200);
+        if($this->logged_user->can('delete', $user)){
+            $user->delete();
+            return response()->json(['message' => 'Eliminazione effettuata.'], 200);
+        }else{
+            return response()->json(['message' => "Errore nell'operazione. Utente non autorizzato."], 401);
+        }
     }
 }

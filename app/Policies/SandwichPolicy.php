@@ -57,6 +57,18 @@ class SandwichPolicy
     }
 
     /**
+     * Determine whether the user can update the sandwich.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Sandwich  $sandwich
+     * @return mixed
+     */
+    public function create(User $user)
+    {
+        return in_array($user->role, array('admin'));
+    }
+
+    /**
      * Determine whether the user can restore the sandwich.
      *
      * @param  \App\User  $user
@@ -66,6 +78,18 @@ class SandwichPolicy
     public function restore(User $user, Sandwich $sandwich)
     {
         return in_array($user->role, array('admin'));
+    }
+
+    /**
+     * Determine whether the user can permanently delete the sandwich.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Sandwich  $sandwich
+     * @return mixed
+     */
+    public function delete(User $user, Sandwich $sandwich)
+    {
+        return in_array($user->role, array('admin', 'bar'));
     }
 
     /**

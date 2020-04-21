@@ -61,6 +61,7 @@
                     type: "POST",                    
                     url: "/api/users",  
                     data: { 
+                        api_token: '{{ Auth::user()->api_token }}',
                         name: name,
                         email: email,
                         password: password,
@@ -83,7 +84,7 @@
                     type: "POST",                    
                     url: "/api/users/" + user_id,  
                     data: { 
-                            user_id: 3,
+                            api_token: '{{ Auth::user()->api_token }}',
                             _token: '{{csrf_token()}}',
                             _method: 'DELETE'
                     },

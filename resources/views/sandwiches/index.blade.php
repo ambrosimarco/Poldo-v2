@@ -88,6 +88,7 @@
                     type: "POST",                    
                     url: "/api/sandwiches",  
                     data: { 
+                        api_token: '{{ Auth::user()->api_token }}',
                         name: name,
                         price: price,
                         description: description,
@@ -106,9 +107,11 @@
             function deleteSandwich(button){
                 var sandwich_id = 4;
                 $.ajax({  
+                    api_token: '{{ Auth::user()->api_token }}',
                     type: "POST",                    
                     url: "/api/sandwiches/" + sandwich_id,  
                     data: { 
+                            api_token: '{{ Auth::user()->api_token }}',
                             sandwich_id: 3,
                             _token: '{{csrf_token()}}',
                             _method: 'DELETE'

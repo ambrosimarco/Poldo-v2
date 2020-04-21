@@ -62,14 +62,17 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
+        // Utente normale
         if ($model->role != 'admin') {
-            //dd('Utente normale');
             return in_array($user->role, array('admin'));
+        // Utente admin ma se stesso
         }elseif ($model->id == $user->id) {
-           // dd('Utente admin ma se stesso');
             return in_array($user->role, array('admin'));
+        // Utente 'admin'
+        }elseif ($user->name = 'admin') {
+            return true;
+        // Altro utente admin
         }else{
-           // dd('Altro utente admin');
             return false;
         }
     }
@@ -83,10 +86,16 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
+        // Utente normale
         if ($model->role != 'admin') {
             return in_array($user->role, array('admin'));
+        // Utente admin ma se stesso
         }elseif ($model->id == $user->id) {
             return in_array($user->role, array('admin'));
+        // Utente 'admin'
+        }elseif ($user->name = 'admin') {
+            return true;
+        // Altro utente admin
         }else{
             return false;
         }
@@ -113,10 +122,16 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
+        // Utente normale
         if ($model->role != 'admin') {
             return in_array($user->role, array('admin'));
+        // Utente admin ma se stesso
         }elseif ($model->id == $user->id) {
             return in_array($user->role, array('admin'));
+        // Utente 'admin'
+        }elseif ($user->name = 'admin') {
+            return true;
+        // Altro utente admin
         }else{
             return false;
         }

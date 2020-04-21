@@ -18,7 +18,9 @@ class OrderController extends Controller
         // Utente che fa la chiamata api
         $this->logged_user = $request->user('api');
         // Id dell'utente associato all'ordine
-        $this->user_id = in_array($request->user('api')->role, array('bar')) ? $request->user_id : $request->user('api')->id; 
+        if ($request->has('api_token')) {
+            $this->user_id = in_array($request->user('api')->role, array('bar')) ? $request->user_id : $request->user('api')->id;             
+        }
     }
     
     /**
@@ -142,7 +144,6 @@ class OrderController extends Controller
      */
     public function soft_destroy_api(OrderRequest $request)
     {
- 
         // Controllo del blocco temporale (solo per le classi scolastiche)
         // oppure controllo se l'utente loggato ha i permessi per bypassarlo 
         if ($this->checkOrderTime() || in_array($this->logged_user->role, array('bar'))) {
@@ -235,9 +236,15 @@ class OrderController extends Controller
         }
     }
 
-    protected function checkOrderTime()
+    public function checkOrderTime()
     {
         $order_time_limit = DB::table('system_settings')->first()->order_time_limit;
         return Carbon::now()->toTimeString() < $order_time_limit;
+    }
+    
+    public function checkRetireTime()
+    {
+        $retire_time = DB::table('system_settings')->first()->retire_time;
+        return Carbon::now()->toTimeString() < $retire_time;
     }
 }
