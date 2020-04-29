@@ -22,7 +22,7 @@ Route::group(['middleware'=> ['online.status.check', 'session.timeout']], functi
         Route::resource('sandwiches', 'SandwichController');
         Route::get('/contacts', 'HomeController@contacts')->name('contacts');
         Route::get('/settings', 'SettingsController@index');
+        Route::patch('/settings', 'SettingsController@update')->name('updateSettings');
         Route::get('/orders', 'OrderController@index_customers');
         Route::get('/print', 'HomeController@print_index');
-        Route::patch('/settings', 'SettingsController@update')->name('updateSettings');
 });

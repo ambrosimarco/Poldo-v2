@@ -79,7 +79,7 @@
             }       
 
             function deleteUser(button){
-                var user_id = 4;
+                var user_id = 5;
                 $.ajax({  
                     type: "POST",                    
                     url: "/api/users/" + user_id,  

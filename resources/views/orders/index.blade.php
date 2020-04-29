@@ -54,6 +54,9 @@
                     $.ajax({  
                         type: "GET",
                         url: "/api/order/list/4",  
+                        data: {
+                            api_token: '{{ Auth::user()->api_token }}',
+                        },
                         dataType: "json",
                         success: function(risposta) {  
                             $.each(risposta, function(index, element) {

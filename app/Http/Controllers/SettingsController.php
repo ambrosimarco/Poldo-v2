@@ -74,7 +74,7 @@ class SettingsController extends Controller
 
         }else{
             if(SettingsController::changePassword($request)){
-                return redirect()->back()->withSuccess('Password cambiata con successo.');
+                return redirect('/')->withSuccess('Password cambiata con successo.');
             }else{
                 return redirect()->back()->withErrors(['msg', "Errore nell'operazione."]);
             }
