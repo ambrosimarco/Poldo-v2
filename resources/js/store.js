@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
- 
 Vue.use(VueAxios, axios)
 Vue.use(Vuex)
 
@@ -34,7 +33,6 @@ const store = new Vuex.Store({
           stato: 'freddo'
         }
     ],
-    data: null,
     sortby: 1,
     filter: "tutti"
   },
@@ -57,8 +55,8 @@ const store = new Vuex.Store({
     filter(state,payload){
       state.filter=payload;
     },
-    loadata(state,payload){
-      state.data=payload;
+    loaddata(state,payload){
+      state.panini=payload;
     }
   },
   actions:{
@@ -74,7 +72,7 @@ const store = new Vuex.Store({
     filter(context,payload){
       context.commit('filter',payload);
     },
-    loadata(context){
+    loaddata(context){
       Vue.axios.get('http://localhost:8000/api/sandwiches').then(response => (context.commit('loaddata',response)));
     }
   },

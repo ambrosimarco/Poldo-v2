@@ -40,7 +40,7 @@ import panino from './panino.vue';
 export default {
   name: 'lista',
   created(){
-    this.$store.dispatch('loadata');
+    this.$store.dispatch('loaddata');
   },
   computed:{
     panini(){
