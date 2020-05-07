@@ -39,9 +39,9 @@
 import panino from './panino.vue';
 export default {
   name: 'lista',
-created(){
-    this.$store.dispatch('loaddata');
- },
+  created(){
+    this.$store.dispatch('loadata');
+  },
   computed:{
     panini(){
       return this.$store.getters['getfilteredpanini'];

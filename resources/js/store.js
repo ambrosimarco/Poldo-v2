@@ -34,7 +34,7 @@ const store = new Vuex.Store({
           stato: 'freddo'
         }
     ],
-    data: '',
+    data: null,
     sortby: 1,
     filter: "tutti"
   },
@@ -57,7 +57,7 @@ const store = new Vuex.Store({
     filter(state,payload){
       state.filter=payload;
     },
-    loaddata(state,payload){
+    loadata(state,payload){
       state.data=payload;
     }
   },
@@ -74,12 +74,8 @@ const store = new Vuex.Store({
     filter(context,payload){
       context.commit('filter',payload);
     },
-    loaddata(context){
-      let data = "inserisci data del database";
-      Vue.axios.get('http://localhost:8000/api/sandwiches').then(response => ( context.commit('loaddata',data)));
-
-//      context.commit('loaddata',data);
-
+    loadata(context){
+      Vue.axios.get('http://localhost:8000/api/sandwiches').then(response => (context.commit('loaddata',response)));
     }
   },
   getters: {
