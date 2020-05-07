@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     //Route::put('user/{id}', 'UserController@update_api');
 });
 */
-Route::group(['middleware'=> ['auth:api']], function(){
+//Route::group(['middleware'=> ['auth:api']], function(){
     // Ordini
     Route::get('/order/list/{id}', 'OrderController@show_list_api');
     Route::put('/order', 'OrderController@store_api');
@@ -28,8 +28,9 @@ Route::group(['middleware'=> ['auth:api']], function(){
     Route::post('/users', 'UserController@store_api');
     Route::delete('/users/{id}', 'UserController@soft_destroy_api');
     // Panini
+    Route::get('/sandwiches', 'SandwichController@index_api');
     Route::post('/sandwiches', 'SandwichController@store_api');
     Route::delete('/sandwiches/{id}', 'SandwichController@soft_destroy_api');
     //Impostazioni
     Route::delete('/settings', 'SettingsController@wipe_system_api');
-});
+//});
