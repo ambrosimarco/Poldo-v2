@@ -2,37 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+ 
 Vue.use(VueAxios, axios)
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    panini :[
-        {
-          id: 1,
-          nome: 'Piadina cotto',
-          ingredienti: ['prosciutto cotto'],
-          prezzo: 2.00,
-          numero: 0,
-          stato: 'caldo'
-        },
-        {
-          id: 2,
-          nome: 'Maxi pizza',
-          ingredienti: ['pomodoro','mozzarella'],
-          prezzo: 2.00,
-          numero: 0,
-          stato: 'caldo'
-        },
-        {
-          id: 3,
-          nome: 'Focaccia',
-          ingredienti: ['prosciutto cotto'],
-          prezzo: 1.30,
-          numero: 0,
-          stato: 'freddo'
-        }
-    ],
+      data:[
+      ],
     sortby: 1,
     filter: "tutti"
   },
@@ -56,7 +33,7 @@ const store = new Vuex.Store({
       state.filter=payload;
     },
     loaddata(state,payload){
-      state.panini=payload;
+      state.data=payload;
     }
   },
   actions:{
@@ -73,40 +50,40 @@ const store = new Vuex.Store({
       context.commit('filter',payload);
     },
     loaddata(context){
-      Vue.axios.get('http://localhost:8000/api/sandwiches').then(response => (context.commit('loaddata',response)));
+      Vue.axios.get('http://localhost:8000/api/sandwiches').then(response => (context.commit('loaddata',response.data)));
     }
   },
   getters: {
     getpanini(state) {
-      return state.panini;
+      return state.data.data;
     },
     getsortedpanini(state) {
       let sortedpanini=[];
       let by=state.sortby;
       switch(by){
         case "1":
-          sortedpanini=state.panini.sort((a, b) => {
-            return a.nome.localeCompare(b.nome);
+          sortedpanini=state.data.sort((a, b) => {
+            return a.name.localeCompare(b.name);
           });
           break;
         case "2":
-          sortedpanini=state.panini.sort((a, b) => {
-            return b.nome.localeCompare(a.nome);
+          sortedpanini=state.data.sort((a, b) => {
+            return b.name.localeCompare(a.name);
           });
           break;
         case "3":
-          sortedpanini=state.panini.sort((a, b) => {
-            return a.prezzo-b.prezzo;
+          sortedpanini=state.data.sort((a, b) => {
+            return a.name.localeCompare(b.name);
           });
           break;
         case "4":
-          sortedpanini=state.panini.sort((a, b) => {
-            return b.prezzo-a.prezzo;
+          sortedpanini=state.data.sort((a, b) => {
+            return b.name.localeCompare(a.name);
           });
           break;
         default:
-          sortedpanini=state.panini.sort((a, b) => {
-            return a.nome.localeCompare(b.nome);
+          sortedpanini=state.data.sort((a, b) => {
+            return a.name.localeCompare(b.name);
           });
           break;
       }

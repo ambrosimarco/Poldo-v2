@@ -2036,15 +2036,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'panino',
-  props: ['panino'],
-  methods: {
-    increase: function increase() {
-      this.$store.dispatch('increment', this.panino.id);
-    },
-    decrease: function decrease() {
-      this.$store.dispatch('decrease', this.panino.id);
-    }
-  }
+  props: ['panino'] //methods: {
+  //increase(){
+  //this.$store.dispatch('increment',this.panino.id);
+  //},
+  //decrease(){
+  //this.$store.dispatch('decrease',this.panino.id);
+  //}
+  //}
+
 });
 
 /***/ }),
@@ -3493,11 +3493,7 @@ var render = function() {
       [
         _c("h4", { staticClass: "media-heading" }, [
           _vm._v(
-            _vm._s(_vm.panino.nome) +
-              ": " +
-              _vm._s(_vm.panino.prezzo) +
-              "€ numero " +
-              _vm._s(_vm.panino.numero)
+            _vm._s(_vm.panino.name) + ": " + _vm._s(_vm.panino.price) + "€"
           )
         ]),
         _vm._v(" "),
@@ -3510,7 +3506,7 @@ var render = function() {
               "aria-label": "Recipient's username",
               "aria-describedby": "basic-addon2"
             },
-            domProps: { value: _vm.panino.ingredienti }
+            domProps: { value: _vm.panino.description }
           }),
           _vm._v(" "),
           _c("div", { staticClass: "input-group-append" }, [
@@ -20037,29 +20033,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODUL
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    panini: [{
-      id: 1,
-      nome: 'Piadina cotto',
-      ingredienti: ['prosciutto cotto'],
-      prezzo: 2.00,
-      numero: 0,
-      stato: 'caldo'
-    }, {
-      id: 2,
-      nome: 'Maxi pizza',
-      ingredienti: ['pomodoro', 'mozzarella'],
-      prezzo: 2.00,
-      numero: 0,
-      stato: 'caldo'
-    }, {
-      id: 3,
-      nome: 'Focaccia',
-      ingredienti: ['prosciutto cotto'],
-      prezzo: 1.30,
-      numero: 0,
-      stato: 'freddo'
-    }],
-    data: '',
+    data: [],
     sortby: 1,
     filter: "tutti"
   },
@@ -20105,15 +20079,14 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
       context.commit('filter', payload);
     },
     loaddata: function loaddata(context) {
-      var data = "inserisci data del database";
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.axios.get('http://localhost:8000/api/sandwiches').then(function (response) {
-        return context.commit('loaddata', data);
-      }); //      context.commit('loaddata',data);
+        return context.commit('loaddata', response.data);
+      });
     }
   },
   getters: {
     getpanini: function getpanini(state) {
-      return state.panini;
+      return state.data.data;
     },
     getsortedpanini: function getsortedpanini(state) {
       var sortedpanini = [];
@@ -20121,32 +20094,32 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 
       switch (by) {
         case "1":
-          sortedpanini = state.panini.sort(function (a, b) {
-            return a.nome.localeCompare(b.nome);
+          sortedpanini = state.data.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
           });
           break;
 
         case "2":
-          sortedpanini = state.panini.sort(function (a, b) {
-            return b.nome.localeCompare(a.nome);
+          sortedpanini = state.data.sort(function (a, b) {
+            return b.name.localeCompare(a.name);
           });
           break;
 
         case "3":
-          sortedpanini = state.panini.sort(function (a, b) {
-            return a.prezzo - b.prezzo;
+          sortedpanini = state.data.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
           });
           break;
 
         case "4":
-          sortedpanini = state.panini.sort(function (a, b) {
-            return b.prezzo - a.prezzo;
+          sortedpanini = state.data.sort(function (a, b) {
+            return b.name.localeCompare(a.name);
           });
           break;
 
         default:
-          sortedpanini = state.panini.sort(function (a, b) {
-            return a.nome.localeCompare(b.nome);
+          sortedpanini = state.data.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
           });
           break;
       }
@@ -20206,8 +20179,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\marco\Desktop\Poldo\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\marco\Desktop\Poldo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\Poldo-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Poldo-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

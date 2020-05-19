@@ -3,7 +3,7 @@
     <div class="btn-toolbar" role="toolbar">
       <div class="dropdown">
         <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">
-           Ordina per:
+           Ordina :
         </button>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="#" @click="ordina('1')">Nome crescente</a>
@@ -39,6 +39,9 @@
 import panino from './panino.vue';
 export default {
   name: 'lista',
+  created(){
+    this.$store.dispatch('loaddata');
+  },
   computed:{
     panini(){
       return this.$store.getters['getfilteredpanini'];
