@@ -122,9 +122,12 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         //dd(Auth::user()->name, $user->name);
         $this->authorize('update', $user);
-        $user->name =  $request->get('name');
+        $user->name = $request->get('name');
         $user->email = $request->get('email');
         $user->role = $request->get('role');
+        if ($request->has('password')) {
+            $user->password = \Hash::make($request->get('password'));
+        }
         $user->save();
         return redirect('users')->withSuccess('Utente aggiornato.');
     }
@@ -146,7 +149,7 @@ class UserController extends Controller
                 $user->role = $request->get('role');
             }
             if ($request->has('password')) {
-                $user->password = $request->get('password');
+                $user->password = \Hash::make($request->get('password'));
             }
             $user->save();
             return response()->json(['success' => $result], 200);

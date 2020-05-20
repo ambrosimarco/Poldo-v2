@@ -32,19 +32,19 @@
     <hr>
 
     @foreach($sandwiches as $sandwich => $attributes)
-    @php
-    $recipe = "";
-    @endphp
-    @foreach($attributes->ingredients as $ingredient)
-    @php
-    $recipe = $recipe.$ingredient->name;
-    @endphp
-    @if (!$loop->last)
-    @php
-    $recipe = $recipe.", ";
-    @endphp
-    @endif
-    @endforeach
+        @php
+        $recipe = "";
+        @endphp
+        @foreach($attributes->ingredients as $ingredient)
+            @php
+            $recipe = $recipe.$ingredient->name;
+            @endphp
+            @if (!$loop->last)
+            @php
+            $recipe = $recipe.", ";
+            @endphp
+            @endif
+        @endforeach
 
     <div class="media p-1">
         <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
@@ -55,8 +55,8 @@
                 <input hidden class="price" name="price" value="{{$attributes->price}}">
                 <input disabled value="{{$recipe}}" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
                 <div class="input-group-append">
-                    <button class="plus btn btn-success" type="button" onclick="addSandwich(this)"><i class="fa fa-plus"></i></button>
-                    <button class="minus btn btn-danger" type="button" onclick="removeSandwich(this)"><i class="fa fa-minus"></i></button>
+                    <button class="plus btn btn-success" type="button" onclick="addSandwich({{$attributes->id}})"><i class="fa fa-plus"></i></button>
+                    <button class="minus btn btn-danger" type="button" onclick="removeSandwich({{$attributes->id}})"><i class="fa fa-minus"></i></button>
                 </div>
             </div>
         </div>
@@ -109,16 +109,13 @@
 @endcan
 
 <script type="application/javascript">
-    function addSandwich(button) {
-        $(button).on('click', function() {
-            var sandwich_id = $($(this).parent().parent()[0]).find("input")[0].value;
-            var price = $(this).parent().parent().parent();
-            $.ajax({
+    function addSandwich(id) {
+        $.ajax({
                 type: "POST",
                 url: "/api/order",
                 data: {
                     api_token: '{{ Auth::user()->api_token }}',
-                    sandwich_id: 3,
+                    sandwich_id: id,
                     _token: '{{csrf_token()}}',
                     _method: 'PUT'
                 },
@@ -130,19 +127,15 @@
                     alert(xhr.responseText);
                 }
             });
-        });
     }
 
-    function removeSandwich(button) {
-        $(button).on('click', function() {
-            var sandwich_id = $($(this).parent().parent()[0]).find("input")[0].value;
-            var price = $(this).parent().parent().parent();
+    function removeSandwich(id) {
             $.ajax({
                 type: "POST",
                 url: "/api/order",
                 data: {
                     api_token: '{{ Auth::user()->api_token }}',
-                    sandwich_id: 3,
+                    sandwich_id: id,
                     _token: '{{csrf_token()}}',
                     _method: 'DELETE'
                 },
@@ -154,7 +147,6 @@
                     alert(xhr.responseText);
                 }
             });
-        });
     }
 </script>
 @endsection

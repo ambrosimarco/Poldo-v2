@@ -14,6 +14,9 @@
             <option value="class" {{ $user->role=='class' ? 'selected' : ''}}>Classe</option> 
             <option value="bar" {{$user->role=='bar' ? 'selected' : ''}}>Bar</option>
         </select>
+        <h1>Password:</h1>
+        <p>(lasciare vuoto per non modificare)</p>
+        <input class="field" type="password" value ="" id="password" name="password">
         <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
         @can('update', Auth::user(), $user)
         <br />
