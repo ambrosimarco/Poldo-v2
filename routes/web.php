@@ -24,5 +24,6 @@ Route::group(['middleware'=> ['online.status.check', 'session.timeout']], functi
         Route::get('/settings', 'SettingsController@index');
         Route::patch('/settings', 'SettingsController@update')->name('updateSettings');
         Route::get('/orders', 'OrderController@index_customers');
+        Route::get('/print/orders', 'OrderController@print_orders');
         Route::get('/print', 'HomeController@print_index');
 });

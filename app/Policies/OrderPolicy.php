@@ -96,4 +96,16 @@ class OrderPolicy
     {
         return in_array($user->role, array('class'));
     }
+
+    /**
+     * Determine whether the user can permanently delete the order.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Order  $order
+     * @return mixed
+     */
+    public function print(User $user)
+    {
+        return in_array($user->role, array('admin', 'bar'));
+    }
 }

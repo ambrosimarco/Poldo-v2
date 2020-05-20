@@ -43,6 +43,13 @@
     <link rel="stylesheet" type="text/css" href="./css/util.css">
     <link rel="stylesheet" type="text/css" href="./css/main.css">
     <!--===============================================================================================-->
+    <style>
+        .none{
+          display: none;
+          margin-left: 10px;
+          margin-top: 10px;  
+        }
+    </style>
 </head>
 
 <body style="background: rgb(239, 222, 205)">

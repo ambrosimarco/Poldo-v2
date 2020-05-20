@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
 
+
 class OrderController extends Controller
 {
     private $logged_user;
@@ -252,5 +253,14 @@ class OrderController extends Controller
     {
         $retire_time = DB::table('system_settings')->first()->retire_time;
         return Carbon::now()->toTimeString() < $retire_time;
+    }
+
+    public function print_orders(){
+          $orders = DB::table('orders')->get();
+          $users = User::all();
+          $sandwiches = Sandwich::all();
+          // Invia i dati alla view usando la funzione loadView della facade PDF
+          $pdf = \PDF::loadView('printableList', array('orders' => $orders, 'users' => $users, 'sandwiches' => $sandwiches));
+          return $pdf->download('liste.pdf');
     }
 }

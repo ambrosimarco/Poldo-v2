@@ -46,6 +46,8 @@
                         </div>
                     </div>
                 </div>
+            <div class='none' id='{{$attributes->id}}'></div>
+
             @endforeach
 
         <script type="application/javascript">
@@ -57,12 +59,48 @@
                             api_token: '{{ Auth::user()->api_token }}',
                         },
                         dataType: "json",
-                        success: function(risposta) {  
-                            $.each(risposta, function(index, element) {
-                                alert("Nome: " + element.name 
-                                    + "\nPrezzo: " + element.pivot.price 
-                                    + "\nQuantità: " + element.pivot.times); 
+                        success: function(risposta) {                             
+                            let string = '';
+                            let tot = 0;
+                            risposta.forEach(element => {                               
+                                string += '<tr>'
+                                string += '<td>' + element.name + '</td>';
+                                string += '<td>' + element.price + '</td>';
+                                string += '<td>' + element.pivot.times + '</td>';
+                                string += '<td>' + (element.price * element.pivot.times).toFixed(2) + '</td>';
+                                string += '</tr>'
+                                tot += element.price * element.pivot.times;
                             });
+
+                            $("#"+id).html(`
+                                <div class='card' style='width: 18rem;'>
+                                    <div class='card-body'>
+                                        <h5 class='card-title'>Ordinazioni</h5>
+                                        <p class='card-text'>
+                                            <table>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>Prezzo</th>
+                                                    <th>Numero</th>
+                                                    <th>Totale</th>
+                                                </tr>
+                                                ` + string + `
+                                                <tr>
+                                                    <td>TOTALE</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>` + tot.toFixed(2) + `</td>
+                                                </tr>
+                                        </p>
+                                    </div>
+                                </div>  
+                                `);
+                            let displ = $("#"+id).is( ":hidden" );
+                            if (displ){
+                                $("#"+id).slideDown("slow");
+                            }else{
+                                $("#"+id).slideUp();
+                            }
                         },
                         error: function(xhr, status, error) {
                         alert(xhr.responseText);
