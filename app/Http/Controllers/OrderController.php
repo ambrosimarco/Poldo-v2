@@ -201,14 +201,14 @@ class OrderController extends Controller
         // Controllo del blocco temporale (solo per le classi scolastiche)
         // oppure controllo se l'utente loggato ha i permessi per bypassarlo 
         if ($this->checkOrderTime() || in_array($this->logged_user->role, array('bar'))) {
-            if ($sandwich_obj = \App\Sandwich::findOrFail(3)) {
+            if ($sandwich_obj = \App\Sandwich::findOrFail($request->get('sandwich_id'))) {
                 $price = $sandwich_obj->price;
             } else {
                 return ['success' => false, 'message' => "Errore nell'ordinazione"];
             }
        
             $order = DB::table('orders')->where('user_id', '=', $this->user_id)
-                ->where('sandwich_id', '=', 3)
+                ->where('sandwich_id', '=', $request->get('sandwich_id'))
                 ->whereDate('created_at', '=', Carbon::today()->toDateString())
                 ->whereNull('deleted_at');
             // Se il panino è stato già ordinato dalla classe nello stesso giorno:
@@ -256,7 +256,10 @@ class OrderController extends Controller
     }
 
     public function print_orders(){
-          $orders = DB::table('orders')->get();
+          $orders = DB::table('orders')
+           ->whereDate('created_at', '=', Carbon::today()->toDateString())
+           ->whereNull('deleted_at')
+           ->get();
           $users = User::all();
           $sandwiches = Sandwich::all();
           // Invia i dati alla view usando la funzione loadView della facade PDF
