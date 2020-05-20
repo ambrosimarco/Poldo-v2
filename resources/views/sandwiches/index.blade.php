@@ -60,7 +60,23 @@
                 </div>
             @endforeach
 
-            <button type="button" class="btn btn-primary mr-1" onclick="createSandwich()">Nuovo panino</button>
+            <button type="button" class="btn btn-primary mr-1" onclick="showForm()">Nuovo</button>
+            <div class='none' id='new'>
+                <div class='card' style='width: 18rem;'>
+                    <div class='card-body'>
+                        <h5 class='card-title'>Ordinazioni</h5>
+                        <p class='card-text'>
+                            <label for="name">Nome</label>
+                            <input type="text" class="border border-dark" id="name">
+                            <label for="price">Prezzo</label>
+                            <input type="text" class="border border-dark" id="price">
+                            <label for="description">Descrizione</label>
+                            <input type="text" class="border border-dark" id="description">
+                            <button type="button" class="btn btn-primary mr-1" onclick="createSandwich()">Invia</button>
+                        </p>
+                    </div>
+                </div>  
+            </div>
 
 
         <!-- Scroll-back button -->
@@ -79,11 +95,18 @@
 
 
         <script type="application/javascript">  
+            function showForm() {
+                let displ = $("#new").is( ":hidden" );
+                    if (displ){
+                        $("#new").slideDown("slow");
+                    }else{
+                        $("#new").slideUp();
+                    }   
+            }
             function createSandwich(button){
-                var name = 'Diablo';
-                var price = '2.00';
-                var description = 'Panino piccante';
-                var role = 'class';
+                var name =  $('#name').val();
+                var price =  $('#price').val();
+                var description =  $('#description').val();;
                 $.ajax({  
                     type: "POST",                    
                     url: "/api/sandwiches",  
@@ -97,6 +120,7 @@
                     dataType: "json",
                     success: function(risposta) {  
                         alert(risposta.message);
+                        location.reload(true);
                     },
                     error: function(xhr, status, error) {
                     alert(xhr.responseText);
@@ -118,6 +142,7 @@
                     dataType: "json",
                     success: function(risposta) {  
                         alert(risposta.message);
+                        location.reload(true);
                     },
                     error: function(xhr, status, error) {
                     alert(xhr.responseText);

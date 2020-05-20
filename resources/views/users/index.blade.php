@@ -46,17 +46,46 @@
                 </div>
             @endforeach
 
-
-
-            <button type="button" class="btn btn-primary mr-1" onclick="createUser()">Crea l'utente 5bi</button>
+            <button type="button" class="btn btn-primary mr-1" onclick="showForm()">Nuovo</button>
+            <div class='none' id='new'>
+                <div class='card' style='width: 18rem;'>
+                    <div class='card-body'>
+                        <h5 class='card-title'>Ordinazioni</h5>
+                        <p class='card-text'>
+                            <label for="name">Nome</label>
+                            <input type="text" class="border border-dark" id="name">
+                            <label for="email">Email</label>
+                            <input type="text" class="border border-dark" id="email">
+                            <label for="password">Password</label>
+                            <input type="password" class="border border-dark" id="password">
+                            <label for="password">Ruolo</label>
+                            <select class="field" id="role">
+                                <option value="admin">Amministratore</option> 
+                                <option value="class">Classe</option> 
+                                <option value="bar">Bar</option>
+                            </select>
+                            <button type="button" class="btn btn-primary mr-1" onclick="createUser()">Invia</button>
+                        </p>
+                    </div>
+                </div>  
+            </div>
 
             
-        <script type="application/javascript">  
-            function createUser(button){
-                var name = '5bi';
-                var email = '5bi@5bi.com';
-                var password = '5bi';
-                var role = 'class';
+        <script type="application/javascript">
+            function showForm() {
+                let displ = $("#new").is( ":hidden" );
+                    if (displ){
+                        $("#new").slideDown("slow");
+                    }else{
+                        $("#new").slideUp();
+                    }   
+            }
+
+            function createUser(){
+                var name = $('#name').val();
+                var email = $('#email').val();
+                var password = $('#password').val();
+                var role = $('#role').val();
                 $.ajax({  
                     type: "POST",                    
                     url: "/api/users",  
@@ -71,6 +100,7 @@
                     dataType: "json",
                     success: function(risposta) {  
                         alert(risposta.message);
+                        location.reload(true);
                     },
                     error: function(xhr, status, error) {
                     alert(xhr.responseText);
@@ -90,6 +120,7 @@
                     dataType: "json",
                     success: function(risposta) {  
                         alert(risposta.message);
+                        location.reload(true);
                     },
                     error: function(xhr, status, error) {
                     alert(xhr.responseText);
