@@ -39,7 +39,7 @@
                         <div class="input-group">
                             <div class="input-group-append">
                             <button type="button" class="btn btn-primary mr-1"><a href="/users/{{$attributes->id}}">Vedi</a></button>
-                            <button type="button" class="btn btn-primary mr-1" onclick="deleteUser()">Cancella</button>
+                            <button type="button" class="btn btn-primary mr-1" onclick="deleteUser({{$attributes->id}})">Cancella</button>
                             </div>
                         </div>
                     </div>
@@ -78,11 +78,10 @@
                 }); 
             }       
 
-            function deleteUser(button){
-                var user_id = 5;
+            function deleteUser(id){
                 $.ajax({  
                     type: "POST",                    
-                    url: "/api/users/" + user_id,  
+                    url: "/api/users/" + id,  
                     data: { 
                             api_token: '{{ Auth::user()->api_token }}',
                             _token: '{{csrf_token()}}',

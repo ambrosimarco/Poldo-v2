@@ -41,7 +41,7 @@
                     <h4 class="media-heading">{{$attributes->name}}</h4>
                         <div class="input-group">
                             <div class="input-group-append">
-                            <button type="button" class="btn btn-primary mr-1" onclick="getList(this)">Vedi</a></button>
+                            <button type="button" class="btn btn-primary mr-1" onclick="getList({{$attributes->id}})">Vedi</a></button>
                             </div>
                         </div>
                     </div>
@@ -49,11 +49,10 @@
             @endforeach
 
         <script type="application/javascript">
-            function getList(button){
-                $(button).on('click', function() {
+            function getList(id){
                     $.ajax({  
                         type: "GET",
-                        url: "/api/order/list/4",  
+                        url: "/api/order/list/" + id,  
                         data: {
                             api_token: '{{ Auth::user()->api_token }}',
                         },
@@ -69,7 +68,6 @@
                         alert(xhr.responseText);
                         }
                     }); 
-                });
             }
         </script>
 

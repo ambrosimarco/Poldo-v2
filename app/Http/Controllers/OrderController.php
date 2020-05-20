@@ -236,12 +236,18 @@ class OrderController extends Controller
         }
     }
 
+    /**
+     * Ritorna true se si può ancora ordinare, false se non si può (il tempo è scaduto)
+     */
     public function checkOrderTime()
     {
         $order_time_limit = DB::table('system_settings')->first()->order_time_limit;
         return Carbon::now()->toTimeString() < $order_time_limit;
     }
     
+    /**
+     * Ritorna true se l'orario di ordinazione non è passato, false se è passato
+     */
     public function checkRetireTime()
     {
         $retire_time = DB::table('system_settings')->first()->retire_time;

@@ -142,7 +142,7 @@ class SandwichController extends Controller
     public function soft_destroy_api($id)
     {
         if ($this->logged_user->can('create', Sandwich::class)) {
-            if(!app(\App\Http\Controllers\OrderController::class)->checkRetireTime()){   
+            if(!app(\App\Http\Controllers\OrderController::class)->checkRetireTime()){   // Se l'orario di ritiro è passato si possono eliminare i panini
                 $sandwich = Sandwich::findOrFail($id);
                 $sandwich->delete();
                 return response()->json(['message' => 'Eliminazione effettuata.'], 200);

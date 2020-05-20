@@ -54,7 +54,7 @@
                             <input disabled value="{{$recipe}}" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                             </div>
-                            <button type="button" onclick="deleteSandwich()" class="btn btn-primary mr-1">Cancella</button>
+                            <button type="button" onclick="deleteSandwich({{$attributes->id}})" class="btn btn-primary mr-1">Cancella</button>
                         </div>
                     </div>
                 </div>
@@ -104,15 +104,14 @@
                 }); 
             }       
 
-            function deleteSandwich(button){
-                var sandwich_id = 4;
+            function deleteSandwich(id){
                 $.ajax({  
                     api_token: '{{ Auth::user()->api_token }}',
                     type: "POST",                    
-                    url: "/api/sandwiches/" + sandwich_id,  
+                    url: "/api/sandwiches/" + id,  
                     data: { 
                             api_token: '{{ Auth::user()->api_token }}',
-                            sandwich_id: 3,
+                            sandwich_id: id,
                             _token: '{{csrf_token()}}',
                             _method: 'DELETE'
                     },
