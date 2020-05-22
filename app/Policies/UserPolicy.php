@@ -47,9 +47,8 @@ class UserPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create()
+    public function create(User $user)
     {
-        return true;
         return in_array($user->role, array('admin'));
     }
 
@@ -62,16 +61,16 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        // Utente normale
+        // Modifica di utente normale
         if ($model->role != 'admin') {
             return in_array($user->role, array('admin'));
-        // Utente admin ma se stesso
+        // Modifica di se stesso
         }elseif ($model->id == $user->id) {
             return in_array($user->role, array('admin'));
-        // Utente 'admin'
-        }elseif ($user->name = 'admin') {
+        // Caso 'admin'
+        }elseif($model->role == 'admin' && $user->name == 'admin'){
             return true;
-        // Altro utente admin
+        // Utente non admin
         }else{
             return false;
         }
@@ -86,16 +85,21 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        // Utente normale
+        // Modifica di utente normale
         if ($model->role != 'admin') {
             return in_array($user->role, array('admin'));
-        // Utente admin ma se stesso
+        // Modifica di se stesso
         }elseif ($model->id == $user->id) {
-            return in_array($user->role, array('admin'));
-        // Utente 'admin'
-        }elseif ($user->name = 'admin') {
+            if ($model->name != 'admin') {
+                return in_array($user->role, array('admin'));
+            // Utente 'admin'
+            }else{  
+                return false;
+            }
+        // Caso 'admin'
+        }elseif($model->role == 'admin' && $user->name == 'admin'){
             return true;
-        // Altro utente admin
+        // Utente non admin
         }else{
             return false;
         }
@@ -122,16 +126,21 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        // Utente normale
+        // Modifica di utente normale
         if ($model->role != 'admin') {
             return in_array($user->role, array('admin'));
-        // Utente admin ma se stesso
+        // Modifica di se stesso
         }elseif ($model->id == $user->id) {
-            return in_array($user->role, array('admin'));
-        // Utente 'admin'
-        }elseif ($user->name = 'admin') {
+            if ($model->name != 'admin') {
+                return in_array($user->role, array('admin'));
+            // Utente 'admin'
+            }else{  
+                return false;
+            }
+        // Caso 'admin'
+        }elseif($model->role == 'admin' && $user->name == 'admin'){
             return true;
-        // Altro utente admin
+        // Utente non admin
         }else{
             return false;
         }

@@ -35,7 +35,7 @@
                 <div class="media p-1">
                     <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
                     <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
-                    <h4 class="media-heading">{{$attributes->name}}</h4>
+                    <h4 class="media-heading {{($attributes->trashed == 'true') ? 'text-danger' : ''}}">{{$attributes->name}}</h4>
                         <div class="input-group">
                             <div class="input-group-append">
                             <button type="button" class="btn btn-primary mr-1"><a href="/users/{{$attributes->id}}">Vedi</a></button>

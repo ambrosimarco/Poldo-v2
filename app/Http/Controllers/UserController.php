@@ -29,7 +29,15 @@ class UserController extends Controller
     public function index()
     {
         $this->authorize('view-any', User::class);
-        $users = User::all();
+        $users = User::withTrashed()->get();
+        foreach ($users as $user) {
+            if($user->trashed()){
+                $user->setAttribute('trashed', 'true');
+            } else {
+                $user->setAttribute('trashed', 'false');
+            }
+        }
+
         return view('/users/index')->with(compact('users'));
     }
 
@@ -77,7 +85,7 @@ class UserController extends Controller
                 $user->save();
                 return response()->json(['message' => 'Utente creato'], 200);
             } catch (\Throwable $th) {
-                return response()->json(['message' => "Errore nell'operazione. Ricontrollare i dati inseriti (l'utente potrebbe essere già presente)."], 200);
+                return response()->json(['message' => "Errore nell'operazione. Ricontrollare i dati inseriti (l'utente o un dato 'unico' potrebbero essere già presenti)."], 200);
             }
         }else{
             return response()->json(['message' => "Errore nell'operazione. Utente non autorizzato."], 401);
@@ -164,9 +172,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy_api($id)
+    {        
+        $user = User::findOrFail($id);
+        if($this->logged_user->can('delete', $user)){
+            $user->forceDelete();
+            return response()->json(['message' => 'Eliminazione effettuata.'], 200);
+        }else{
+            return response()->json(['message' => "Errore nell'operazione. Utente non autorizzato."], 401);
+        }
     }
     
     /**
