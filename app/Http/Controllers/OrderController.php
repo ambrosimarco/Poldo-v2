@@ -46,22 +46,26 @@ class OrderController extends Controller
         $customers = [];
         // Cicla tutti i panini nel DB
         foreach (Sandwich::all() as $sandwich) {
-            // Cicla l'utente associato ad ogni ordine
-            foreach (Sandwich::findOrFail($sandwich->id)->users()->get() as $user) {
-                // Cicla gli utenti
-                foreach ($customers as $element) {
-                    // Controlla i duplicati
-                    if ($element['id'] == $user['id']) {
-                        // Flag per i duplicati
-                        $dup_flag = true;   //Flag for duplicates
+            // Cicla gli utenti associati ad ogni panino (cioè cicla tutte
+            // le associazioni tra utente e panino, ovvero gli ordini)
+            foreach (Sandwich::findOrFail($sandwich->id)->users()
+                // Almeno un record nella tabella pivot deve essere stato creato oggi
+                // (per mostrare solo gli utenti che hanno fatto ordinazioni oggi)
+                ->wherePivot('created_at', today())->get() as $user) {
+                    // Cicla gli utenti
+                    foreach ($customers as $element) {
+                        // Controlla i duplicati
+                        if ($element['id'] == $user['id']) {
+                            // Flag per i duplicati
+                            $dup_flag = true;   //Flag for duplicates
+                        }
                     }
-                }
-                if (!$dup_flag) {
-                    // Aggiungi l'utente all'array se non è già presente
-                    array_push($customers, $user);
-                }
-                // Resetta il flag dopo ogni ordine
-                $dup_flag = false;
+                    if (!$dup_flag) {
+                        // Aggiungi l'utente all'array se non è già presente
+                        array_push($customers, $user);
+                    }
+                    // Resetta il flag dopo ogni ordine
+                    $dup_flag = false;
             }
         }
         return view('/orders/index')->with(compact('customers'));
@@ -131,7 +135,7 @@ class OrderController extends Controller
     {
         $list = [];
         $user = User::findOrfail($id);
-        foreach ($user->sandwiches()->get() as $sandwich) {
+        foreach ($user->sandwiches()->wherePivot('created_at', today())->get() as $sandwich) {
             array_push($list, $sandwich);
         }
         return response()->json($list);
@@ -165,13 +169,13 @@ class OrderController extends Controller
                 $times = ($order->select('times')->pluck('times')[0]);
                 // Se il contatore è maggiore di 1 lo diminuisco di 1:
                 if ($times > 1) {
-                    $order->updated_at = Carbon::now();
+                    $order->update(['updated_at' => Carbon::now()]);
                     $order->update(['times' => $times - 1]);
                     return ['success' => true, 'message' => 'Diminuzione effettuata.'];
                 // Altrimenti elimino il panino
-                } else {
+                } else if ($times = 1){
                     try {
-                        $order->deleted_at = Carbon::now();
+                        $order->update(['deleted_at' => Carbon::now()]);
                         return ['success' => true, 'message' => 'Rimozione effettuata.'];
                     } catch (\Throwable $th) {
                         return ['success' => false, 'message' => $th->getMessage()];
@@ -216,14 +220,14 @@ class OrderController extends Controller
                 $times = ($order->select('times')->pluck('times')[0]);
                 // Se il contatore è maggiore di 1 lo diminuisco di 1:
                 if ($times > 1) {
-                    $order->updated_at = Carbon::now();
+                    $order->update(['updated_at' => Carbon::now()]);
                     $order->update(['times' => $times - 1]);
                     return ['success' => true, 'message' => 'Diminuzione effettuata.'];
-                // Altrimenti elimino DEFINITIVAMENTE il panino
-                } else {
+                // Altrimenti elimino il panino
+                } else if ($times = 1){
                     try {
                         $order->delete();
-                        return ['success' => true, 'message' => 'Rimozione permanente effettuata.'];
+                        return ['success' => true, 'message' => 'Rimozione effettuata.'];
                     } catch (\Throwable $th) {
                         return ['success' => false, 'message' => $th->getMessage()];
                     }
