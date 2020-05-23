@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
             'name' => 'required|max:20',
             'email' => 'required|email:rfc,dns|max:100',
             'role' => 'in:admin,class,bar',
-            'password' => 'string|min:3',
+            'password' => 'string|min:3|nullable',
         ];
     }
 }

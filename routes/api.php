@@ -27,6 +27,10 @@ Route::group(['middleware'=> ['auth:api']], function(){
     // Utenti
     Route::post('/users', 'UserController@store_api');
     Route::delete('/users/{id}', 'UserController@soft_destroy_api');
+    Route::patch('/users/{id}', 'UserController@update_api');
+    Route::patch('/users/restore/{id}', 'UserController@restore_api');
+    Route::delete('/users/{id}', 'UserController@soft_destroy_api');
+    Route::delete('/users/hard/{id}', 'UserController@destroy_api');
     // Panini
     Route::post('/sandwiches', 'SandwichController@store_api');
     Route::delete('/sandwiches/{id}', 'SandwichController@soft_destroy_api');

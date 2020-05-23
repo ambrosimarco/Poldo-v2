@@ -100,9 +100,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        /*
         $user = User::findOrFail($id);
         $this->authorize('view', $user);
         return view('/users/show')->with(compact('user'));
+        */
+        abort(404);
     }
 
     /**
@@ -147,35 +150,35 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update_api(UserRequest $request)
+    public function update_api(UserRequest $request, $id)
     {
-        $user = User::findOrFail($user_id);
+        $user = User::findOrFail($id);
         if($this->logged_user->can('update', $user)){
             $user->name = $request->get('name');
             $user->email = $request->get('email');
-            if ($logged_user->role == 'admin') {
+            if ($this->logged_user->role == 'admin') {
                 $user->role = $request->get('role');
             }
             if ($request->has('password')) {
                 $user->password = \Hash::make($request->get('password'));
             }
             $user->save();
-            return response()->json(['success' => $result], 200);
+            return response()->json(['message' => 'Modifica effettuata.'], 200);
         }else{
             return response()->json(['message' => "Errore nell'operazione. Utente non autorizzato."], 401);
         }
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Completely remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy_api($id)
     {        
-        $user = User::findOrFail($id);
-        if($this->logged_user->can('delete', $user)){
+        $user = User::withTrashed()->findOrFail($id);
+        if($this->logged_user->can('force-delete', $user)){
             $user->forceDelete();
             return response()->json(['message' => 'Eliminazione effettuata.'], 200);
         }else{
@@ -194,7 +197,24 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         if($this->logged_user->can('delete', $user)){
             $user->delete();
-            return response()->json(['message' => 'Eliminazione effettuata.'], 200);
+            return response()->json(['message' => 'Disattivazione effettuata.'], 200);
+        }else{
+            return response()->json(['message' => "Errore nell'operazione. Utente non autorizzato."], 401);
+        }
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore_api($id)
+    {        
+        $user = User::withTrashed()->findOrFail($id);
+        if($this->logged_user->can('restore', $user)){
+            $user->restore();
+            return response()->json(['message' => 'Attivazione effettuata.'], 200);
         }else{
             return response()->json(['message' => "Errore nell'operazione. Utente non autorizzato."], 401);
         }

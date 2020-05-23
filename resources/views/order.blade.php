@@ -44,7 +44,7 @@
             $recipe = $recipe.", ";
             @endphp
             @endif
-        @endforeach
+    @endforeach
 
     <div class="media p-1">
         <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
