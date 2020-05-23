@@ -30,35 +30,41 @@
                 </div>
             </div>
             <hr>
-    
-            @foreach($sandwiches as $sandwich => $attributes)
-                @php
-                $recipe = "";
-                @endphp
-                @foreach($attributes->ingredients as $ingredient)
+            
+            <h1 class="mb-3">Panini</h1>
+            <div id="reloadForm">
+                <div id="reloadSandwiches">
+                @foreach($sandwiches as $sandwich => $attributes)
                     @php
-                    $recipe = $recipe.$ingredient->name;
+                    $recipe = "";
                     @endphp
-                    @if (!$loop->last)
+                    @foreach($attributes->ingredients as $ingredient)
                         @php
-                        $recipe = $recipe.", ";
+                        $recipe = $recipe.$ingredient->name;
                         @endphp
-                    @endif
-                @endforeach
-
-                <div class="media p-1">
-                    <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
-                    <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
-                    <h4 class="media-heading">{{$attributes->name}}: {{$attributes->price}}€</h4>
-                        <div class="input-group">
-                            <input disabled value="{{$recipe}}" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
+                        @if (!$loop->last)
+                            @php
+                            $recipe = $recipe.", ";
+                            @endphp
+                        @endif
+                    @endforeach
+                    
+                        <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
+                        <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
+                        <h4 class="media-heading  {{($attributes->trashed == 'true') ? 'text-danger' : ''}}">{{$attributes->name}}: {{$attributes->price}}€</h4>
+                            <div class="input-group">
+                                <input disabled value="{{$recipe}}" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                </div>
+                                @if ($attributes->trashed == 'true')
+                                    <button type="button" class="btn btn-primary mr-1" onclick="enableSandwich({{$attributes->id}})">Abilita</button>                                
+                                @else
+                                    <button type="button" class="btn btn-primary mr-1" onclick="disableSandwich({{$attributes->id}})">Disabilita</button>                                
+                                @endif
                             </div>
-                            <button type="button" onclick="deleteSandwich({{$attributes->id}})" class="btn btn-primary mr-1">Cancella</button>
                         </div>
-                    </div>
+                @endforeach
                 </div>
-            @endforeach
 
             <button type="button" class="btn btn-primary mr-1" onclick="showForm()">Nuovo</button>
             <div class='none' id='new'>
@@ -77,6 +83,7 @@
                     </div>
                 </div>  
             </div>
+        </div>
 
 
         <!-- Scroll-back button -->
@@ -120,35 +127,53 @@
                     dataType: "json",
                     success: function(risposta) {  
                         alert(risposta.message);
-                        location.reload(true);
+                        $("#reloadForm").load(location.href + " #reloadForm");
                     },
                     error: function(xhr, status, error) {
                     alert(xhr.responseText);
                     }
                 }); 
-            }       
+            }           
 
-            function deleteSandwich(id){
+            function enableSandwich(id){
                 $.ajax({  
-                    api_token: '{{ Auth::user()->api_token }}',
+                    type: "POST",                    
+                    url: "/api/sandwiches/restore/" + id,  
+                    data: { 
+                            api_token: '{{ Auth::user()->api_token }}',
+                            _token: '{{csrf_token()}}',
+                            _method: 'PATCH'
+                    },
+                    dataType: "json",
+                    success: function(risposta) {  
+                        alert(risposta.message);
+                        $("#reloadSandwiches").load(location.href + " #reloadSandwiches");
+                    },
+                    error: function(xhr, status, error) {
+                    alert(xhr.responseText);
+                    }
+                }); 
+            } 
+
+            function disableSandwich(id){
+                $.ajax({  
                     type: "POST",                    
                     url: "/api/sandwiches/" + id,  
                     data: { 
                             api_token: '{{ Auth::user()->api_token }}',
-                            sandwich_id: id,
                             _token: '{{csrf_token()}}',
                             _method: 'DELETE'
                     },
                     dataType: "json",
                     success: function(risposta) {  
                         alert(risposta.message);
-                        location.reload(true);
+                        $("#reloadSandwiches").load(location.href + " #reloadSandwiches");
                     },
                     error: function(xhr, status, error) {
                     alert(xhr.responseText);
                     }
                 }); 
-            }       
+            } 
         </script>
 
 

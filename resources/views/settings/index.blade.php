@@ -66,6 +66,7 @@
                     dataType: "json",
                     success: function(risposta) {  
                         alert(risposta.message);
+                        location.reload(true);
                     },
                     error: function(xhr, status, error) {
                     alert(xhr.responseText);

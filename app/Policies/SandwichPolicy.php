@@ -87,7 +87,7 @@ class SandwichPolicy
      * @param  \App\Sandwich  $sandwich
      * @return mixed
      */
-    public function delete(User $user, Sandwich $sandwich)
+    public function delete(User $user)
     {
         return in_array($user->role, array('admin', 'bar'));
     }
@@ -99,7 +99,7 @@ class SandwichPolicy
      * @param  \App\Sandwich  $sandwich
      * @return mixed
      */
-    public function forceDelete(User $user, Sandwich $sandwich)
+    public function forceDelete(User $user)
     {
         return in_array($user->role, array('admin'));
     }

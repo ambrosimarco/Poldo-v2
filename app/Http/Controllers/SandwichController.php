@@ -28,7 +28,15 @@ class SandwichController extends Controller
      */
     public function index()
     {
-        $sandwiches = Sandwich::all();
+        $this->authorize('view-any', Sandwich::class);
+        $sandwiches = Sandwich::withTrashed()->get();
+        foreach ($sandwiches as $sandwich) {
+            if($sandwich->trashed()){
+                $sandwich->setAttribute('trashed', 'true');
+            } else {
+                $sandwich->setAttribute('trashed', 'false');
+            }
+        }
         return view('/sandwiches/index')->with(compact('sandwiches'));
     }
 
@@ -129,7 +137,8 @@ class SandwichController extends Controller
      */
     public function destroy($id)
     {
-        // E' NECESSARIO METTERE IL SITO IN MANUTENZIONE
+        // I panini non posso essere cancellati (effettuare un wipe del sistema).
+        return false;
     }
 
 
@@ -145,10 +154,27 @@ class SandwichController extends Controller
             if(!app(\App\Http\Controllers\OrderController::class)->checkRetireTime()){   // Se l'orario di ritiro è passato si possono eliminare i panini
                 $sandwich = Sandwich::findOrFail($id);
                 $sandwich->delete();
-                return response()->json(['message' => 'Eliminazione effettuata.'], 200);
+                return response()->json(['message' => 'Panino disabilitato.'], 200);
             }else{
                 return response()->json(['message' => "Errore nell'operazione. Attendere l'orario di ritiro per effettuare cambiamenti nel listino."], 403);
             }
+        }else{
+            return response()->json(['message' => "Errore nell'operazione. Utente non autorizzato."], 401);
+        }
+    }
+
+        /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore_api($id)
+    {        
+        $sandwich = Sandwich::withTrashed()->findOrFail($id);
+        if($this->logged_user->can('restore', $sandwich)){
+            $sandwich->restore();
+            return response()->json(['message' => 'Panino abilitato.'], 200);
         }else{
             return response()->json(['message' => "Errore nell'operazione. Utente non autorizzato."], 401);
         }

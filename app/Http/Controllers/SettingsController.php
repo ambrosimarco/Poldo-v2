@@ -11,6 +11,11 @@ use App\User;
 class SettingsController extends Controller
 {
 
+    public function __construct(Request $request){
+        // Utente che fa la chiamata api
+        $this->logged_user = $request->user('api');
+    }
+
     public function index(){
         try {
             if(Auth::user()->canAdminEdit()){
@@ -70,7 +75,7 @@ class SettingsController extends Controller
             foreach ($validatedData as $key => $value) {
                 $settings->update([$key => $value]);
             }
-            return redirect('/')->withSuccess('Modifiche effettuate con successo.');
+            return redirect()->back()->withSuccess('Modifiche effettuate con successo.');
 
         }else{
             if(SettingsController::changePassword($request)){
@@ -102,7 +107,9 @@ class SettingsController extends Controller
         if($no_wipe){
             return response()->json(['message' => "Impossibile effettuare il wipe del sistema. Il vincolo no-wipe è abilitato."], 403); 
         }
-        $this->authorize('wipe', User::class);
+        $this->logged_user->can('wipe', User::class);
+        $this->logged_user->can('force-delete', Sandwich::class);
+
         DB::table('orders')->truncate();
         DB::table('pairings')->truncate();
         DB::table('ingredients')->where('id', '>', '0')->delete();

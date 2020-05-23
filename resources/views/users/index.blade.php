@@ -30,7 +30,8 @@
                 </div>
             </div>
             <hr>
-    
+
+            <h1 class="mb-3">Utenti</h1>
             <div id="reloadForm">
                 <div id="reloadUsers">
                 @foreach($users as $user => $attributes)
