@@ -58,7 +58,8 @@ class DatabaseSeeder extends Seeder
       DB::table('sandwiches')->insert([
         'name' => 'Piadina al cotto',
         'price' => '2.00',
-        'description' => 'Piadina al cotto',
+        'description' => 'Piadina al prosciutto cotto',
+        'type' => 'Caldo',
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),
       ]);
@@ -66,13 +67,15 @@ class DatabaseSeeder extends Seeder
         'name' => 'Maxi pizza',
         'price' => '2.00',
         'description' => 'Scelta casualmente tra Margherita, Prosciutto, Funghi, Würstel, Salamino',
+        'type' => 'Caldo',
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),
       ]);
       DB::table('sandwiches')->insert([
         'name' => 'Focaccia',
         'price' => '1.30',
-        'description' => 'Focaccia',
+        'description' => 'Focaccia al prosciutto cotto',
+        'type' => 'Freddo',
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),
       ]);

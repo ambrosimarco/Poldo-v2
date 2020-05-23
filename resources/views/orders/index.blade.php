@@ -6,30 +6,6 @@
         <!-- Container with the list of users -->
         <div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
     
-            <!-- Three main buttons -->
-            <div class="btn-toolbar" role="toolbar">
-                <div class="dropdown">
-                    <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">
-                        Ordina per:
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Nome crescente</a>
-                        <a class="dropdown-item" href="#">Nome decrescente</a>
-                        <a class="dropdown-item" href="#">Prezzo crescente</a>
-                        <a class="dropdown-item" href="#">Prezzo decrescente</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">
-                        Visualizza panini:
-                    </button>
-
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Caldi</a>
-                        <a class="dropdown-item" href="#">Freddi</a>
-                    </div>
-                </div>
-            </div>
             <hr>
 
             <h1>Liste di oggi</h1>
@@ -120,7 +96,6 @@
         <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script type="application/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-        <script type="application/javascript" src="js/bootstrap-better-nav.js"></script>
     
         <script  type="application/javascript">
             //Get the button

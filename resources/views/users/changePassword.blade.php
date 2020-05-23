@@ -2,20 +2,23 @@
 
 @section('content')
 
+        <div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
+
+        <hr>
         <h1>Cambio password</h1>
         <br />
 
         <form method="POST" action="{{ route('updateSettings') }}">           
             @method('PATCH')
             <label>
-                <input class="input-group-text" type="text" name="old_password">
+                <input class="input-group-text" type="password" name="old_password">
                 <span>Vecchia password</span>
             </label>
             <label>
-                <input class="input-group-text" type="text" name="new_password">
+                <input class="input-group-text" type="password" name="new_password">
                 <span>Nuova password</span>
             </label>
-                <input class="input-group-text" type="text" name="new_password_confirmation">
+                <input class="input-group-text" type="password" name="new_password_confirmation">
                 <span>Reinserisci la password</span>
             </label>
             <br />
@@ -36,7 +39,6 @@
         <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script type="application/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-        <script type="application/javascript" src="js/bootstrap-better-nav.js"></script>
     
         <script  type="application/javascript">
             //Get the button
@@ -62,5 +64,6 @@
             }
     
         </script>
+        </div>
         </div>
 @endsection

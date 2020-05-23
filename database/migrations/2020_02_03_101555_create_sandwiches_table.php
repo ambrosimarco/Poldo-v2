@@ -15,7 +15,7 @@ class CreateSandwichesTable extends Migration
     {
         Schema::create('sandwiches', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 100)->unique();
+            $table->string('name', 100);
             $table->decimal('price', 4, 2);
             $table->string('description', 255);
             $table->timestamps();            

@@ -65,7 +65,7 @@ class SandwichPolicy
      */
     public function create(User $user)
     {
-        return in_array($user->role, array('admin'));
+        return in_array($user->role, array('admin', 'bar'));
     }
 
     /**

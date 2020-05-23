@@ -122,4 +122,10 @@ class SettingsController extends Controller
 
         return response()->json(['message' => 'System wipe completato.'], 200);
     }
+
+    public function egg_api(){
+        DB::table('system_settings')->increment('egg', 1);
+        $n = DB::table('system_settings')->pluck('egg')[0];
+        return $n;
+    }
 }
