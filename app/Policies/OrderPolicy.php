@@ -35,7 +35,7 @@ class OrderPolicy
      */
     public function view(User $user, Order $order)
     {
-        return in_array($user->role, array('class', 'admin', 'bar'));
+        return (in_array($user->role, array('admin', 'bar')) || $user->id == $order->user_id);
     }
 
     /**

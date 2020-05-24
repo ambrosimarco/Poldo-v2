@@ -133,12 +133,17 @@ class OrderController extends Controller
      */
     public function show_list_api($id)
     {
-        $list = [];
-        $user = User::findOrfail($id);
-        foreach ($user->sandwiches()->wherePivot('created_at', today())->get() as $sandwich) {
-            array_push($list, $sandwich);
+        if ((in_array($this->logged_user->role, array('admin', 'bar')) || $this->logged_user->id == $id)) {
+            $list = [];
+            $user = User::findOrfail($id);
+            foreach ($user->sandwiches()->wherePivot('created_at', today())->get() as $sandwich) {
+                array_push($list, $sandwich);
+            }
+            return response()->json($list);
+        }else{
+            return response()->json(['message' => "Utente non autorizzato."], 403);
         }
-        return response()->json($list);
+        
     }
 
     /**

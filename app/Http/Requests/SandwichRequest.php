@@ -27,6 +27,7 @@ class SandwichRequest extends FormRequest
             'name' => 'required|max:100',
             'price' => 'required|between:0,99.99',
             'description' => 'required|max:255',
+            'type' => 'required|in:Caldo,Freddo'
         ];
     }
 }

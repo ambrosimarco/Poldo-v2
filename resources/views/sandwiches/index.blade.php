@@ -77,6 +77,13 @@
                             <input type="text" class="border border-dark" id="price">
                             <label for="description">Descrizione</label>
                             <input type="text" class="border border-dark" id="description">
+                            <br>
+                            <label for="type">Tipo</label>
+                            <select class="field" id="type">
+                                <option value="Caldo">Caldo</option> 
+                                <option value="Freddo">Freddo</option> 
+                            </select>
+                            <br>
                             <button type="button" class="btn btn-primary mr-1" onclick="createSandwich()">Invia</button>
                         </p>
                     </div>
@@ -112,7 +119,8 @@
             function createSandwich(button){
                 var name =  $('#name').val();
                 var price =  $('#price').val();
-                var description =  $('#description').val();;
+                var description =  $('#description').val();
+                var type =  $('#type').val();
                 $.ajax({  
                     type: "POST",                    
                     url: "/api/sandwiches",  
@@ -121,6 +129,7 @@
                         name: name,
                         price: price,
                         description: description,
+                        type: type,
                         _token: '{{csrf_token()}}',
                     },
                     dataType: "json",

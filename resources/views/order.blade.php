@@ -73,7 +73,9 @@
             <hr>
             <h1>Riepilogo ordinazioni</h1>
             <br>
+            <div id="riepilogo">
 
+            </div>
         </div>
     </div>
 
@@ -145,7 +147,8 @@
             },
             dataType: "json",
             success: function(risposta) {
-                alert(risposta.message);
+                // alert(risposta.message);
+                riepilogo();
             },
             error: function(xhr, status, error) {
                 alert(xhr.responseText);
@@ -165,15 +168,68 @@
             },
             dataType: "json",
             success: function(risposta) {
-                alert(risposta.message);
+                // alert(risposta.message);
+                riepilogo();
             },
             error: function(xhr, status, error) {
                 alert(xhr.responseText);
             }
         });
     }
-</script>
 
+    function riepilogo(){
+        $.ajax({
+            type: "GET",
+            url: "api/order/list/{{Auth::user()->id}}",
+            data: {
+                api_token: '{{ Auth::user()->api_token }}',
+                _token: '{{csrf_token()}}',
+                _method: 'DELETE'
+            },
+            dataType: "json",
+            success: function(risposta) {
+                var tot = 0.00;                
+                var string = "";
+                string += `
+                <table class="table">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Quantità</th>
+                        <th>Prezzo</th>
+                    </tr>
+                `;
+                risposta.forEach(element => {
+                    string += `
+                    <tr>
+                        <td>`+ element.name +`</td>
+                        <td>`+ element.pivot.times +`</td>
+                        <td>`+ element.pivot.price +`</td>
+                    </tr>
+                    `;
+                    tot += element.pivot.price * element.pivot.times;
+                });
+                string += `
+                    <tr>
+                        <td class="mt-3">TOTALE</td>
+                        <td></td>
+                        <td>`+ tot.toFixed(2) +`</td>
+                    </tr>
+                    `;
+                string += '</table>';
+
+
+                $("#riepilogo").html(string);
+            },
+            error: function(xhr, status, error) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+
+    $( document ).ready(function() {
+        riepilogo();
+    });
+</script>
 
 <script type="application/javascript">
     var list = [

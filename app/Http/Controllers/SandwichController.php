@@ -53,6 +53,7 @@ class SandwichController extends Controller
                     $sandwich->name = $request->name;
                     $sandwich->price = $request->price;
                     $sandwich->description = $request->description;
+                    $sandwich->type = $request->type;
                     $sandwich->save();
                     return response()->json(['message' => 'Panino creato.'], 200);
                 } catch (\Throwable $th) {
