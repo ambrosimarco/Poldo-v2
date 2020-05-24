@@ -13,7 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+// Authentication Routes...
+Auth::routes([
+        'register' => false, // Registration Routes...
+        'reset' => false, // Password Reset Routes...
+        'verify' => false, // Email Verification Routes...
+      ]);
 
 Route::group(['middleware'=> ['online.status.check', 'session.timeout']], function(){
         Route::get('/', 'HomeController@order')->name('order');

@@ -89,7 +89,7 @@ class OrderController extends Controller
             if ($sandwich_obj = Sandwich::findOrFail($request->sandwich_id)) {
                 $price = $sandwich_obj->price;
             } else {
-                return ['success' => false, 'message' => "Errore nell'ordinazione."];
+                return response()->json(['message' => "Errore nell'ordinazione."], 404);
             }
     
             $order = DB::table('orders')->where('user_id', '=', $this->logged_user->id)
@@ -102,7 +102,7 @@ class OrderController extends Controller
                 $times = ($order->select('times')->pluck('times')[0] + 1);
                 $order->updated_at = Carbon::now();
                 $order->update(['times' => $times]);
-                return ['success' => true, 'message' => 'Aggiunta effettuata.'];
+                return response()->json(['message' => "Aggiunta effettuata."], 200);
 
             // Se non è stato ordinato lo inserisco:
             } else {
@@ -115,13 +115,13 @@ class OrderController extends Controller
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ]);
-                    return ['success' => true, 'message' => 'Nuovo ordine creato.'];
+                    return response()->json(['message' => "Nuovo ordine creato."], 201);
                 } catch (\Throwable $th) {
-                    return ['success' => false, 'message' => $th->getMessage()];
+                    return response()->json(['message' => $th->getMessage()], 400);
                 }
             }
         } else {
-            return ['success' => false, 'message' => "Il tempo limite per le ordinazioni è stato superato."];
+            return response()->json(['message' => 'Il tempo limite per le ordinazioni è stato superato.'], 403);
         }
     }
 
@@ -161,7 +161,7 @@ class OrderController extends Controller
             if ($sandwich_obj = Sandwich::findOrFail($request->sandwich_id)) {
                 $price = $sandwich_obj->price;
             } else {
-                return ['success' => false, 'message' => "Errore nell'ordinazione."];
+                return response()->json(['message' => "Errore nell'ordinazione."], 404);
             }
 
             $order = DB::table('orders')->where('user_id', '=', $this->user_id)
@@ -176,22 +176,22 @@ class OrderController extends Controller
                 if ($times > 1) {
                     $order->update(['updated_at' => Carbon::now()]);
                     $order->update(['times' => $times - 1]);
-                    return ['success' => true, 'message' => 'Diminuzione effettuata.'];
+                    return response()->json(['message' => "Diminuzione effettuata."], 200);
                 // Altrimenti elimino il panino
                 } else if ($times = 1){
                     try {
                         $order->update(['deleted_at' => Carbon::now()]);
-                        return ['success' => true, 'message' => 'Rimozione effettuata.'];
+                        return response()->json(['message' => "Rimozione effettuata."], 200);
                     } catch (\Throwable $th) {
-                        return ['success' => false, 'message' => $th->getMessage()];
+                        return response()->json(['message' => $th->getMessage()], 400);
                     }
                 }
             // Se non è stato ordinato:
             } else {
-                return ['success' => false, 'message' => 'Ordinazione non trovata.'];
+                return response()->json(['message' => 'Ordinazione non trovata.'], 404);
             }
         } else {
-            return ['success' => false, 'message' => "Il tempo limite per le ordinazioni è stato superato."];
+            return response()->json(['message' => 'Il tempo limite per le ordinazioni è stato superato.'], 403);
         }
     }
 
@@ -213,7 +213,7 @@ class OrderController extends Controller
             if ($sandwich_obj = \App\Sandwich::findOrFail($request->get('sandwich_id'))) {
                 $price = $sandwich_obj->price;
             } else {
-                return ['success' => false, 'message' => "Errore nell'ordinazione"];
+                return response()->json(['message' => "Errore nell'ordinazione."], 404);
             }
        
             $order = DB::table('orders')->where('user_id', '=', $this->user_id)
@@ -227,22 +227,22 @@ class OrderController extends Controller
                 if ($times > 1) {
                     $order->update(['updated_at' => Carbon::now()]);
                     $order->update(['times' => $times - 1]);
-                    return ['success' => true, 'message' => 'Diminuzione effettuata.'];
+                    return response()->json(['message' => "Diminuzione effettuata."], 200);
                 // Altrimenti elimino il panino
                 } else if ($times = 1){
                     try {
                         $order->delete();
-                        return ['success' => true, 'message' => 'Rimozione effettuata.'];
+                        return response()->json(['message' => "Rimozione effettuata."], 200);
                     } catch (\Throwable $th) {
-                        return ['success' => false, 'message' => $th->getMessage()];
+                        return response()->json(['message' => $th->getMessage()], 400);
                     }
                 }
             // Se non è stato ordinato:
             } else {
-                return ['success' => false, 'message' => 'Ordinazione non trovata.'];
+                return response()->json(['message' => 'Ordinazione non trovata.'], 404);
             }
         } else {
-            return ['success' => false, 'message' => "Il tempo limite per le ordinazioni è stato superato."];
+            return response()->json(['message' => 'Il tempo limite per le ordinazioni è stato superato.'], 403);
         }
     }
 
