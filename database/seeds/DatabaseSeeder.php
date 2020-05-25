@@ -35,6 +35,15 @@ class DatabaseSeeder extends Seeder
         'api_token' => Str::random(60),
         ]);
       DB::table('users')->insert([
+        'name' => 'prof',
+        'email' => 'prof@prof.com',
+        'password' => Hash::make('prof'),
+        'role' => 'admin',
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+        'api_token' => Str::random(60),
+        ]);
+      DB::table('users')->insert([
         'name' => 'bar',
         'email' => 'bar@bar.com',
         'password' => Hash::make('bar'),
@@ -47,6 +56,15 @@ class DatabaseSeeder extends Seeder
         'name' => '5ai',
         'email' => '5ai@5ai.com',
         'password' => Hash::make('5ai'),
+        'role' => 'class',
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+        'api_token' => Str::random(60),
+        ]);
+      DB::table('users')->insert([
+        'name' => '5bi',
+        'email' => '5bi@5bi.com',
+        'password' => Hash::make('5bi'),
         'role' => 'class',
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),
@@ -79,7 +97,62 @@ class DatabaseSeeder extends Seeder
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),
       ]);
-
+      DB::table('sandwiches')->insert([
+        'name' => 'Salsa ai funghi',
+        'price' => '1.40',
+        'description' => 'Panino con salsa ai funghi',
+        'type' => 'Freddo',
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+      ]);
+      DB::table('sandwiches')->insert([
+        'name' => 'Tramezzino (salsa ai funghi)',
+        'price' => '0.70',
+        'description' => 'Tramezzino con salsa ai funghi',
+        'type' => 'Freddo',
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+      ]);
+      DB::table('sandwiches')->insert([
+        'name' => 'Brioches alla crema',
+        'price' => '0.80',
+        'description' => 'Brioches alla crema',
+        'type' => 'Freddo',
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+      ]);
+      DB::table('sandwiches')->insert([
+        'name' => 'Brioches al cioccolato',
+        'price' => '0.80',
+        'description' => 'Brioches al cioccolato',
+        'type' => 'Freddo',
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+      ]);
+      DB::table('sandwiches')->insert([
+        'name' => 'Panino al salame',
+        'price' => '1.00',
+        'description' => 'Panino al salame',
+        'type' => 'Freddo',
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+      ]);
+      DB::table('sandwiches')->insert([
+        'name' => 'Panino al cotto',
+        'price' => '1.00',
+        'description' => 'Panino al prosciutto cotto',
+        'type' => 'Freddo',
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+      ]);
+      DB::table('sandwiches')->insert([
+        'name' => 'Filoncino',
+        'price' => '1.30',
+        'description' => 'Filoncino',
+        'type' => 'Freddo',
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+      ]);
       //Ingredients
 
       DB::table('ingredients')->insert([

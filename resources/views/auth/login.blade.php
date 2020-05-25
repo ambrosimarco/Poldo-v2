@@ -31,6 +31,10 @@
                 </span>
                 @enderror
             </div>
+            
+            @error('name')
+                <div class="error text-danger mb-3 text-center">I dati inseriti non sono corretti.</div>
+            @enderror
 
             <div class="container-login100-form-btn">
                 <div class="wrap-login100-form-btn">

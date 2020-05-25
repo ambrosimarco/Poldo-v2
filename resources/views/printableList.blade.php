@@ -39,7 +39,7 @@
                   @endforeach
                 </td>
                 <td>{{ $order->times }}</td>
-                <td>{{ $order->price }}</td>
+                <td>{{ $order->price }} €</td>
               </tr>
                   {{$tot += $order->times * $order->price}}
             @endif
@@ -47,7 +47,7 @@
           <tr>
             <td>TOTALE</td>
             <td></td>
-            <td>@php echo number_format((float) $tot, 2, '.', '') @endphp</td>
+            <td>@php echo number_format((float) $tot, 2, '.', '') @endphp €</td>
           </tr>
         </tbody>
       </table>

@@ -4,12 +4,12 @@
 
 @can('order', App\Order::class)
 <!-- Container with the list of sandwiches -->
-<div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
+<div class="container bg-white" style="margin-top: 80px; margin-bottom: 50px; padding-bottom: 2%;">
     <div class="row">
         <div class="col">
             <br>
-            <!-- Three main buttons -->
-            <div class="btn-toolbar" role="toolbar">
+            <!-- Two main buttons -->
+            <div class="btn-toolbar pb-2" role="toolbar">
                 <div class="dropdown">
                     <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">
                         Ordina per:
@@ -34,10 +34,20 @@
                 </div>
             </div>
             <hr>
-            <h1>Ordina i tuoi panini!</h1>
+            <h2>Ordina i tuoi panini!</h2>
             <br>
-            <div id="reloadSandwiches">
 
+            <!-- Barra di ricerca -->
+            <div class="wrap-input100">
+                <span class="btn-show-pass">
+                    <i class="fa fa-search"></i>
+                </span>
+                <input class="input100" type="text" id="search" placeholder="Cerca panini">
+                <span class="focus-input100"></span>
+            </div>
+
+            <!-- Elenco panini -->
+            <div id="reloadSandwiches" class="overflow-auto h-25">
             </div>
         </div>
 
@@ -45,33 +55,14 @@
         <!-- Seconda colonna / ripeilogo ordine -->
         <div class="col ml-5">
             <br>
-            <!-- Three main buttons -->
-            <div class="btn-toolbar" role="toolbar">
-                <div class="dropdown">
-                    <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">
-                        Ordina per:
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" onclick="sorting('1')">Nome crescente</a>
-                        <a class="dropdown-item" href="#" onclick="sorting('2')">Nome decrescente</a>
-                        <a class="dropdown-item" href="#" onclick="sorting('3')">Prezzo crescente</a>
-                        <a class="dropdown-item" href="#" onclick="sorting('4')">Prezzo decrescente</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">
-                        Visualizza panini:
-                    </button>
-
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" onclick="filtering('tutti')">Tutti</a>
-                        <a class="dropdown-item" href="#" onclick="filtering('caldi')">Caldi</a>
-                        <a class="dropdown-item" href="#" onclick="filtering('freddi')">Freddi</a>
-                    </div>
-                </div>
+            <!-- titolo del riepilogo -->
+            <div class="title">
+                Al Bar Poldo
+                <br>
+                {{ now()}} - {{Auth::user()->name}}
             </div>
             <hr>
-            <h1>Riepilogo ordinazioni</h1>
+            <h2>Riepilogo ordinazioni</h2>
             <br>
             <div id="riepilogo">
 
@@ -98,6 +89,7 @@
         <!-- Scroll-back button 
         <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button>
 </footer> -->
+
 
 
 
@@ -131,7 +123,14 @@
     </script>
 </div>
 @else
-<h1>Benvenuto, {{ Auth::user()->name }}!</h1>
+<div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
+    <div class="row">
+        <h1 class="mt-3 ml-3">Benvenuto, {{ Auth::user()->name }}!</h1>
+    </div>
+    <div class="row">
+        <h3 class="mt-3 ml-3">Naviga utilizzando la barra in alto.</h3>
+    </div>
+</div>
 @endcan
 
 <script type="application/javascript">
@@ -194,7 +193,7 @@
                 <table class="table">
                     <tr>
                         <th>Nome</th>
-                        <th>Quantità</th>
+                        <th class="text-center">Quantità</th>
                         <th>Prezzo</th>
                     </tr>
                 `;
@@ -202,8 +201,8 @@
                     string += `
                     <tr>
                         <td>`+ element.name +`</td>
-                        <td>`+ element.pivot.times +`</td>
-                        <td>`+ element.pivot.price +`</td>
+                        <td class="text-center">`+ element.pivot.times +`</td>
+                        <td>`+ element.pivot.price +` €</td>
                     </tr>
                     `;
                     tot += element.pivot.price * element.pivot.times;
@@ -212,7 +211,7 @@
                     <tr>
                         <td class="mt-3">TOTALE</td>
                         <td></td>
-                        <td>`+ tot.toFixed(2) +`</td>
+                        <td>`+ tot.toFixed(2) +` €</td>
                     </tr>
                     `;
                 string += '</table>';
@@ -246,7 +245,21 @@
     var sort = "1";
     var filter = "tutti";
     var final_list = list;
+    var search_list = list;
+    var sear = "";
     $(document).ready(function() {
+      $('#search').keyup(function() {
+        console.log('asdasdasda');
+        this.sear=$("#search").val();
+        if(this.sear===""){
+            search_list=list;
+        }else{
+            search_list=list.filter((a) => {
+                return a.nome.toLocaleLowerCase().includes(this.sear.toLocaleLowerCase());
+            });
+        }
+        filtering(filter);
+        });        
         filtering(filter);
     })
 
@@ -282,47 +295,46 @@
         }
         final_list.forEach(function(item) {
             string +=
-                `<div class="media p-1">
-            <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
-            <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
-            <h4 class="media-heading">` + item.nome + `: ` + item.prezzo + `€</h4>
-            <div class="input-group">
-                <input hidden class="sandwich_id" name="sandwich_id" value="` + item.id + `">
-                <input hidden class="price" name="price" value="` + item.prezzo + `">
-                <input disabled value="` + item.ingredienti + `" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="plus btn btn-success" type="button" onclick="addSandwich(` + item.id + `)"><i class="fa fa-plus"></i></button>
-                    <button class="minus btn btn-danger" type="button" onclick="removeSandwich(` + item.id + `)"><i class="fa fa-minus"></i></button>
-                </div>
-            </div>
-        </div>
-            </div>`;
+                `<div class="media my-2 p-1">
+                    <img src="./img/pan1.jpg" class="media-object rounded-circle mt-1" style="width:70px; height:70px">
+                    <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
+                        <h4 class="media-heading">` + item.nome + `: ` + item.prezzo + `€</h4>
+                        <div class="input-group pt-1">
+                            <input hidden class="sandwich_id" name="sandwich_id" value="` + item.id + `">
+                            <input hidden class="price" name="price" value="` + item.prezzo + `">
+                            <input disabled value="` + item.ingredienti + `" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="plus btn btn-success" type="button" onclick="addSandwich(` + item.id + `)"><i class="fa fa-plus"></i></button>
+                                <button class="minus btn btn-danger" type="button" onclick="removeSandwich(` + item.id + `)"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
         });
         $("#reloadSandwiches").html(string);
     };
 
-    function filtering(value) {
-
-        filter = value;
-        switch (filter) {
-            case "tutti":
-                final_list = list;
-                break;
-            case "caldi":
-                final_list = list.filter((a) => {
-                    return a.stato === "Caldo";
-                });
-                break;
-            case "freddi":
-                final_list = list.filter((a) => {
-                    return a.stato === "Freddo";
-                });
-                break;
-            default:
-                final_list = list;
-                break;
-        };
-        sorting(sort);
+    function filtering (value) {
+      filter = value;
+      switch (filter) {
+        case "tutti":
+          final_list = search_list;
+          break;
+        case "caldi":
+          final_list = search_list.filter((a) => {
+            return a.stato === "Caldo";
+          });
+          break;
+        case "freddi":
+          final_list = search_list.filter((a) => {
+            return a.stato === "Freddo";
+          });
+          break;
+        default:
+          final_list = search_list;
+          break;
+      };
+      sorting(sort);
     }
 </script>
 

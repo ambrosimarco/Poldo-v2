@@ -40,7 +40,7 @@
                             let tot = 0;
                             risposta.forEach(element => {                               
                                 string += '<tr>'
-                                string += '<td>' + element.name + '</td>';
+                                string += '<td class="">' + element.name + '</td>';
                                 string += '<td>' + element.price + '</td>';
                                 string += '<td>' + element.pivot.times + '</td>';
                                 string += '<td>' + (element.price * element.pivot.times).toFixed(2) + '</td>';
@@ -49,7 +49,7 @@
                             });
 
                             $("#"+id).html(`
-                                <div class='card' style='width: 18rem;'>
+                                <div class='card' style='width: 18rem; '>
                                     <div class='card-body'>
                                         <h5 class='card-title'>Ordinazioni</h5>
                                         <p class='card-text'>
