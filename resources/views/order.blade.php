@@ -4,7 +4,7 @@
 
 @can('order', App\Order::class)
 <!-- Container with the list of sandwiches -->
-<div class="container bg-white" style="margin-top: 80px; margin-bottom: 50px; padding-bottom: 2%;">
+<div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
     <div class="row">
         <div class="col">
             <br>
@@ -47,7 +47,7 @@
             </div>
 
             <!-- Elenco panini -->
-            <div id="reloadSandwiches" class="overflow-auto h-25">
+            <div id="reloadSandwiches" class="overflow-auto" style="height: 500px">
             </div>
         </div>
 
@@ -125,10 +125,10 @@
 @else
 <div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
     <div class="row">
-        <h1 class="mt-3 ml-3">Benvenuto, {{ Auth::user()->name }}!</h1>
+        <h1 class="mt-3 ml-3 text-center">Benvenuto, {{ Auth::user()->name }}!</h1>
     </div>
     <div class="row">
-        <h3 class="mt-3 ml-3">Naviga utilizzando la barra in alto.</h3>
+        <h3 class="mt-3 ml-3 text-center">Naviga utilizzando la barra in alto.</h3>
     </div>
 </div>
 @endcan
@@ -176,7 +176,7 @@
         });
     }
 
-    function riepilogo(){
+    function riepilogo() {
         $.ajax({
             type: "GET",
             url: "api/order/list/{{Auth::user()->id}}",
@@ -187,7 +187,7 @@
             },
             dataType: "json",
             success: function(risposta) {
-                var tot = 0.00;                
+                var tot = 0.00;
                 var string = "";
                 string += `
                 <table class="table">
@@ -200,9 +200,9 @@
                 risposta.forEach(element => {
                     string += `
                     <tr>
-                        <td>`+ element.name +`</td>
-                        <td class="text-center">`+ element.pivot.times +`</td>
-                        <td>`+ element.pivot.price +` €</td>
+                        <td>` + element.name + `</td>
+                        <td class="text-center">` + element.pivot.times + `</td>
+                        <td>` + element.pivot.price + ` €</td>
                     </tr>
                     `;
                     tot += element.pivot.price * element.pivot.times;
@@ -211,7 +211,7 @@
                     <tr>
                         <td class="mt-3">TOTALE</td>
                         <td></td>
-                        <td>`+ tot.toFixed(2) +` €</td>
+                        <td>` + tot.toFixed(2) + ` €</td>
                     </tr>
                     `;
                 string += '</table>';
@@ -225,7 +225,7 @@
         });
     }
 
-    $( document ).ready(function() {
+    $(document).ready(function() {
         riepilogo();
     });
 </script>
@@ -248,18 +248,18 @@
     var search_list = list;
     var sear = "";
     $(document).ready(function() {
-      $('#search').keyup(function() {
-        console.log('asdasdasda');
-        this.sear=$("#search").val();
-        if(this.sear===""){
-            search_list=list;
-        }else{
-            search_list=list.filter((a) => {
-                return a.nome.toLocaleLowerCase().includes(this.sear.toLocaleLowerCase());
-            });
-        }
-        filtering(filter);
-        });        
+        $('#search').keyup(function() {
+            console.log('asdasdasda');
+            this.sear = $("#search").val();
+            if (this.sear === "") {
+                search_list = list;
+            } else {
+                search_list = list.filter((a) => {
+                    return a.nome.toLocaleLowerCase().includes(this.sear.toLocaleLowerCase());
+                });
+            }
+            filtering(filter);
+        });
         filtering(filter);
     })
 
@@ -304,8 +304,8 @@
                             <input hidden class="price" name="price" value="` + item.prezzo + `">
                             <input disabled value="` + item.ingredienti + `" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="plus btn btn-success" type="button" onclick="addSandwich(` + item.id + `)"><i class="fa fa-plus"></i></button>
-                                <button class="minus btn btn-danger" type="button" onclick="removeSandwich(` + item.id + `)"><i class="fa fa-minus"></i></button>
+                                <button class="plus btn btn-outline-success rounded" type="button" onclick="addSandwich(` + item.id + `)"><i class="fa fa-plus"></i></button>
+                                <button class="minus btn btn-outline-danger rounded" type="button" onclick="removeSandwich(` + item.id + `)"><i class="fa fa-minus"></i></button>
                             </div>
                         </div>
                     </div>
@@ -314,27 +314,27 @@
         $("#reloadSandwiches").html(string);
     };
 
-    function filtering (value) {
-      filter = value;
-      switch (filter) {
-        case "tutti":
-          final_list = search_list;
-          break;
-        case "caldi":
-          final_list = search_list.filter((a) => {
-            return a.stato === "Caldo";
-          });
-          break;
-        case "freddi":
-          final_list = search_list.filter((a) => {
-            return a.stato === "Freddo";
-          });
-          break;
-        default:
-          final_list = search_list;
-          break;
-      };
-      sorting(sort);
+    function filtering(value) {
+        filter = value;
+        switch (filter) {
+            case "tutti":
+                final_list = search_list;
+                break;
+            case "caldi":
+                final_list = search_list.filter((a) => {
+                    return a.stato === "Caldo";
+                });
+                break;
+            case "freddi":
+                final_list = search_list.filter((a) => {
+                    return a.stato === "Freddo";
+                });
+                break;
+            default:
+                final_list = search_list;
+                break;
+        };
+        sorting(sort);
     }
 </script>
 

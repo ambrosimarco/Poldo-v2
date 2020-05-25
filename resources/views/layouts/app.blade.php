@@ -51,10 +51,21 @@
         #lolink:hover {
             cursor: pointer;
         }
+
+        body {
+            background-image: url('https://cdn.pixabay.com/photo/2017/06/24/05/26/hot-dog-2436747_960_720.jpg') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
     </style>
 </head>
 
-<body style="background: rgb(239, 222, 205)">
+<!-- <body style="background: rgb(239, 222, 205)"> -->
+
+<body style="background-image: url('https://cdn.pixabay.com/photo/2017/06/24/05/26/hot-dog-2436747_960_720.jpg');">
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
@@ -136,7 +147,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main>
             @yield('content')
         </main>
     </div>

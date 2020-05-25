@@ -3,7 +3,8 @@
             background: linear-gradient(135deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(7,46,145,1) 5%, rgba(0,212,255,1) 77%);
             " -->
 @section('content')
-<div class="container-login100" style="background: rgb(239, 222, 205)">
+
+<div class="container-login100">
     <div class="wrap-login100">
         <form method="POST" action="{{ route('login') }}" class="login100-form validate-form">
             @csrf
@@ -11,29 +12,30 @@
                 {{ __('Login') }}
             </span>
             <span class="login100-form-title p-b-48">
-                <i class="fa fa-user 2x"></i>
+                <img src="./images/icons/icona_bar_poldo.png" />
+                <!-- <i class="fa fa-user 2x"></i> -->
             </span>
 
             <div class="wrap-input100 validate-input">
-                <input class="input100" type="text" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-                <span class="focus-input100" data-placeholder="{{ __('Username') }}"></span>
+                <input class="input100" type="text" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="{{ __('Username') }}">
+                <span class="focus-input100"></span>
             </div>
 
             <div class="wrap-input100 validate-input" data-validate="Enter password">
-                <span class="btn-show-pass">
+                <!-- <span class="btn-show-pass">
                     <i class="zmdi zmdi-eye"></i>
-                </span>
-                <input class="input100" required autocomplete="current-password" type="password" name="password">
-                <span class="focus-input100" data-placeholder="{{ __('Password') }}"></span>
+                </span> -->
+                <input class="input100" required autocomplete="current-password" type="password" name="password" placeholder="{{ __('Password') }}">
+                <span class="focus-input100"></span>
                 @error('password')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
                 @enderror
             </div>
-            
+
             @error('name')
-                <div class="error text-danger mb-3 text-center">I dati inseriti non sono corretti.</div>
+            <div class="error text-danger mb-3 text-center">I dati inseriti non sono corretti.</div>
             @enderror
 
             <div class="container-login100-form-btn">

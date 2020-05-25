@@ -12,7 +12,7 @@
         <div id="reloadUsers">
             @foreach($users as $user => $attributes)
             <div class="media p-1">
-                <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
+                <img src="./images/icons/icona_bar_poldo.png" class="media-object rounded-circle mt-1" style="width:65px; height:65px">
                 <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
                     <h4 class="media-heading {{($attributes->trashed == 'true') ? 'text-danger' : ''}}">{{$attributes->name}}</h4>
                     <div class="input-group">
@@ -33,18 +33,18 @@
                     <div class='card-body'>
                         <h5 class='card-title'>Modifica utente</h5>
                         <p class='card-text'>
-                            <label for="name-{{$attributes->id}}">Nome</label>
-                            <input type="text" value="{{$attributes->name}}" class="border border-dark" id="name-{{$attributes->id}}">
-                            <label for="email-{{$attributes->id}}">Email</label>
-                            <input type="text" value="{{$attributes->email}}" class="border border-dark" id="email-{{$attributes->id}}">
-                            <label for="password-{{$attributes->id}}">Password (vuoto per non modificare)</label>
-                            <input type="password" class="border border-dark" id="password-{{$attributes->id}}">
-                            <label for="field-{{$attributes->id}}">Ruolo</label>
-                            <select class="field" id="role-{{$attributes->id}}">
+                            <label for="name-{{$attributes->id}}">Nome</label><br>
+                            <input type="text" value="{{$attributes->name}}" class="border border-dark" id="name-{{$attributes->id}}"><br>
+                            <label for="email-{{$attributes->id}}">Email</label><br>
+                            <input type="text" value="{{$attributes->email}}" class="border border-dark" id="email-{{$attributes->id}}"><br>
+                            <label for="password-{{$attributes->id}}">Password (vuoto per non modificare)</label><br>
+                            <input type="password" class="border border-dark" id="password-{{$attributes->id}}"><br>
+                            <label for="field-{{$attributes->id}}">Ruolo</label><br>
+                            <select class="field" id="role-{{$attributes->id}}"><br>
                                 <option value="admin" {{ $attributes->role == 'admin' ? 'selected' : '' }}>Amministratore</option>
                                 <option value="class" {{ $attributes->role == 'class' ? 'selected' : '' }}>Classe</option>
                                 <option value="bar" {{ $attributes->role == 'bar' ? 'selected' : '' }}>Bar</option>
-                            </select>
+                            </select><br><br>
                             <button type="button" class="btn btn-primary mr-1" onclick="editUser({{$attributes->id}})">Invia</button>
                         </p>
                     </div>
@@ -59,18 +59,18 @@
                 <div class='card-body'>
                     <h5 class='card-title'>Nuovo utente</h5>
                     <p class='card-text'>
-                        <label for="name">Nome</label>
-                        <input type="text" class="border border-dark" id="name">
-                        <label for="email">Email</label>
-                        <input type="text" class="border border-dark" id="email">
-                        <label for="password">Password</label>
-                        <input type="password" class="border border-dark" id="password">
-                        <label for="password">Ruolo</label>
+                        <label for="name">Nome</label><br>
+                        <input type="text" class="border border-dark" id="name"><br>
+                        <label for="email">Email</label><br>
+                        <input type="text" class="border border-dark" id="email"><br>
+                        <label for="password">Password</label><br>
+                        <input type="password" class="border border-dark" id="password"><br>
+                        <label for="password">Ruolo</label><br>
                         <select class="field" id="role">
                             <option value="admin">Amministratore</option>
                             <option value="class">Classe</option>
                             <option value="bar">Bar</option>
-                        </select>
+                        </select><br><br>
                         <button type="button" class="btn btn-primary mr-1" onclick="createUser()">Invia</button>
                     </p>
                 </div>
