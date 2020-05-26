@@ -93,10 +93,6 @@
 
 
 
-<div>
-    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script type="application/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
     <script type="application/javascript">
         //Get the button
@@ -121,17 +117,92 @@
             document.documentElement.scrollTop = 0;
         }
     </script>
-</div>
+    
 @else
 <div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
     <div class="row">
         <h1 class="mt-3 ml-3 text-center">Benvenuto, {{ Auth::user()->name }}!</h1>
     </div>
     <div class="row">
-        <h3 class="mt-3 ml-3 text-center">Naviga utilizzando la barra in alto.</h3>
+        <canvas id="myChart" style=" background: transparent url(img/burger.png) no-repeat center 175px"></canvas>        
     </div>
 </div>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    @if(Auth::user()->role == 'admin')
+        var labels = ['Gestione utenti', 'Ordinazioni', 'Listino', 'Stampa liste', 'Gestione Poldo', 'Contatti'];
+    @elseif(Auth::user()->role == 'bar')
+        var labels = ['Ordinazioni', 'Listino', 'Stampa liste', 'Gestione Poldo', 'Contatti'];
+    @endif
+    var labelsColor = ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)","rgb(219, 0, 208)","rgb(88, 219, 0)","rgb(47, 0, 219)"];
+    var data = [];
+    for (i = 0; i < labels.length; i++) {
+        data.push(1);
+    }
+ 
+    data = {
+        datasets: [{
+            data: data,
+            backgroundColor: labelsColor,
+        }],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: labels
+    };
+    
+    // And for a doughnut chart
+    var myDoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: {
+            legend: {
+                display: false,
+            },
+            responsive: true,
+            elements: {
+                    arc: {
+                        borderWidth: 30,
+                        borderColor: 'rgba(0, 0, 0, 0)',
+                    },
+                },
+                tooltips: {
+            enabled: false
+        },
+        plugins: {
+            datalabels: {
+                color: '#111',
+                textAlign: 'center',
+                font: {
+                    lineHeight: 1.6,
+                    size: 18,
+                },
+                formatter: function(value, ctx) {
+                    return ctx.chart.data.labels[ctx.dataIndex];
+                }
+            }
+        }
+        }
+    });
+
+    document.getElementById("myChart").onclick = function(evt){
+            var activePoints = myDoughnutChart.getElementsAtEvent(evt);
+            var firstPoint = activePoints[0];
+            var label = myDoughnutChart.data.labels[firstPoint._index];
+            switch (label) {
+            // add case for each label/slice
+            case 'Gestione utenti':
+                window.open('/users', "_self");
+                break;
+            case 'Contatti':
+                window.open('/contacts', "_self");
+                break;
+            // add rests ...
+        }
+        };
+</script>
 @endcan
+
+
 
 <script type="application/javascript">
     function addSandwich(id) {
@@ -249,7 +320,6 @@
     var sear = "";
     $(document).ready(function() {
         $('#search').keyup(function() {
-            console.log('asdasdasda');
             this.sear = $("#search").val();
             if (this.sear === "") {
                 search_list = list;
