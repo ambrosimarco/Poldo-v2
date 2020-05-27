@@ -59,22 +59,81 @@
             cursor: pointer;
         }
 
-        body {
-            background-image: url('https://cdn.pixabay.com/photo/2017/06/24/05/26/hot-dog-2436747_960_720.jpg') no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
+        #myBtn {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Fixed/sticky position */
+            bottom: 20px;
+            /* Place the button at the bottom of the page */
+            right: 30px;
+            /* Place the button 30px from the right */
+            z-index: 99;
+            /* Make sure it does not overlap */
+            border: orange;
+            /* Remove borders */
+            outline: orange;
+            /* Remove outline */
+            background-color: none;
+            /*Set a background color */
+            cursor: pointer;
+            /* Add a mouse pointer on hover */
+            padding: 15px;
+            /* Some padding */
+            border-radius: 10px;
+            /* Rounded corners */
+            font-size: 18px;
+            /* Increase font size */
+        }
+
+        #myBtn:hover {
+            border: orange;
+        }
+
+        .parallax {
+            /* The image used */
+            background-image: url("https://cdn.pixabay.com/photo/2017/06/24/05/26/hot-dog-2436747_960_720.jpg");
+            /* Create the parallax scrolling effect */
+            height: 60em;
+            width: 100%;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
             background-size: cover;
         }
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+    </style>
+
+
+
     </style>
 </head>
 
 <!-- <body style="background: rgb(239, 222, 205)"> -->
 
-<body style="background-image: url('https://cdn.pixabay.com/photo/2017/06/24/05/26/hot-dog-2436747_960_720.jpg');">
-
+<body>
+    <div class="parallax">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
+                <img src="./images/icons/icona_bar_poldo.png" alt="AlBarPoldo" height="50px" widht="50px">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Al Bar Poldo') }}
                 </a>
@@ -92,12 +151,12 @@
                         <!-- Authentication Links -->
                         @guest
                         <!-- <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li> -->
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li> -->
                         @if (Route::has('register'))
                         <!-- <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Registrati') }}</a>
-                        </li> -->
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Registrati') }}</a>
+                            </li> -->
                         @endif
                         @else
                         @if (Auth::user()->role == 'class')
@@ -138,7 +197,7 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                        document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 
@@ -152,11 +211,21 @@
                 </div>
             </div>
         </nav>
+        <!-- end navbar -->
+ 
+        <!-- Container element -->
+        @yield('content')
+    </div>
 
-        <main>
-            @yield('content')
-        </main>
-
+    <footer class="footer bg-dark" style="width: 100%">
+        <div class="container text-center pt-3 pb-3">
+            <span class="text-white">&COPY 2020 All right reserved | Lorenzoni - Ambrosi - Du | Al Bar Poldo</span>
+        </div>
+        {{-- <div>
+            <!-- Scroll-back button -->
+            <button onclick="topFunction()" id="myBtn" title="Torna sù"><i class="fa fa-chevron-up fa-2x" style="color: orange;"></i></button>
+        </div> --}}
+    </footer>
 
 </body>
 

@@ -4,84 +4,80 @@
 
 @can('order', App\Order::class)
 <!-- Container with the list of sandwiches -->
-<div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
-    <div class="row">
-        <div class="col">
-            <br>
-            <!-- Two main buttons -->
-            <div class="btn-toolbar pb-2" role="toolbar">
-                <div class="dropdown">
-                    <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">
-                        Ordina per:
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" onclick="sorting('1')">Nome crescente</a>
-                        <a class="dropdown-item" href="#" onclick="sorting('2')">Nome decrescente</a>
-                        <a class="dropdown-item" href="#" onclick="sorting('3')">Prezzo crescente</a>
-                        <a class="dropdown-item" href="#" onclick="sorting('4')">Prezzo decrescente</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">
-                        Visualizza panini:
-                    </button>
 
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" onclick="filtering('tutti')">Tutti</a>
-                        <a class="dropdown-item" href="#" onclick="filtering('caldi')">Caldi</a>
-                        <a class="dropdown-item" href="#" onclick="filtering('freddi')">Freddi</a>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <h2>Ordina i tuoi panini!</h2>
-            <br>
-
-            <!-- Barra di ricerca -->
-            <div class="wrap-input100">
-                <span class="btn-show-pass">
-                    <i class="fa fa-search"></i>
-                </span>
-                <input class="input100" type="text" id="search" placeholder="Cerca panini">
-                <span class="focus-input100"></span>
-            </div>
-
-            <!-- Elenco panini -->
-            <div id="reloadSandwiches" class="overflow-auto" style="height: 500px">
-            </div>
-        </div>
-
-
-        <!-- Seconda colonna / ripeilogo ordine -->
-        <div class="col ml-5">
-            <br>
-            <!-- titolo del riepilogo -->
-            <div class="title">
-                Al Bar Poldo
+    <div class="container bg-white mt-5 mb-3">
+        <div class=" row">
+            <div class="col">
                 <br>
-                {{ now()}} - {{Auth::user()->name}}
-            </div>
-            <hr>
-            <h2>Riepilogo ordinazioni</h2>
-            <br>
-            <div id="riepilogo">
+                <!-- Two main buttons -->
+                <div class="btn-toolbar pb-2" role="toolbar">
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">
+                            Ordina per:
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" onclick="sorting('1')">Nome crescente</a>
+                            <a class="dropdown-item" href="#" onclick="sorting('2')">Nome decrescente</a>
+                            <a class="dropdown-item" href="#" onclick="sorting('3')">Prezzo crescente</a>
+                            <a class="dropdown-item" href="#" onclick="sorting('4')">Prezzo decrescente</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">
+                            Visualizza panini:
+                        </button>
 
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" onclick="filtering('tutti')">Tutti</a>
+                            <a class="dropdown-item" href="#" onclick="filtering('caldi')">Caldi</a>
+                            <a class="dropdown-item" href="#" onclick="filtering('freddi')">Freddi</a>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <h2>Ordina i tuoi panini!</h2>
+                <br>
+
+                <!-- Barra di ricerca -->
+                <div class="wrap-input100">
+                    <span class="btn-show-pass">
+                        <i class="fa fa-search"></i>
+                    </span>
+                    <input class="input100" type="text" id="search" placeholder="Cerca panini">
+                    <span class="focus-input100"></span>
+                </div>
+
+                <!-- Elenco panini -->
+                <div id="reloadSandwiches" class="overflow-auto" style="height: 500px">
+                </div>
+            </div>
+
+
+            <!-- Seconda colonna / ripeilogo ordine -->
+            <div class="col ml-5">
+                <br>
+                <!-- titolo del riepilogo -->
+                <div class="title">
+                    Al Bar Poldo
+                    <br>
+                    {{ now()}} - {{Auth::user()->name}}
+                </div>
+                <hr>
+                <h2>Riepilogo ordinazioni</h2>
+                <br>
+                <div id="riepilogo">
+
+                </div>
             </div>
         </div>
+
+
+        <hr>
+
+       
+
     </div>
 
-
-    <hr>
-
-    <footer class="footer">
-        <div class="container bg-white text-center">
-            <span class="text-muted">&COPY 2020 All right reserved | Lorenzoni - Ambrosi - Du | Al Bar Poldo</span>
-            <!-- Scroll-back button -->
-            <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button>
-        </div>
-    </footer>
-
-</div>
 
 <!-- Footer
 <footer class="footer">
@@ -94,52 +90,53 @@
 
 
 
-    <script type="application/javascript">
-        //Get the button
-        var mybutton = document.getElementById("myBtn");
+<script type="application/javascript">
+    //Get the button
+    var mybutton = document.getElementById("myBtn");
 
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function() {
-            scrollFunction()
-        };
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {
+        scrollFunction()
+    };
 
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                mybutton.style.display = "block";
-            } else {
-                mybutton.style.display = "none";
-            }
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
         }
+    }
 
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-    </script>
-    
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+
 @else
 <div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
     <div class="row">
         <h1 class="mt-3 ml-3 text-center">Benvenuto, {{ Auth::user()->name }}!</h1>
     </div>
     <div class="row">
-        <canvas id="myChart" style=" background: transparent url(img/burger.png) no-repeat center 175px"></canvas>        
+        <canvas id="myChart" style=" background: transparent url(img/burger.png) no-repeat center 175px"></canvas>
     </div>
 </div>
+
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
-    @if(Auth::user()->role == 'admin')
-        var labels = ['Gestione utenti', 'Ordinazioni', 'Listino', 'Stampa liste', 'Gestione Poldo', 'Contatti'];
-    @elseif(Auth::user()->role == 'bar')
-        var labels = ['Ordinazioni', 'Listino', 'Stampa liste', 'Gestione Poldo', 'Contatti'];
+    @if(Auth::user() -> role == 'admin')
+    var labels = ['Gestione utenti', 'Ordinazioni', 'Listino', 'Stampa liste', 'Gestione Poldo', 'Contatti'];
+    @elseif(Auth::user() -> role == 'bar')
+    var labels = ['Ordinazioni', 'Listino', 'Stampa liste', 'Gestione Poldo', 'Contatti'];
     @endif
-    var labelsColor = ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)","rgb(219, 0, 208)","rgb(88, 219, 0)","rgb(47, 0, 219)"];
+    var labelsColor = ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(219, 0, 208)", "rgb(88, 219, 0)", "rgb(47, 0, 219)"];
     var data = [];
     for (i = 0; i < labels.length; i++) {
         data.push(1);
     }
- 
+
     data = {
         datasets: [{
             data: data,
@@ -149,7 +146,7 @@
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: labels
     };
-    
+
     // And for a doughnut chart
     var myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
@@ -160,35 +157,35 @@
             },
             responsive: true,
             elements: {
-                    arc: {
-                        borderWidth: 30,
-                        borderColor: 'rgba(0, 0, 0, 0)',
+                arc: {
+                    borderWidth: 30,
+                    borderColor: 'rgba(0, 0, 0, 0)',
+                },
+            },
+            tooltips: {
+                enabled: false
+            },
+            plugins: {
+                datalabels: {
+                    color: '#111',
+                    textAlign: 'center',
+                    font: {
+                        lineHeight: 1.6,
+                        size: 18,
                     },
-                },
-                tooltips: {
-            enabled: false
-        },
-        plugins: {
-            datalabels: {
-                color: '#111',
-                textAlign: 'center',
-                font: {
-                    lineHeight: 1.6,
-                    size: 18,
-                },
-                formatter: function(value, ctx) {
-                    return ctx.chart.data.labels[ctx.dataIndex];
+                    formatter: function(value, ctx) {
+                        return ctx.chart.data.labels[ctx.dataIndex];
+                    }
                 }
             }
         }
-        }
     });
 
-    document.getElementById("myChart").onclick = function(evt){
-            var activePoints = myDoughnutChart.getElementsAtEvent(evt);
-            var firstPoint = activePoints[0];
-            var label = myDoughnutChart.data.labels[firstPoint._index];
-            switch (label) {
+    document.getElementById("myChart").onclick = function(evt) {
+        var activePoints = myDoughnutChart.getElementsAtEvent(evt);
+        var firstPoint = activePoints[0];
+        var label = myDoughnutChart.data.labels[firstPoint._index];
+        switch (label) {
             // add case for each label/slice
             case 'Gestione utenti':
                 window.open('/users', "_self");
@@ -196,9 +193,9 @@
             case 'Contatti':
                 window.open('/contacts', "_self");
                 break;
-            // add rests ...
+                // add rests ...
         }
-        };
+    };
 </script>
 @endcan
 
