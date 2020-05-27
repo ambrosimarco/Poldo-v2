@@ -89,18 +89,25 @@
         #myBtn:hover {
             border: orange;
         }
-
+        body, html {
+            height: 100%;
+        }
         .parallax {
             /* The image used */
             background-image: url("https://cdn.pixabay.com/photo/2017/06/24/05/26/hot-dog-2436747_960_720.jpg");
             /* Create the parallax scrolling effect */
-            height: 60em;
+            height: 100%;
             width: 100%;
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
         }
+        .menu{
+            background-color: rgb(255, 246, 230);
+            border-radius: 15px;
+        }
+
 /* width */
 ::-webkit-scrollbar {
   width: 7px;
@@ -120,10 +127,6 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
-    </style>
-
-
-
     </style>
 </head>
 
@@ -217,6 +220,32 @@
         @yield('content')
     </div>
 
+    <!-- Scroll-back button -->
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up text-white"></i></button>
+    <script type="application/javascript">
+        //Get the button
+        var mybutton = document.getElementById("myBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+    </script>
     <footer class="footer bg-dark" style="width: 100%">
         <div class="container text-center pt-3 pb-3">
             <span class="text-white">&COPY 2020 All right reserved | Lorenzoni - Ambrosi - Du | Al Bar Poldo</span>
@@ -226,7 +255,5 @@
             <button onclick="topFunction()" id="myBtn" title="Torna sù"><i class="fa fa-chevron-up fa-2x" style="color: orange;"></i></button>
         </div> --}}
     </footer>
-
 </body>
-
 </html>

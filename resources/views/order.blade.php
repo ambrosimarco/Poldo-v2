@@ -5,7 +5,7 @@
 @can('order', App\Order::class)
 <!-- Container with the list of sandwiches -->
 
-    <div class="container bg-white mt-5 mb-3">
+    <div class="container menu mt-5 mb-3">
         <div class=" row">
             <div class="col">
                 <br>
@@ -115,7 +115,7 @@
 </script>
 
 @else
-<div class="container bg-white" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
+<div class="container menu" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;">
     <div class="row">
         <h1 class="mt-3 ml-3 text-center">Benvenuto, {{ Auth::user()->name }}!</h1>
     </div>
@@ -131,7 +131,7 @@
     @elseif(Auth::user() -> role == 'bar')
     var labels = ['Ordinazioni', 'Listino', 'Stampa liste', 'Gestione Poldo', 'Contatti'];
     @endif
-    var labelsColor = ["rgb(255,248,220)", "rgb(255,248,220)", "rgb(255,248,220)", "rgb(255,248,220)", "rgb(255,248,220)", "rgb(255,248,220)"];
+    var labelsColor = ["rgb(255,222,173)", "rgb(255,222,173)", "rgb(255,222,173)", "rgb(255,222,173)", "rgb(255,222,173)", "rgb(255,222,173)"];
     var data = [];
     for (i = 0; i < labels.length; i++) {
         data.push(1);
@@ -188,7 +188,7 @@
         switch (label) {
             // add case for each label/slice
             case 'Gestione utenti':
-                window.open('/users', "_self");
+            window.open('/users', "_self");
                 break;
             case 'Ordinazioni':
             window.open('/orders', "_self");
