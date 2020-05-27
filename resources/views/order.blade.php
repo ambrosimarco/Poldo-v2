@@ -131,7 +131,7 @@
     @elseif(Auth::user() -> role == 'bar')
     var labels = ['Ordinazioni', 'Listino', 'Stampa liste', 'Gestione Poldo', 'Contatti'];
     @endif
-    var labelsColor = ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)", "rgb(219, 0, 208)", "rgb(88, 219, 0)", "rgb(47, 0, 219)"];
+    var labelsColor = ["rgb(255,248,220)", "rgb(255,248,220)", "rgb(255,248,220)", "rgb(255,248,220)", "rgb(255,248,220)", "rgb(255,248,220)"];
     var data = [];
     for (i = 0; i < labels.length; i++) {
         data.push(1);
@@ -190,10 +190,21 @@
             case 'Gestione utenti':
                 window.open('/users', "_self");
                 break;
-            case 'Contatti':
-                window.open('/contacts', "_self");
+            case 'Ordinazioni':
+            window.open('/orders', "_self");
                 break;
-                // add rests ...
+            case 'Listino':
+            window.open('/sandwiches', "_self");
+                break;
+            case 'Stampa liste':
+            window.open('/print', "_self");
+                break;
+            case 'Gestione Poldo':
+            window.open('/settings', "_self");
+                break;
+            case 'Contatti':
+            window.open('/contacts', "_self");
+                break;
         }
     };
 </script>

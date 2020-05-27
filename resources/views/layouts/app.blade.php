@@ -133,8 +133,8 @@
     <div class="parallax">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
-                <img src="./images/icons/icona_bar_poldo.png" alt="AlBarPoldo" height="50px" widht="50px">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <img src="./images/icons/icona_bar_poldo.png" alt="AlBarPoldo" height="50px" width="50px">
+                <a class="navbar-brand ml-2" href="{{ url('/') }}">
                     {{ config('app.name', 'Al Bar Poldo') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
