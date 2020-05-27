@@ -96,7 +96,7 @@
             /* The image used */
             background-image: url("https://cdn.pixabay.com/photo/2017/06/24/05/26/hot-dog-2436747_960_720.jpg");
             /* Create the parallax scrolling effect */
-            height: 100%;
+            height: 94%;
             width: 100%;
             background-attachment: fixed;
             background-position: center;
@@ -106,29 +106,48 @@
         .menu{
             background-color: rgb(255, 246, 230);
             border-radius: 15px;
+            max-height: 700px;
         }
 
-/* width */
-::-webkit-scrollbar {
-  width: 7px;
-}
+        .nuovo .card{
+            margin-top: 8px;
+        }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888; 
-}
+        .nuovo .card .card-body{
+            padding: 10px;
+        }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555; 
-}
-    </style>
-</head>
+        .ordini .card{
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .ordini .card .card-body{
+            padding: 10px;
+        }
+
+
+        /* width */
+        ::-webkit-scrollbar {
+        width: 7px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+        }
+        
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+        background: #888; 
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+        }
+            </style>
+        </head>
 
 <!-- <body style="background: rgb(239, 222, 205)"> -->
 

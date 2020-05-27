@@ -9,7 +9,7 @@
 
     <h1 class="mb-3">Utenti</h1>
     <div id="reloadForm">
-        <div id="reloadUsers">
+        <div id="reloadUsers" class="overflow-auto" style="height: 300px">
             @foreach($users as $user => $attributes)
             <div class="media p-1">
                 <img src="./images/icons/icona_bar_poldo.png" class="media-object rounded-circle mt-1" style="width:65px; height:65px">
@@ -53,24 +53,24 @@
             @endforeach
         </div>
 
-        <button type="button" class="btn btn-primary mr-1" onclick="showForm()">Nuovo</button>
-        <div class='none' id='new'>
-            <div class='card' style='width: 18rem;'>
+        <button type="button" class="btn btn-primary mr-1 mt-3" onclick="showForm()">Nuovo</button>
+        <div class='none nuovo' id='new'>
+            <div class='card' style='width: 30rem;'>
                 <div class='card-body'>
                     <h5 class='card-title'>Nuovo utente</h5>
                     <p class='card-text'>
-                        <label for="name">Nome</label><br>
-                        <input type="text" class="border border-dark" id="name"><br>
-                        <label for="email">Email</label><br>
-                        <input type="text" class="border border-dark" id="email"><br>
-                        <label for="password">Password</label><br>
-                        <input type="password" class="border border-dark" id="password"><br>
-                        <label for="password">Ruolo</label><br>
+                        <label for="name">Nome</label>
+                        <input type="text" class="border border-dark" id="name">
+                        <label for="email">Email</label>
+                        <input type="text" class="border border-dark" id="email">
+                        <label for="password">Password</label>
+                        <input type="password" class="border border-dark" id="password">
+                        <label for="password">Ruolo</label>
                         <select class="field" id="role">
                             <option value="admin">Amministratore</option>
                             <option value="class">Classe</option>
                             <option value="bar">Bar</option>
-                        </select><br><br>
+                        </select><br>
                         <button type="button" class="btn btn-primary mr-1" onclick="createUser()">Invia</button>
                     </p>
                 </div>
@@ -117,7 +117,7 @@
                 },
                 dataType: "json",
                 success: function(risposta) {
-                    alert(risposta.message);
+                    //alert(risposta.message);
                     $("#reloadForm").load(location.href + " #reloadForm");
                 },
                 error: function(xhr, status, error) {
@@ -145,7 +145,7 @@
                 },
                 dataType: "json",
                 success: function(risposta) {
-                    alert(risposta.message);
+                    //alert(risposta.message);
                     $("#reloadForm").load(location.href + " #reloadForm");
                 },
                 error: function(xhr, status, error) {
@@ -165,7 +165,7 @@
                 },
                 dataType: "json",
                 success: function(risposta) {
-                    alert(risposta.message);
+                    //alert(risposta.message);
                     $("#reloadUsers").load(location.href + " #reloadUsers");
                 },
                 error: function(xhr, status, error) {
@@ -185,7 +185,7 @@
                 },
                 dataType: "json",
                 success: function(risposta) {
-                    alert(risposta.message);
+                    //alert(risposta.message);
                     $("#reloadUsers").load(location.href + " #reloadUsers");
                 },
                 error: function(xhr, status, error) {
@@ -205,7 +205,7 @@
                 },
                 dataType: "json",
                 success: function(risposta) {
-                    alert(risposta.message);
+                    //alert(risposta.message);
                     $("#reloadUsers").load(location.href + " #reloadUsers");
                 },
                 error: function(xhr, status, error) {

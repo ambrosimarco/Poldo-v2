@@ -9,10 +9,11 @@
             <hr>
 
             <h1>Liste di oggi</h1>
-            <br />
+            <hr>
+            <div class="overflow-auto" style="height: 300px">
             @foreach($customers as $customer => $attributes)
                 <div class="media p-1">
-                    <img src="./img/pan1.jpg" class="media-object" style="width:65px; height:65px">
+                    <img src="./images/icons/icona_bar_poldo.png" class="media-object rounded-circle mt-1" style="width:65px; height:65px">
                     <div class="media-body" style="margin-left: 10px; margin-bottom: auto;">
                         <h4 class="media-heading">{{$attributes->name}}</h4>
                         <div class="input-group">
@@ -21,11 +22,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            <div class='none' id='{{$attributes->id}}'>
+            </div>
+            <div class='none ordini' id='{{$attributes->id}}'>
             </div>
 
             @endforeach
+            </div>
 
         <script type="application/javascript">
             function getList(id){
@@ -50,11 +52,11 @@
                             });
 
                             $("#"+id).html(`
-                                <div class='card' style='width: 18rem; '>
+                                <div class='card' style='width: 40rem; '>
                                     <div class='card-body'>
                                         <h5 class='card-title'>Ordinazioni</h5>
                                         <p class='card-text'>
-                                            <table>
+                                            <table style="table-layout: auto;width:100%;"">
                                                 <tr>
                                                     <th>Nome</th>
                                                     <th>Prezzo</th>

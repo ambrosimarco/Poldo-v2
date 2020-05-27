@@ -31,11 +31,12 @@
             </div>
         </div>
     </div>
-    <hr>
 
+<br>
 <h1 class="mb-3">Panini</h1>
+<hr>
     <div id="reloadForm">
-        <div id="reloadSandwiches">
+        <div id="reloadSandwiches" class="overflow-auto" style="height: 300px">
             @foreach($sandwiches as $sandwich => $attributes)
             @php
             $recipe = "";
@@ -65,9 +66,9 @@
             @endforeach
         </div>
 
-        <button type="button" class="btn btn-primary mr-1" onclick="showForm()">Nuovo</button>
-        <div class='none' id='new'>
-            <div class='card' style='width: 18rem;'>
+        <button type="button" class="btn btn-primary mr-1 mt-3" onclick="showForm()">Nuovo</button>
+        <div class='none nuovo' id='new'>
+            <div class='card' style='width: 40rem'>
                 <div class='card-body'>
                     <h5 class='card-title'>Ordinazioni</h5>
                     <p class='card-text'>
@@ -75,9 +76,9 @@
                         <input type="text" class="border border-dark" id="name">
                         <label for="price">Prezzo</label>
                         <input type="text" class="border border-dark" id="price">
+                        <br>
                         <label for="description">Descrizione</label>
                         <input type="text" class="border border-dark" id="description">
-                        <br>
                         <label for="type">Tipo</label>
                         <select class="field" id="type">
                             <option value="Caldo">Caldo</option>

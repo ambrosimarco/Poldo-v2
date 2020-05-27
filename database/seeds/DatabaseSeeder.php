@@ -114,17 +114,17 @@ class DatabaseSeeder extends Seeder
         'updated_at' => Carbon::now(),
       ]);
       DB::table('sandwiches')->insert([
-        'name' => 'Brioches alla crema',
+        'name' => 'Brioche alla crema',
         'price' => '0.80',
-        'description' => 'Brioches alla crema',
+        'description' => 'Brioche alla crema',
         'type' => 'Freddo',
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),
       ]);
       DB::table('sandwiches')->insert([
-        'name' => 'Brioches al cioccolato',
+        'name' => 'Brioche al cioccolato',
         'price' => '0.80',
-        'description' => 'Brioches al cioccolato',
+        'description' => 'Brioche al cioccolato',
         'type' => 'Freddo',
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),

@@ -48,7 +48,7 @@
                 </div>
 
                 <!-- Elenco panini -->
-                <div id="reloadSandwiches" class="overflow-auto" style="height: 500px">
+                <div id="reloadSandwiches" class="overflow-auto" style="height: 400px">
                 </div>
             </div>
 
@@ -65,7 +65,7 @@
                 <hr>
                 <h2>Riepilogo ordinazioni</h2>
                 <br>
-                <div id="riepilogo">
+                <div id="riepilogo" class="overflow-auto" style="height: 500px">
 
                 </div>
             </div>
