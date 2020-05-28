@@ -131,23 +131,28 @@
     }
 
     function deleteSandwich(id) {
-        $.ajax({
-            type: "POST",
-            url: "/api/sandwiches/" + id,
-            data: {
-                api_token: '{{ Auth::user()->api_token }}',
-                _token: '{{csrf_token()}}',
-                _method: 'DELETE'
-            },
-            dataType: "json",
-            success: function(risposta) {
-                alert(risposta.message);
-                $("#reloadSandwiches").load(location.href + " #reloadSandwiches");
-            },
-            error: function(xhr, status, error) {
-                alert(xhr.responseText);
-            }
-        });
+        var r = confirm("Sei sicuro di voler procedere?");
+        if (r == true) {
+            $.ajax({
+                type: "POST",
+                url: "/api/sandwiches/" + id,
+                data: {
+                    api_token: '{{ Auth::user()->api_token }}',
+                    _token: '{{csrf_token()}}',
+                    _method: 'DELETE'
+                },
+                dataType: "json",
+                success: function(risposta) {
+                    alert(risposta.message);
+                    $("#reloadSandwiches").load(location.href + " #reloadSandwiches");
+                },
+                error: function(xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }else{
+            
+        }
     }
 </script>
 
