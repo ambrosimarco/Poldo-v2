@@ -2,7 +2,7 @@
 
 @section('content')
         
-<div class="container menu " style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;align-items: center;">
+<div class="container menu" style="margin-top: 80px; margin-bottom: 80px; padding-bottom: 2%;align-items: center;">
         <hr>
         <h1>Stampa le liste</h1>
         <hr>
