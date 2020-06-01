@@ -5,7 +5,7 @@
 @can('order', App\Order::class)
 <!-- Container with the list of sandwiches -->
 
-    <div class="container menu mt-5 mb-3">
+    <div class="container menu mt-5 mb-1">
         <div class=" row">
             <div class="col">
                 <br>
@@ -65,7 +65,7 @@
                 <hr>
                 <h2>Riepilogo ordinazioni</h2>
                 <br>
-                <div id="riepilogo" class="overflow-auto" style="height: 500px">
+                <div id="riepilogo" class="overflow-auto" >
 
                 </div>
             </div>

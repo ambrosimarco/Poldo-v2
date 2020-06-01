@@ -90,14 +90,13 @@
             border: orange;
         }
         body, html {
-            height: 100%;
+            min-height: 100%;
         }
-        .parallax {
+        body {
             /* The image used */
             background-image: url("https://cdn.pixabay.com/photo/2017/06/24/05/26/hot-dog-2436747_960_720.jpg");
             /* Create the parallax scrolling effect */
-            height: 94%;
-            width: 100%;
+
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
@@ -106,7 +105,6 @@
         .menu{
             background-color: rgb(255, 246, 230);
             border-radius: 15px;
-            max-height: 700px;
         }
 
         .nuovo .card{
@@ -265,7 +263,8 @@
         }
 
     </script>
-    <footer class="footer bg-dark" style="width: 100%">
+    <div style="height:100px;"> </div>
+    <footer class="footer bg-dark fixed-bottom" style="width: 100%;">
         <div class="container text-center pt-3 pb-3">
             <span class="text-white">&COPY 2020 All right reserved | Lorenzoni - Ambrosi - Du | Al Bar Poldo</span>
         </div>
